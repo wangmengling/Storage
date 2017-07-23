@@ -9,6 +9,11 @@
 import XCTest
 @testable import Storage
 
+struct StorageModel:Codable {
+    var name: String?
+    var eMail: String?
+}
+
 class StorageTests: XCTestCase {
     
     override func setUp() {
@@ -24,6 +29,12 @@ class StorageTests: XCTestCase {
     func testExample() {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
+        var storageModel:StorageModel = StorageModel()
+        storageModel.name = "王国仲"
+//        _ = Storage().add(storageModel)
+//        let m = Mirror(reflecting: storageModel)
+//        m.children.m
+//        print(m.children)
     }
     
     func testPerformanceExample() {
