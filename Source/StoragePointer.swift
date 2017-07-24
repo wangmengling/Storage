@@ -26,8 +26,26 @@ struct StoragePointer {
     var pointer:UnsafePointer<Int>?
     
     mutating func deCodeable<T>(_ object:inout T) -> Void {
+        
+//        var children = [(label: String?, value: Any)]()
+        let mirror = Mirror(reflecting: object)
+        var children = [(label: String?, value: Any)]()
+        let mirrorChildrenCollection = AnyRandomAccessCollection(mirror.children)!
+        children += mirrorChildrenCollection
+        
+        var currentMirror = mirror
+        while let superclassChildren = currentMirror.superclassMirror?.children {
+            let randomCollection = AnyRandomAccessCollection(superclassChildren)!
+            children += randomCollection
+            currentMirror = currentMirror.superclassMirror!
+        }
         let pointer = self.headPointerOfStruct(&object)
-        print(pointer.pointee)
+        let animalRawPtr = UnsafeMutableRawPointer(pointer)
+        
+        let d = animalRawPtr.assumingMemoryBound(to: T.self)
+        print(d.pointee)
+        let aPtr = animalRawPtr.advanced(by: 0).assumingMemoryBound(to: String.self)
+        print(aPtr.pointee)
     }
     
     //获取 struct 类型实例的指针
@@ -45,38 +63,3 @@ struct StoragePointer {
     }
 }
 
-
-//final func withUnsafeMutablePointers<R>(_ body: (UnsafeMutablePointer<Header>, UnsafeMutablePointer<Element>) throws -> R) rethrows -> R
-//
-////基本数据类型
-//var a: T = T()
-//var aPointer = a.withUnsafeMutablePointer{ return $0 }
-//
-////获取 struct 类型实例的指针，From HandyJSON
-
-
-enum Kind {
-    case wolf
-    case fox
-    case dog
-    case sheep
-}
-
-struct Animal {
-    private var a: Int = 1       //8 byte
-    var b: String = "animal"     //24 byte
-    var c: Kind = .wolf          //1 byte
-    var d: String?               //25 byte
-    var e: Int8 = 8              //1 byte
-    
-    //返回指向 Animal 实例头部的指针
-    mutating func headPointerOfStruct() -> UnsafeMutablePointer<Int8> {
-        return withUnsafeMutablePointer(to: &self) {
-            return UnsafeMutableRawPointer($0).bindMemory(to: Int8.self, capacity: MemoryLayout<Animal>.stride)
-        }
-    }
-        
-        func printA() {
-            print("Animal a:\(a)")
-        }
-}

@@ -11,7 +11,7 @@ import XCTest
 
 struct StorageModel:Codable {
     var name: String?
-    var eMail: String?
+    var eMail: Int?
 }
 
 class StorageTests: XCTestCase {
