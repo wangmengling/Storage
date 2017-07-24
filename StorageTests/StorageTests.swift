@@ -31,6 +31,9 @@ class StorageTests: XCTestCase {
         // Use XCTAssert and related functions to verify your tests produce the correct results.
         var storageModel:StorageModel = StorageModel()
         storageModel.name = "王国仲"
+        var storagePointer:StoragePointer   = StoragePointer()
+        storagePointer.deCodeable(&storageModel)
+//        storagePointer.he
 //        _ = Storage().add(storageModel)
 //        let m = Mirror(reflecting: storageModel)
 //        m.children.m
