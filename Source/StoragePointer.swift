@@ -22,25 +22,28 @@ extension Encodable {
     }
 }
 
-struct Struct {
+struct StorageOff {
     var kind: Int
     var nominalTypeDescriptorOffset: Int
 }
 
-struct NominalTypeDescriptor{
+struct StorageTypeDescriptor{
     
     var name: Int32
     var numberOfFields: Int32
     var FieldOffsetVectorOffset: Int32
     var fieldNames: Int32
-    var getFieldTypes: Int32
+    var fieldTypes: Int32
 }
 
 struct StoragePointer {
     var pointer:UnsafePointer<Int>?
     
     mutating func deCodeable<T>(_ object:inout T) -> Void {
-        let typePointer = unsafeBitCast(T.self, to: UnsafePointer<Struct>.self)
+        let intsPointer = unsafeBitCast(T.self, to: UnsafePointer<Int>.self)
+        intsPointer.advanced(by: 0)
+        print(T.self, "pointer is", intsPointer.pointee)
+        let typePointer = unsafeBitCast(T.self, to: UnsafePointer<StorageOff>.self)
         print(T.self, "pointer is", typePointer)
         print(typePointer.pointee.nominalTypeDescriptorOffset)
         let intPointer = unsafeBitCast(typePointer, to: UnsafePointer<Int>.self)
@@ -50,30 +53,22 @@ struct StoragePointer {
         let nominalTypePointer = int8Type.advanced(by: typePointer.pointee.nominalTypeDescriptorOffset)
         
         
-        let nominalType = unsafeBitCast(nominalTypePointer, to: UnsafePointer<NominalTypeDescriptor>.self)
+        let nominalType = unsafeBitCast(nominalTypePointer, to: UnsafePointer<StorageTypeDescriptor>.self)
         let numberOfField = Int(nominalType.pointee.numberOfFields)
         
         
-//        let int32NominalType = unsafeBitCast(nominalType, to: UnsafePointer<Int32>.self)
-//        let fieldBase = int32NominalType.advanced(by: Int(nominalType.pointee.FieldOffsetVectorOffset))
-//
-//        let int8FieldBasePointer = unsafeBitCast(fieldBase, to: UnsafePointer<Int8>.self)
-//        let fieldNamePointer = int8FieldBasePointer.advanced(by: Int(nominalType.pointee.fieldNames))
-//
-//        let fieldNames = getFieldNames(pointer: fieldNamePointer, fieldCount: numberOfField)
-        
         let int32NominalFunc = unsafeBitCast(nominalType, to: UnsafePointer<Int32>.self).advanced(by: 4)
-        let nominalFunc = unsafeBitCast(int32NominalFunc, to: UnsafePointer<Int8>.self).advanced(by: Int(nominalType.pointee.getFieldTypes))
+        let nominalFunc = unsafeBitCast(int32NominalFunc, to: UnsafePointer<Int8>.self).advanced(by: Int(nominalType.pointee.fieldTypes))
         
         let fieldType = getType(pointer: nominalFunc, fieldCount: numberOfField)
         print(fieldType)
-        let offsetPointer = intPointer.advanced(by: Int(nominalType.pointee.FieldOffsetVectorOffset))
-        var offsetArr: [Int] = []
-        
-        for i in 0..<numberOfField {
-            let offset = offsetPointer.advanced(by: i)
-            offsetArr.append(offset.pointee)
-        }
+//        let offsetPointer = intPointer.advanced(by: Int(nominalType.pointee.FieldOffsetVectorOffset))
+//        var offsetArr: [Int] = []
+//
+//        for i in 0..<numberOfField {
+//            let offset = offsetPointer.advanced(by: i)
+//            offsetArr.append(offset.pointee)
+//        }
 //        let pointer = self.headPointerOfStruct(&object)
 //        let animalRawPtr = UnsafeMutableRawPointer(pointer)
 //
@@ -82,6 +77,20 @@ struct StoragePointer {
 //        let aPtr = animalRawPtr.advanced(by: 0).assumingMemoryBound(to: String.self)
 //
 //        print(aPtr.pointee)
+    }
+    
+    mutating func s<T>(_ object:inout T) -> Void {
+                let pointer = self.headPointerOfStruct(&object)
+                let animalRawPtr = UnsafeMutableRawPointer(pointer)
+        
+                let d = animalRawPtr.assumingMemoryBound(to: T.self)
+//                print(d.pointee)
+//                let aPtr = animalRawPtr.advanced(by: 0).assumingMemoryBound(to: String.self)
+//
+//                print(aPtr.pointee)
+        
+        let objectP = animalRawPtr.advanced(by: 0).assumingMemoryBound(to: Any?.self)
+        print(objectP.pointee)
     }
     
     //获取 struct 类型实例的指针

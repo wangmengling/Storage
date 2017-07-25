@@ -32,7 +32,8 @@ class StorageTests: XCTestCase {
         var storageModel:StorageModel = StorageModel()
         storageModel.name = "王国仲"
         var storagePointer:StoragePointer   = StoragePointer()
-        storagePointer.deCodeable(&storageModel)
+//        storagePointer.deCodeable(&storageModel)
+        storagePointer.s(&storageModel)
 //        storagePointer.he
 //        _ = Storage().add(storageModel)
 //        let m = Mirror(reflecting: storageModel)
