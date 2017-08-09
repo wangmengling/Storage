@@ -92,9 +92,10 @@ struct StoragePointer {
 //        let fieldNames = getFieldNames(pointer: fieldNamePointer, fieldCount: numberOfField)
 //        superObject.propertyNames.append(contentsOf: fieldNames)
         
-        let int32NominalFunc = unsafeBitCast(nominalType, to: UnsafePointer<Int32>.self).advanced(by: 4)
+        let int32NominalFunc = unsafeBitCast(nominalType, to: UnsafePointer<Int32>.self).advanced(by: 4)//转换被你获取到fieldTypes
         print(9,int32NominalFunc,int32NominalFunc.pointee)
         let nominalFunc = unsafeBitCast(int32NominalFunc, to: UnsafePointer<Int8>.self).advanced(by: Int(nominalType.pointee.fieldTypes))
+        print(10,nominalFunc,nominalFunc.pointee,"----",Int(nominalType.pointee.fieldTypes))
         let fieldType = getType(pointer: nominalFunc, fieldCount: numberOfField)
 //        print(fieldType)
 //        let offsetPointer = intPointer.advanced(by: Int(nominalType.pointee.FieldOffsetVectorOffset))
@@ -148,18 +149,24 @@ struct StoragePointer {
 }
 typealias FieldsTypeAccessor = @convention(c) (UnsafePointer<Int>) -> UnsafePointer<UnsafePointer<Int>>
 private func getType(pointer nominalFunc: UnsafePointer<Int8>, fieldCount numberOfField: Int) -> [Any.Type]{
-    
+    print(11,FieldsTypeAccessor.self,nominalFunc.pointee)
     let funcPointer = unsafeBitCast(nominalFunc, to: FieldsTypeAccessor.self)
-    let funcBase = funcPointer(unsafeBitCast(nominalFunc, to: UnsafePointer<Int>.self))
-    
+    print(12,funcPointer)
+    let pointer = unsafeBitCast(nominalFunc, to: UnsafePointer<Int>.self)
+    print(13,pointer,pointer.pointee)
+    let funcBase = funcPointer(pointer)
+    print(14,funcBase,funcBase.pointee)
     
     var types: [Any.Type] = []
     for i in 0..<numberOfField {
         let typeFetcher = funcBase.advanced(by: i).pointee
+        print(15,funcBase.advanced(by: i),funcBase.advanced(by: i).pointee)
+        print(16,typeFetcher,typeFetcher.pointee)
         let type = unsafeBitCast(typeFetcher, to: Any.Type.self)
+        print(type)
         types.append(type)
     }
-    
+    print(types)
     return types
 }
 
