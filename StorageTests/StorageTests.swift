@@ -12,6 +12,10 @@ import XCTest
 struct StorageModel:Codable {
     var name: String?
     var eMail: Int?
+//    var phome: String?
+//    var nickName: String?
+//    var password: String?
+//    var passwords: Int?
 }
 
 class StorageTests: XCTestCase {
@@ -31,9 +35,10 @@ class StorageTests: XCTestCase {
         // Use XCTAssert and related functions to verify your tests produce the correct results.
         var storageModel:StorageModel = StorageModel()
         storageModel.name = "王国仲"
+        storageModel.eMail = 1;
         var storagePointer:StoragePointer   = StoragePointer()
-//        storagePointer.deCodeable(&storageModel)
-        storagePointer.s(&storageModel)
+        storagePointer.deCodeable(&storageModel)
+//        storagePointer.s(&storageModel)
 //        storagePointer.he
 //        _ = Storage().add(storageModel)
 //        let m = Mirror(reflecting: storageModel)

@@ -25,6 +25,8 @@ extension Encodable {
 struct StorageOff {
     var kind: Int
     var nominalTypeDescriptorOffset: Int
+    var type:Int
+    var count:Int
 }
 
 struct StorageTypeDescriptor{
@@ -34,6 +36,7 @@ struct StorageTypeDescriptor{
     var FieldOffsetVectorOffset: Int32
     var fieldNames: Int32
     var fieldTypes: Int32
+    var fieldTypess: Int32
 }
 
 struct StoragePointer {
@@ -41,27 +44,60 @@ struct StoragePointer {
     
     mutating func deCodeable<T>(_ object:inout T) -> Void {
         let intsPointer = unsafeBitCast(T.self, to: UnsafePointer<Int>.self)
-        intsPointer.advanced(by: 0)
-        print(T.self, "pointer is", intsPointer.pointee)
+        //获取地址
+        print(1,intsPointer,intsPointer.pointee)
+//        let secondPointer = intsPointer.advanced(by: 0)
+//        print(T.self, "pointer is", secondPointer.pointee)
         let typePointer = unsafeBitCast(T.self, to: UnsafePointer<StorageOff>.self)
-        print(T.self, "pointer is", typePointer)
-        print(typePointer.pointee.nominalTypeDescriptorOffset)
+        print(2,T.self, "pointer is", typePointer,typePointer.pointee)
+//        StorageModel pointer is 0x0000000123f961a8 StorageOff(kind: 1, nominalTypeDescriptorOffset: -1936, type: 0, count: 4898510144)
+//        StorageModel pointer is 0x00000001213d6218 StorageOff(kind: 1, nominalTypeDescriptorOffset: -2224, type: 0, count: 0)
+//        StorageModel pointer is 0x0000000123c60230 StorageOff(kind: 1, nominalTypeDescriptorOffset: -2304, type: 0, count: 0)
+//        StorageModel pointer is 0x000000011ed49238 StorageOff(kind: 1, nominalTypeDescriptorOffset: -2312, type: 0, count: 0)
+//        StorageModel pointer is 0x000000011ffba238 StorageOff(kind: 1, nominalTypeDescriptorOffset: -2496, type: 0, count: 0)
+//        print(typePointer.pointee.nominalTypeDescriptorOffset)
         let intPointer = unsafeBitCast(typePointer, to: UnsafePointer<Int>.self)
-        
+        print(3,intPointer,intPointer.pointee)
+//
         let nominalTypeBase = intPointer.advanced(by: 1)
+        print(nominalTypeBase,nominalTypeBase.pointee)
+        let typeTypeBase = nominalTypeBase.advanced(by: 1)
+        print(typeTypeBase,typeTypeBase.pointee)
         let int8Type = unsafeBitCast(nominalTypeBase, to: UnsafePointer<Int8>.self)
+        print(int8Type,int8Type.pointee)
         let nominalTypePointer = int8Type.advanced(by: typePointer.pointee.nominalTypeDescriptorOffset)
+        print(nominalTypePointer,nominalTypePointer.pointee)
         
-        
+//
+//        
         let nominalType = unsafeBitCast(nominalTypePointer, to: UnsafePointer<StorageTypeDescriptor>.self)
+        print(nominalType,nominalType.pointee)
+        print(1)
+//        0x00000001193b9a20 StorageTypeDescriptor(name: -32, numberOfFields: 0, FieldOffsetVectorOffset: 3, fieldNames: -20, fieldTypes: -1120, fieldTypess: 1)
+//        0x000000011ab72970 StorageTypeDescriptor(name: -32, numberOfFields: 1, FieldOffsetVectorOffset: 3, fieldNames: -20, fieldTypes: -1648, fieldTypess: 1)
+//        let numberOfField = Int(nominalType.pointee.numberOfFields)
+//        0x000000011bd3e938 StorageTypeDescriptor(name: -40, numberOfFields: 2, FieldOffsetVectorOffset: 3, fieldNames: -28, fieldTypes: -1864, fieldTypess: 1)
+//        0x000000011cbe18e8 StorageTypeDescriptor(name: -56, numberOfFields: 3, FieldOffsetVectorOffset: 3, fieldNames: -36, fieldTypes: -1864, fieldTypess: 1)
+//        0x000000012496d8e0 StorageTypeDescriptor(name: -64, numberOfFields: 4, FieldOffsetVectorOffset: 3, fieldNames: -44, fieldTypes: -1888, fieldTypess: 1)
+//        let int32NominalFunc = unsafeBitCast(nominalType, to: UnsafePointer<Int32>.self).advanced(by: 4)
+//        let nominalFunc = unsafeBitCast(int32NominalFunc, to: UnsafePointer<Int8>.self).advanced(by: Int(nominalType.pointee.fieldTypes))
+//        0x00000001208c78a8 StorageTypeDescriptor(name: -72, numberOfFields: 5, FieldOffsetVectorOffset: 3, fieldNames: -52, fieldTypes: -1896, fieldTypess: 1)
+//        0x0000000126156880 StorageTypeDescriptor(name: -80, numberOfFields: 6, FieldOffsetVectorOffset: 3, fieldNames: -60, fieldTypes: -1936, fieldTypess: 1)
         let numberOfField = Int(nominalType.pointee.numberOfFields)
         
+//        let int32NominalType = unsafeBitCast(nominalType, to: UnsafePointer<Int32>.self)
+//        let fieldBase = int32NominalType.advanced(by: 3)//.advanced(by: Int(nominalType.pointee.FieldOffsetVectorOffset))
+        
+//        let int8FieldBasePointer = unsafeBitCast(fieldBase, to: UnsafePointer<Int8>.self)
+//        let fieldNamePointer = int8FieldBasePointer.advanced(by: Int(nominalType.pointee.fieldNames))
+        
+//        let fieldNames = getFieldNames(pointer: fieldNamePointer, fieldCount: numberOfField)
+//        superObject.propertyNames.append(contentsOf: fieldNames)
         
         let int32NominalFunc = unsafeBitCast(nominalType, to: UnsafePointer<Int32>.self).advanced(by: 4)
         let nominalFunc = unsafeBitCast(int32NominalFunc, to: UnsafePointer<Int8>.self).advanced(by: Int(nominalType.pointee.fieldTypes))
-        
         let fieldType = getType(pointer: nominalFunc, fieldCount: numberOfField)
-        print(fieldType)
+//        print(fieldType)
 //        let offsetPointer = intPointer.advanced(by: Int(nominalType.pointee.FieldOffsetVectorOffset))
 //        var offsetArr: [Int] = []
 //
