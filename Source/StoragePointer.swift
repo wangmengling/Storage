@@ -118,14 +118,18 @@ struct StoragePointer {
                 let pointer = self.headPointerOfStruct(&object)
                 let animalRawPtr = UnsafeMutableRawPointer(pointer)
         
-                let d = animalRawPtr.assumingMemoryBound(to: T.self)
+        let firstPointer = animalRawPtr.advanced(by: 0)
+        
+        let ds = unsafeBitCast(firstPointer, to: UnsafePointer<Int>.self)
+        print(ds.pointee)
+//                let d = animalRawPtr.assumingMemoryBound(to: T.self)
 //                print(d.pointee)
 //                let aPtr = animalRawPtr.advanced(by: 0).assumingMemoryBound(to: String.self)
 //
 //                print(aPtr.pointee)
         
-        let objectP = animalRawPtr.advanced(by: 0).assumingMemoryBound(to: Any?.self)
-        print(objectP.pointee)
+//        let objectP = animalRawPtr.advanced(by: 0).assumingMemoryBound(to: Any.Type.self)
+//        print(objectP.pointee)
     }
     
     //获取 struct 类型实例的指针
