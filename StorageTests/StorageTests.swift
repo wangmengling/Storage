@@ -18,6 +18,12 @@ struct StorageModel:Codable {
 //    var passwords: Int?
 }
 
+class StorageClassModel: NSObject {
+    var name: String?
+    var eMail: Int?
+    
+}
+
 class StorageTests: XCTestCase {
     
     override func setUp() {
@@ -37,7 +43,9 @@ class StorageTests: XCTestCase {
         storageModel.name = "王国仲"
         storageModel.eMail = 1;
         var storagePointer:StoragePointer   = StoragePointer()
-        storagePointer.deCodeable(&storageModel)
+//        storagePointer.deCodeable(&storageModel)
+        let pointer = storagePointer.headPointerOfStruct(&storageModel)
+        print(pointer,pointer.pointee)
 //        storagePointer.s(&storageModel)
 //        storagePointer.he
 //        _ = Storage().add(storageModel)
