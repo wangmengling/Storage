@@ -7,6 +7,8 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		160058201F403E6B0046EED2 /* StorageMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1600581F1F403E6B0046EED2 /* StorageMetadata.swift */; };
+		160058211F403E6B0046EED2 /* StorageMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1600581F1F403E6B0046EED2 /* StorageMetadata.swift */; };
 		166DB3CC1F0F32F7009D18DD /* Storage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 166DB3C21F0F32F7009D18DD /* Storage.framework */; };
 		166DB3D11F0F32F7009D18DD /* StorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166DB3D01F0F32F7009D18DD /* StorageTests.swift */; };
 		166DB3D31F0F32F7009D18DD /* Storage.h in Headers */ = {isa = PBXBuildFile; fileRef = 166DB3C51F0F32F7009D18DD /* Storage.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -17,6 +19,7 @@
 		166DB4201F0F5EDC009D18DD /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 166DB41F1F0F5EC0009D18DD /* libsqlite3.0.tbd */; };
 		166DB4221F0F5F37009D18DD /* StorageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166DB4211F0F5F37009D18DD /* StorageExtensions.swift */; };
 		169222601F24EF5800B7D656 /* StoragePointer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1692225F1F24EF5800B7D656 /* StoragePointer.swift */; };
+		16C703CE1F40911D00410D30 /* StorageNominalType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C703CD1F40911D00410D30 /* StorageNominalType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -30,6 +33,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		1600581F1F403E6B0046EED2 /* StorageMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageMetadata.swift; sourceTree = "<group>"; };
 		166DB3C21F0F32F7009D18DD /* Storage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Storage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		166DB3C51F0F32F7009D18DD /* Storage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Storage.h; sourceTree = "<group>"; };
 		166DB3C61F0F32F7009D18DD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -43,6 +47,7 @@
 		166DB41F1F0F5EC0009D18DD /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		166DB4211F0F5F37009D18DD /* StorageExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageExtensions.swift; sourceTree = "<group>"; };
 		1692225F1F24EF5800B7D656 /* StoragePointer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoragePointer.swift; sourceTree = "<group>"; };
+		16C703CD1F40911D00410D30 /* StorageNominalType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageNominalType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,7 +116,7 @@
 				166DB4171F0F5928009D18DD /* StorageSQLiteManager.swift */,
 				166DB4131F0F3988009D18DD /* StorageProtocol.swift */,
 				166DB4211F0F5F37009D18DD /* StorageExtensions.swift */,
-				1692225F1F24EF5800B7D656 /* StoragePointer.swift */,
+				16C703CF1F4091A600410D30 /* Reflection */,
 			);
 			path = Source;
 			sourceTree = SOURCE_ROOT;
@@ -122,6 +127,16 @@
 				166DB41F1F0F5EC0009D18DD /* libsqlite3.0.tbd */,
 			);
 			name = Frameworks;
+			sourceTree = "<group>";
+		};
+		16C703CF1F4091A600410D30 /* Reflection */ = {
+			isa = PBXGroup;
+			children = (
+				1692225F1F24EF5800B7D656 /* StoragePointer.swift */,
+				1600581F1F403E6B0046EED2 /* StorageMetadata.swift */,
+				16C703CD1F40911D00410D30 /* StorageNominalType.swift */,
+			);
+			name = Reflection;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -233,11 +248,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				16C703CE1F40911D00410D30 /* StorageNominalType.swift in Sources */,
 				166DB4121F0F396E009D18DD /* Storage.swift in Sources */,
 				169222601F24EF5800B7D656 /* StoragePointer.swift in Sources */,
 				166DB4221F0F5F37009D18DD /* StorageExtensions.swift in Sources */,
 				166DB4161F0F39DF009D18DD /* StorageToSQLite.swift in Sources */,
 				166DB4181F0F5928009D18DD /* StorageSQLiteManager.swift in Sources */,
+				160058201F403E6B0046EED2 /* StorageMetadata.swift in Sources */,
 				166DB4141F0F3988009D18DD /* StorageProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -246,6 +263,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				160058211F403E6B0046EED2 /* StorageMetadata.swift in Sources */,
 				166DB3D11F0F32F7009D18DD /* StorageTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
