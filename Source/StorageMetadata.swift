@@ -9,14 +9,21 @@
 import Foundation
 
 
-
-protocol StorageMetadataProtocol {
-    
+struct StorageMetadata: StoragePointerProtocol {
+    var pointer: UnsafePointer<Int>
+    init(type: Any.Type) {
+        print(unsafeBitCast(type, to: UnsafePointer<Int>.self).pointee)
+        self.init(pointer: unsafeBitCast(type, to: UnsafePointer<Int>.self))
+    }
 }
 
-struct StorageMetadata: StorageMetadataProtocol {
-    var kind:Kind
-    var nominalTypeDescriptorOffset:Int
+extension StorageMetadata {
+    var kind:Kind {
+        return .class
+    }
+    var nominalTypeDescriptorOffset:Int {
+        return 0
+    }
     
     enum Kind {
         case `struct`
@@ -63,5 +70,32 @@ struct Metadata {
     struct ObjcClassWrapper {
         var kind: Int
         var targetType: Any.Type?
+    }
+}
+
+
+
+protocol StoragePointerProtocol : Equatable {
+    associatedtype Pointee //Metadata Type
+    var pointer: UnsafePointer<Pointee> { get set }
+}
+extension StoragePointerProtocol {
+    init<T>(pointer: UnsafePointer<T>) {
+        func cast<T, U>(_ value: T) -> U {
+            print(U.self)
+            return unsafeBitCast(value, to: U.self)
+        }
+        print(UnsafePointer<Pointee>(pointer),UnsafePointer<Pointee>(pointer).pointee)
+        self = cast(UnsafePointer<Pointee>(pointer))
+    }
+}
+func == <T: StoragePointerProtocol>(lhs: T, rhs: T) -> Bool {
+    return lhs.pointer == rhs.pointer
+}
+
+extension UnsafePointer {
+    init<T>(_ pointer: UnsafePointer<T>) {
+        print(UnsafeRawPointer(pointer).assumingMemoryBound(to: Pointee.self),UnsafeRawPointer(pointer).assumingMemoryBound(to: Pointee.self).pointee)
+        self = UnsafeRawPointer(pointer).assumingMemoryBound(to: Pointee.self)
     }
 }

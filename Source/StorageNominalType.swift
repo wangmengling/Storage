@@ -7,6 +7,11 @@
 //
 
 import Foundation
+
+struct StorageNominalType {
+    
+}
+
 struct StorageNominalTypeDescriptor {
     var mangledName: Int32 //offset 1
     var numberOfFields: Int32 //offset 2

@@ -8,13 +8,16 @@
 
 import Foundation
 
-protocol StoragePointerProtocol {
-    associatedtype PointerType //Metadata Type
-    var pointer: UnsafePointer<PointerType> { get set }
-}
+
+
+
 
 struct StoragePointer {
-    var kind:StorageMetadata.Kind
+//    var kind:StorageMetadata.Kind
+    
+    init(_ subject: Any) {
+        
+    }
     
 }
 

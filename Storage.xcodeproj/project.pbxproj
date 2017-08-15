@@ -20,6 +20,9 @@
 		166DB4221F0F5F37009D18DD /* StorageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166DB4211F0F5F37009D18DD /* StorageExtensions.swift */; };
 		169222601F24EF5800B7D656 /* StoragePointer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1692225F1F24EF5800B7D656 /* StoragePointer.swift */; };
 		16C703CE1F40911D00410D30 /* StorageNominalType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C703CD1F40911D00410D30 /* StorageNominalType.swift */; };
+		195E36DE1F42CB6B0015A5BD /* StorageMirror.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195E36DD1F42CB6B0015A5BD /* StorageMirror.swift */; };
+		19ACCE741F42D37F00233269 /* StorageMirror.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195E36DD1F42CB6B0015A5BD /* StorageMirror.swift */; };
+		19ACCE761F42E0C500233269 /* StoragePointerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19ACCE751F42E0C500233269 /* StoragePointerType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -48,6 +51,8 @@
 		166DB4211F0F5F37009D18DD /* StorageExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageExtensions.swift; sourceTree = "<group>"; };
 		1692225F1F24EF5800B7D656 /* StoragePointer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoragePointer.swift; sourceTree = "<group>"; };
 		16C703CD1F40911D00410D30 /* StorageNominalType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageNominalType.swift; sourceTree = "<group>"; };
+		195E36DD1F42CB6B0015A5BD /* StorageMirror.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageMirror.swift; sourceTree = "<group>"; };
+		19ACCE751F42E0C500233269 /* StoragePointerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoragePointerType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -135,6 +140,8 @@
 				1692225F1F24EF5800B7D656 /* StoragePointer.swift */,
 				1600581F1F403E6B0046EED2 /* StorageMetadata.swift */,
 				16C703CD1F40911D00410D30 /* StorageNominalType.swift */,
+				195E36DD1F42CB6B0015A5BD /* StorageMirror.swift */,
+				19ACCE751F42E0C500233269 /* StoragePointerType.swift */,
 			);
 			name = Reflection;
 			sourceTree = "<group>";
@@ -249,6 +256,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				16C703CE1F40911D00410D30 /* StorageNominalType.swift in Sources */,
+				19ACCE761F42E0C500233269 /* StoragePointerType.swift in Sources */,
+				195E36DE1F42CB6B0015A5BD /* StorageMirror.swift in Sources */,
 				166DB4121F0F396E009D18DD /* Storage.swift in Sources */,
 				169222601F24EF5800B7D656 /* StoragePointer.swift in Sources */,
 				166DB4221F0F5F37009D18DD /* StorageExtensions.swift in Sources */,
@@ -264,6 +273,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				160058211F403E6B0046EED2 /* StorageMetadata.swift in Sources */,
+				19ACCE741F42D37F00233269 /* StorageMirror.swift in Sources */,
 				166DB3D11F0F32F7009D18DD /* StorageTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -405,7 +415,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -426,7 +436,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.maolin.Storage;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 3.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

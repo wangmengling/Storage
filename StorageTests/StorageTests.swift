@@ -28,12 +28,14 @@ class StorageTests: XCTestCase {
     
     override func setUp() {
         super.setUp()
+        
         // Put setup code here. This method is called before the invocation of each test method in the class.
     }
     
     override func tearDown() {
         // Put teardown code here. This method is called after the invocation of each test method in the class.
         super.tearDown()
+        
     }
     
     func testExample() {
@@ -42,16 +44,17 @@ class StorageTests: XCTestCase {
         var storageModel:StorageModel = StorageModel()
         storageModel.name = "王国仲"
         storageModel.eMail = 1;
-        var storagePointer:StoragePointer   = StoragePointer()
-//        storagePointer.deCodeable(&storageModel)
-        let pointer = storagePointer.headPointerOfStruct(&storageModel)
-        print(pointer,pointer.pointee)
+//        var storagePointer:StoragePointer   = StoragePointer()
+////        storagePointer.deCodeable(&storageModel)
+//        let pointer = storagePointer.headPointerOfStruct(&storageModel)
+//        print(pointer,pointer.pointee)
 //        storagePointer.s(&storageModel)
 //        storagePointer.he
 //        _ = Storage().add(storageModel)
 //        let m = Mirror(reflecting: storageModel)
 //        m.children.m
 //        print(m.children)
+        let mirror = StorageMirror(reflecting: storageModel);
     }
     
     func testPerformanceExample() {
