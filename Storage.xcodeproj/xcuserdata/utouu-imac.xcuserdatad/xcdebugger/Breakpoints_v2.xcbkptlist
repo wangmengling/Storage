@@ -57,22 +57,6 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "StorageTests/StorageTests.swift"
-            timestampString = "524480090.387028"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "40"
-            endingLineNumber = "40"
-            landmarkName = "StorageTests"
-            landmarkType = "3">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
             filePath = "Source/StoragePointer.swift"
             timestampString = "523965418.147817"
             startingColumnNumber = "9223372036854775807"
@@ -186,7 +170,7 @@
                   moduleName = "StorageTests"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/utouu-imac/Documents/GIT/Storage/Source/StorageMirror.swift"
-                  timestampString = "524480091.078143"
+                  timestampString = "524544461.179842"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "14"
@@ -201,7 +185,7 @@
                   moduleName = "Storage"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/utouu-imac/Documents/GIT/Storage/Source/StorageMirror.swift"
-                  timestampString = "524480091.132721"
+                  timestampString = "524544461.233964"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "14"
@@ -217,94 +201,14 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Source/StorageMetadata.swift"
-            timestampString = "524480090.387444"
+            filePath = "StorageTests/StorageTests.swift"
+            timestampString = "524544460.583687"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "16"
-            endingLineNumber = "16"
-            landmarkName = "init(type:)"
+            startingLineNumber = "57"
+            endingLineNumber = "57"
+            landmarkName = "testExample()"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "StorageTests.StorageMetadata.init(type: Any.Type) -&gt; StorageTests.StorageMetadata"
-                  moduleName = "StorageTests"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/utouu-imac/Documents/GIT/Storage/Source/StorageMetadata.swift"
-                  timestampString = "524480091.08068"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "16"
-                  endingLineNumber = "16"
-                  offsetFromSymbolStart = "270">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Storage.StorageMetadata.init(type: Any.Type) -&gt; Storage.StorageMetadata"
-                  moduleName = "Storage"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/utouu-imac/Documents/GIT/Storage/Source/StorageMetadata.swift"
-                  timestampString = "524480091.134786"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "16"
-                  endingLineNumber = "16"
-                  offsetFromSymbolStart = "270">
-               </Location>
-            </Locations>
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "Source/StorageMetadata.swift"
-            timestampString = "524480090.38749"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "99"
-            endingLineNumber = "99"
-            landmarkName = "init(_:)"
-            landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(extension in StorageTests):Swift.UnsafePointer.init&lt;A&gt;(Swift.UnsafePointer&lt;A1&gt;) -&gt; Swift.UnsafePointer&lt;A&gt;"
-                  moduleName = "StorageTests"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/utouu-imac/Documents/GIT/Storage/Source/StorageMetadata.swift"
-                  timestampString = "524480091.082814"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "99"
-                  endingLineNumber = "99"
-                  offsetFromSymbolStart = "222">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "(extension in Storage):Swift.UnsafePointer.init&lt;A&gt;(Swift.UnsafePointer&lt;A1&gt;) -&gt; Swift.UnsafePointer&lt;A&gt;"
-                  moduleName = "Storage"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/utouu-imac/Documents/GIT/Storage/Source/StorageMetadata.swift"
-                  timestampString = "524480091.136953"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "99"
-                  endingLineNumber = "99"
-                  offsetFromSymbolStart = "222">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
