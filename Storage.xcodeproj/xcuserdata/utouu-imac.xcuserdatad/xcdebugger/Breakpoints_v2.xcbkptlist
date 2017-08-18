@@ -153,46 +153,14 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "Source/StorageMirror.swift"
-            timestampString = "524479474.394912"
+            filePath = "StorageTests/StorageTests.swift"
+            timestampString = "524738851.842828"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "14"
-            endingLineNumber = "14"
-            landmarkName = "init(reflecting:)"
+            startingLineNumber = "64"
+            endingLineNumber = "64"
+            landmarkName = "testExample()"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "StorageTests.StorageMirror.init&lt;A&gt;(reflecting: A) -&gt; StorageTests.StorageMirror"
-                  moduleName = "StorageTests"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/utouu-imac/Documents/GIT/Storage/Source/StorageMirror.swift"
-                  timestampString = "524544461.179842"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "14"
-                  endingLineNumber = "14"
-                  offsetFromSymbolStart = "16">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "Storage.StorageMirror.init&lt;A&gt;(reflecting: A) -&gt; Storage.StorageMirror"
-                  moduleName = "Storage"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/utouu-imac/Documents/GIT/Storage/Source/StorageMirror.swift"
-                  timestampString = "524544461.233964"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "14"
-                  endingLineNumber = "14"
-                  offsetFromSymbolStart = "16">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -202,11 +170,27 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "StorageTests/StorageTests.swift"
-            timestampString = "524544460.583687"
+            timestampString = "524738851.843173"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "57"
-            endingLineNumber = "57"
+            startingLineNumber = "65"
+            endingLineNumber = "65"
+            landmarkName = "testExample()"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "StorageTests/StorageTests.swift"
+            timestampString = "524738851.843426"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "68"
+            endingLineNumber = "68"
             landmarkName = "testExample()"
             landmarkType = "7">
          </BreakpointContent>

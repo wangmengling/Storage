@@ -9,7 +9,6 @@
 import Foundation
 
 struct Storage: StorageProtocol {
-    typealias T = Codable
     fileprivate var storageToSQLite = StorageToSQLite.shareInstance
 }
 
@@ -23,7 +22,7 @@ extension Storage {
             _ = storageToSQLite.createTable(object)
         }
         //修改
-//        if update == true && storageToSQLite.count(object as! SrorageToSQLite.E.Type) > 0{
+//        if update == true && storageToSQLite.count(object) > 0{
 //            return storageToSQLite.update(object)
 //        }
 //        return storageToSQLite.insert(object)

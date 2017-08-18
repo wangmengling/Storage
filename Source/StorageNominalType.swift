@@ -9,18 +9,77 @@
 import Foundation
 
 struct StorageNominalType {
-    private var metadata:StorageMetadata
-    public init<T>(reflecting subject: T) {
+    fileprivate var metadata:StorageMetadata
+    public init<T>(reflecting subject: inout T) {
         metadata = StorageMetadata(type: T.self)
     }
 }
 
 extension StorageNominalType {
-    var pointer:UnsafePointer<NominalTypeDescriptor>? {
-        return nil
+    var nominalTypeDescriptorointer:UnsafePointer<NominalTypeDescriptor>? {
+        return self.metadataKindType()
     }
 }
 
+extension StorageNominalType {
+    func metadataKindType() -> UnsafePointer<NominalTypeDescriptor>{
+        switch metadata.kind {
+        case .struct:
+            return nominalTypeOfStruct()
+        case .class:
+            return nominalTypeOfClass()
+        default:
+            return nominalTypeOfStruct()
+        }
+    }
+    
+    func nominalTypeDescriptorPointer(nominalTypePointer:UnsafePointer<Int8>) -> UnsafePointer<NominalTypeDescriptor>{
+        let nominalTypeDescriptorPointer = nominalTypePointer.withMemoryRebound(to: NominalTypeDescriptor.self, capacity: 1, { $0 })
+        return nominalTypeDescriptorPointer
+    }
+}
+
+// MARK: - Type struct
+extension StorageNominalType {
+    fileprivate func nominalTypeOfStruct() -> UnsafePointer<NominalTypeDescriptor>{
+        let nominalTypePointer = self.nominalTypeOfStructPointer()
+        let nominalTypeDescriptorPointer = self.nominalTypeDescriptorPointer(nominalTypePointer: nominalTypePointer)
+        return nominalTypeDescriptorPointer;
+    }
+    
+    /// Get nominalType of struct through metadata pointer
+    private func nominalTypeOfStructPointer() -> UnsafePointer<Int8> {
+        let headerPointer = metadata.pointer.withMemoryRebound(to: Int.self, capacity: 1
+            , {$0}); //Header address
+        let nominalTypeAddressPointer = headerPointer.advanced(by: NominalTypeDescriptor.Struct.nominalTypeOffset).withMemoryRebound(to: Int8.self, capacity: 1, {$0})
+        let nominalTypePointer = nominalTypeAddressPointer.advanced(by: metadata.pointer.pointee.nominalTypeDescriptorOffset)
+        return nominalTypePointer
+    }
+}
+
+
+// MARK: - Type Class
+extension StorageNominalType {
+    fileprivate func nominalTypeOfClass() -> UnsafePointer<NominalTypeDescriptor> {
+        let nominalTypePointer = self.nominalTypeOfClassPointer()
+        let nominalTypeDescriptorPointer = self.nominalTypeDescriptorPointer(nominalTypePointer: nominalTypePointer)
+        return nominalTypeDescriptorPointer;
+    }
+    
+    private func nominalTypeOfClassPointer() -> UnsafePointer<Int8> {
+        let metadataClassPointer:UnsafePointer<NominalTypeDescriptor.Class> = UnsafePointer<NominalTypeDescriptor.Class>(metadata.pointer)
+        
+        let headerPointer = UnsafePointer<Int>(metadataClassPointer);
+        
+        let nominalTypeAddressPointer = headerPointer.advanced(by: NominalTypeDescriptor.Class.nominalTypeOffset).withMemoryRebound(to: Int8.self, capacity: 1, {$0})
+        let nominalTypePointer = nominalTypeAddressPointer.advanced(by: metadataClassPointer.pointee.Description)
+        return nominalTypePointer
+    }
+}
+
+
+
+/// NominalTypeDescriptor
 struct NominalTypeDescriptor {
     var mangledName: Int32 //offset 1
     var numberOfFields: Int32 //offset 2
@@ -82,3 +141,7 @@ extension NominalTypeDescriptor{
         var caseTypes: Int32
     }
 }
+
+
+/// FieldsType Function
+typealias FieldTypesAccessor = @convention(c) (UnsafePointer<Int>) -> UnsafePointer<UnsafePointer<Int>>

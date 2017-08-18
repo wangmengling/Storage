@@ -8,11 +8,12 @@
 
 import Foundation
 public struct StorageMirror {
-    private let pointer:StorageMetadata
+    fileprivate let storageNominalType:StorageNominalType
     
-    public init<T>(reflecting subject: T) {
-        pointer = StorageMetadata(type: T.self)
+    public init<T>(reflecting subject:  inout T) {
+        storageNominalType = StorageNominalType(reflecting: &subject)
     }
+    
 }
 
 extension StorageMirror {
@@ -26,22 +27,60 @@ extension StorageMirror {
     
     /// The name of the subject being reflected.
     public var mangledName: String {
-        return "";
+        guard let nominalTypeDescriptorointer  = storageNominalType.nominalTypeDescriptorointer else {
+            return ""
+        }
+        let p = UnsafePointer<Int32>(nominalTypeDescriptorointer)
+        let fieldBase = p.advanced(by: Int(nominalTypeDescriptorointer.pointee.fieldOffsetVector))
+        return String(cString: relativePointer(base: fieldBase, offset: nominalTypeDescriptorointer.pointee.mangledName) as UnsafePointer<CChar>)
     }
     
     /// The fields num of the subject being reflected.
-    public var numberOfFields: Int {
-        return 0
+    public var numberOfFields: Int? {
+        guard let nominalTypeDescriptorointer  = storageNominalType.nominalTypeDescriptorointer else {
+            return 0
+        }
+        return Int(nominalTypeDescriptorointer.pointee.numberOfFields)
     }
     
     /// The field names of the subject being reflected.
-    public var fieldNames: [String] {
-        return []
+    var fieldNames: [String] {
+        guard let nominalTypeDescriptorointer  = storageNominalType.nominalTypeDescriptorointer else {
+            return []
+        }
+        let p = UnsafePointer<Int32>(nominalTypeDescriptorointer)
+        
+        return Array(utf8Strings: relativePointer(base: p.advanced(by: 3), offset: nominalTypeDescriptorointer.pointee.fieldNames))
     }
     
     /// The field types of the subject being reflected.
-    public var fieldTypes: [Any.Type] {
-        return []
+    var fieldTypes: [Any.Type]? {
+        guard let nominalTypeDescriptorointer = storageNominalType.nominalTypeDescriptorointer else {
+            return nil
+        }
+        let nominalType = UnsafePointer<Int32>(nominalTypeDescriptorointer)
+        
+        let nominalTypeFunc: UnsafePointer<Int> = relativePointer(base: nominalType.advanced(by: 4), offset: nominalTypeDescriptorointer.pointee.fieldTypesAccessor)
+        
+        let types = self.getType(pointer: nominalTypeFunc, fieldCount: self.numberOfFields ?? 0)
+        return types
+    }
+}
+
+extension StorageMirror {
+    fileprivate func getType(pointer nominalFunc: UnsafePointer<Int>, fieldCount numberOfField: Int) -> [Any.Type]{
+        
+        let function = unsafeBitCast(nominalFunc, to: FieldTypesAccessor.self)
+        let funcBase = function(nominalFunc)
+        
+        var types: [Any.Type] = []
+        for i in 0..<numberOfField {
+            let typeFetcher = funcBase.advanced(by: i).pointee
+            let type = unsafeBitCast(typeFetcher, to: Any.Type.self)
+            types.append(type)
+        }
+        
+        return types
     }
 }
 
@@ -49,5 +88,44 @@ extension StorageMirror {
 extension StorageMirror : CustomStringConvertible {
     public var description: String {
         return "";
+    }
+}
+
+func relativePointer<T, U, V>(base: UnsafePointer<T>, offset: U) -> UnsafePointer<V> where U : BinaryInteger {
+    return UnsafeRawPointer(base).advanced(by: Int(integer: offset)).assumingMemoryBound(to: V.self)
+}
+
+extension Int {
+    fileprivate init<T : BinaryInteger>(integer: T) {
+        switch integer {
+        case let value as Int: self = value
+        case let value as Int32: self = Int(value)
+        case let value as Int16: self = Int(value)
+        case let value as Int8: self = Int(value)
+        default: self = 0
+        }
+    }
+}
+
+protocol UTF8Initializable {
+    init?(validatingUTF8: UnsafePointer<CChar>)
+}
+
+extension String : UTF8Initializable {}
+
+extension Array where Element : UTF8Initializable {
+    
+    init(utf8Strings: UnsafePointer<CChar>) {
+        var strings = [Element]()
+        var p = utf8Strings
+        while let string = Element(validatingUTF8: p) {
+            strings.append(string)
+            while p.pointee != 0 {
+                p = p.advanced(by: 1)
+            }
+            p = p.advanced(by: 1)
+            guard p.pointee != 0 else { break }
+        }
+        self = strings
     }
 }

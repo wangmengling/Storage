@@ -18,11 +18,10 @@
 		166DB4181F0F5928009D18DD /* StorageSQLiteManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166DB4171F0F5928009D18DD /* StorageSQLiteManager.swift */; };
 		166DB4201F0F5EDC009D18DD /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 166DB41F1F0F5EC0009D18DD /* libsqlite3.0.tbd */; };
 		166DB4221F0F5F37009D18DD /* StorageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166DB4211F0F5F37009D18DD /* StorageExtensions.swift */; };
-		169222601F24EF5800B7D656 /* StoragePointer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1692225F1F24EF5800B7D656 /* StoragePointer.swift */; };
 		16C703CE1F40911D00410D30 /* StorageNominalType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C703CD1F40911D00410D30 /* StorageNominalType.swift */; };
 		195E36DE1F42CB6B0015A5BD /* StorageMirror.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195E36DD1F42CB6B0015A5BD /* StorageMirror.swift */; };
 		19ACCE741F42D37F00233269 /* StorageMirror.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195E36DD1F42CB6B0015A5BD /* StorageMirror.swift */; };
-		19ACCE761F42E0C500233269 /* StoragePointerType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 19ACCE751F42E0C500233269 /* StoragePointerType.swift */; };
+		19C0BC3D1F468C3900D99517 /* StorageNominalType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C703CD1F40911D00410D30 /* StorageNominalType.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,10 +48,8 @@
 		166DB4171F0F5928009D18DD /* StorageSQLiteManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageSQLiteManager.swift; sourceTree = "<group>"; };
 		166DB41F1F0F5EC0009D18DD /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		166DB4211F0F5F37009D18DD /* StorageExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageExtensions.swift; sourceTree = "<group>"; };
-		1692225F1F24EF5800B7D656 /* StoragePointer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoragePointer.swift; sourceTree = "<group>"; };
 		16C703CD1F40911D00410D30 /* StorageNominalType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageNominalType.swift; sourceTree = "<group>"; };
 		195E36DD1F42CB6B0015A5BD /* StorageMirror.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageMirror.swift; sourceTree = "<group>"; };
-		19ACCE751F42E0C500233269 /* StoragePointerType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoragePointerType.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -137,11 +134,9 @@
 		16C703CF1F4091A600410D30 /* Reflection */ = {
 			isa = PBXGroup;
 			children = (
-				1692225F1F24EF5800B7D656 /* StoragePointer.swift */,
 				1600581F1F403E6B0046EED2 /* StorageMetadata.swift */,
 				16C703CD1F40911D00410D30 /* StorageNominalType.swift */,
 				195E36DD1F42CB6B0015A5BD /* StorageMirror.swift */,
-				19ACCE751F42E0C500233269 /* StoragePointerType.swift */,
 			);
 			name = Reflection;
 			sourceTree = "<group>";
@@ -256,10 +251,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				16C703CE1F40911D00410D30 /* StorageNominalType.swift in Sources */,
-				19ACCE761F42E0C500233269 /* StoragePointerType.swift in Sources */,
 				195E36DE1F42CB6B0015A5BD /* StorageMirror.swift in Sources */,
 				166DB4121F0F396E009D18DD /* Storage.swift in Sources */,
-				169222601F24EF5800B7D656 /* StoragePointer.swift in Sources */,
 				166DB4221F0F5F37009D18DD /* StorageExtensions.swift in Sources */,
 				166DB4161F0F39DF009D18DD /* StorageToSQLite.swift in Sources */,
 				166DB4181F0F5928009D18DD /* StorageSQLiteManager.swift in Sources */,
@@ -272,6 +265,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				19C0BC3D1F468C3900D99517 /* StorageNominalType.swift in Sources */,
 				160058211F403E6B0046EED2 /* StorageMetadata.swift in Sources */,
 				19ACCE741F42D37F00233269 /* StorageMirror.swift in Sources */,
 				166DB3D11F0F32F7009D18DD /* StorageTests.swift in Sources */,

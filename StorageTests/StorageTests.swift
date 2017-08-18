@@ -9,7 +9,7 @@
 import XCTest
 @testable import Storage
 
-struct StorageModel:Codable {
+struct StorageModel {
     var name: String?
     var eMail: Int?
 //    var phome: String?
@@ -21,7 +21,7 @@ struct StorageModel:Codable {
 class StorageClassModel: NSObject {
     var name: String?
     var eMail: Int?
-    
+    var phone: String?
 }
 
 class StorageTests: XCTestCase {
@@ -41,7 +41,7 @@ class StorageTests: XCTestCase {
     func testExample() {
         // This is an example of a functional test case.
         // Use XCTAssert and related functions to verify your tests produce the correct results.
-        var storageModel:StorageModel = StorageModel()
+        var storageModel:StorageClassModel = StorageClassModel()
         storageModel.name = "王国仲"
         storageModel.eMail = 1;
 //        var storagePointer:StoragePointer   = StoragePointer()
@@ -54,7 +54,24 @@ class StorageTests: XCTestCase {
 //        let m = Mirror(reflecting: storageModel)
 //        m.children.m
 //        print(m.children)
-        let mirror = StorageMirror(reflecting: storageModel);
+        let mirror = StorageMirror(reflecting: &storageModel);
+//        print(mirror.numberOfFields ?? 0)
+//        print(mirror.fieldNames)
+//        print(mirror.fieldTypes!)
+        
+        for var type:Any.Type in mirror.fieldTypes! {
+            switch type {
+            case is Optional<String>.Type:
+                print(type)
+                break
+            case is Optional<Int>.Type:
+                print(type)
+                break
+            default:
+                print(type)
+                break
+            }
+        }
     }
     
     func testPerformanceExample() {
