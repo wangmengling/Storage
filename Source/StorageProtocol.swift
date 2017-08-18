@@ -8,5 +8,11 @@
 
 import Foundation
 protocol StorageProtocol {
-    
+    func primaryKey()
+}
+
+extension StorageProtocol {
+    func primaryKey() -> String {
+        return ""
+    }
 }

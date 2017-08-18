@@ -13,7 +13,7 @@ struct Storage: StorageProtocol {
 }
 
 extension Storage {
-    func add<T>(_ object:T?, update:Bool = false) -> Bool {
+    mutating func add<T>(_ object:T?, update:Bool = false) -> Bool {
         guard let object:T = object else {
             return false
         }
@@ -22,9 +22,9 @@ extension Storage {
             _ = storageToSQLite.createTable(object)
         }
         //修改
-//        if update == true && storageToSQLite.count(object) > 0{
+        if update == true && storageToSQLite.count(object) > 0{
 //            return storageToSQLite.update(object)
-//        }
+        }
 //        return storageToSQLite.insert(object)
         return true
     }

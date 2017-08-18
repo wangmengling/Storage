@@ -8,15 +8,197 @@
 
 import Foundation
 struct StorageToSQLite {
-    typealias T = Codable
+//    typealias T = Codable
     public static let shareInstance:StorageToSQLite = {
         return StorageToSQLite()
     }()
     var sqliteManager = StorageSQLiteManager.instanceManager
+    
+//    fileprivate var objectType:T
+    fileprivate var tableName:String = ""
+    fileprivate var filter:String = ""
+    fileprivate var sort:String = ""
+    fileprivate var limit:String = ""
+}
+
+extension StorageToSQLite {
+    mutating func count<T>(_ type:T,filter:String = "") -> Int {
+        var count = 0
+        self.tableName = String(describing: type)
+        //关键字 来计算count
+        let countSql = "SELECT COUNT(*) AS count FROM \(self.tableName) \(filter)"
+        count = sqliteManager.count(countSql)
+        return count
+    }
+}
+
+// MARK: - Update Data To Table
+extension StorageToSQLite {
+    func update<T>(_ object:T) -> Bool {
+        
+        //获取主键
+        let primaryKey = object.primaryKey()
+        guard let primaryKeyValue = object.objectForKey(primaryKey) else {
+            return false
+        }
+        let filter = "Where \(primaryKey) = '\(primaryKeyValue)'"
+        
+        //设置值
+        let objectsMirror = Mirror(reflecting: object)
+        let property = objectsMirror.children
+        var values = ""
+        if let b = AnyBidirectionalCollection(property) {
+            
+            b.forEach({ (child) in
+                guard let columnValue:String = self.proToColumnValues(child.value) , primaryKey != child.label else  {
+                    return
+                }
+                values += "\(child.label!) = \(columnValue)"
+            })
+            
+            if values.characters.count > 0 {
+                values = values.subString(0, length: values.characters.count - 1)
+            }
+        }
+        //组装
+        let updateSql = "UPDATE \(self.tableName(object)) SET \(values) \(filter)"
+        return sqliteManager.execSQL(updateSql)
+    }
 }
 
 
+// MARK: - Insert
+extension StorageToSQLite {
+    
+    func insert<T>(_ object:T) -> Bool {
+        let objectsMirror = Mirror(reflecting: object)
+        let property = objectsMirror.children
+        
+        var columns = ""
+        var values = ""
+        
+        
+        let json = DataConversion<T>().toJSON(object)
+        let fieldsType = DataConversion<T>().fieldsType(object)
+        
+        json.forEach { (key,value) in
+            let fieldType:Any? = fieldsType[key]
+            if fieldType != nil {
+                
+                guard let columnValue:String = self.proToColumnValues(fieldType!, value) , columnValue.characters.count > 0  else  {
+                    return
+                }
+                columns += "\(key),"
+                values += columnValue
+            }
+        }
+        
+        if property.count > 0 {
+            columns = columns.subString(0, length: columns.characters.count - 1)
+            values = values.subString(0, length: values.characters.count - 1)
+        }
+        
+        let insertSQL = "INSERT INTO \(String(describing: objectsMirror.subjectType)) (\(columns))  VALUES (\(values));"
+        
+        return sqliteManager.execSQL(insertSQL)
+    }
+    
+    func insert(_ fieldType:[Any] ,_ value:[String:Any]) -> Bool {
+        var columns = ""
+        var values = ""
+        
+        let fieldsType = fieldType.last as? [String:Any]
+        let tableName = fieldType.first as? String
+        
+        value.forEach { (k,v) in
+            let fT:Any? = fieldsType?[k]
+            if fT != nil {
+                guard let columnValue:String = self.proToColumnValues(fT!, v ) , columnValue.characters.count > 0  else  {
+                    return
+                }
+                columns += "\(k),"
+                values += columnValue
+            }
+        }
+        if value.count > 0 {
+            columns = columns.subString(0, length: columns.characters.count - 1)
+            values = values.subString(0, length: values.characters.count - 1)
+        }
+        if let tableName = tableName {
+            let insertSQL = "INSERT INTO \(tableName) (\(columns))  VALUES (\(values));"
+            return sqliteManager.execSQL(insertSQL)
+        }
+        return false
+    }
+}
 
+
+// MARK: - T property to Table Column
+extension StorageToSQLite {
+    func proToColumnValues(_ fieldType:Any, _ value:Any )  -> String? {
+        if fieldType is Int.Type{
+            return "\(value as! Int),"
+        }else if fieldType is Double.Type{
+            return "\(value as! Double),"
+        } else if fieldType is Float.Type{
+            return "\(value as! Float),"
+        } else if fieldType is String.Type{
+            return "'\(value as! String)',"
+        } else if fieldType is Bool.Type{
+            let boolValue = value as! Bool
+            if boolValue == true{
+                return "1,"
+            }
+            return "0,"
+        } else if fieldType is Array<Any> {
+            _ = self.insert(fieldType as! [Any], value as! [String : Any])
+            return ""
+        }
+        return "\(value as! Int),"
+    }
+    
+    func proToColumnValues(_ value:Any?) -> String?{
+        guard let x:Any = value else {
+            return ""
+        }
+        
+        if (x as AnyObject).debugDescription == "Optional(nil)" {
+            return ""
+        }
+        return self.proToColumnValues(x)
+    }
+    
+    /**
+     Optional To Value
+     
+     - parameter value: 属性值
+     
+     - returns: column values
+     */
+    func proToColumnValues(_ value:Any) -> String?{
+        
+        let m =  Mirror(reflecting: value)
+        
+        if m.subjectType == Optional<Int>.self{
+            return "\(value as! Int),"
+        } else if m.subjectType == Optional<Double>.self{
+            return "\(value as! Double),"
+        } else if m.subjectType == Optional<Float>.self{
+            return "\(value as! Float),"
+        } else if m.subjectType == Optional<String>.self{
+            return "'\(value as! String)',"
+        }else if m.subjectType == Optional<Bool>.self{
+            return "'\(value as! String)',"
+        } else if m.subjectType == ImplicitlyUnwrappedOptional<String>.self {
+            return "'\(value)',"
+        } else {
+            return "\(value),"
+        }
+    }
+}
+
+
+// MARK: - Table
 extension StorageToSQLite {
     /**
      check table is exist
@@ -167,3 +349,5 @@ extension StorageToSQLite {
         return ColumuType.NULL
     }
 }
+
+
