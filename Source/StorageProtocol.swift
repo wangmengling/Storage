@@ -8,7 +8,7 @@
 
 import Foundation
 protocol StorageProtocol {
-    func primaryKey()
+    func primaryKey() -> String
 }
 
 extension StorageProtocol {
