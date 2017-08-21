@@ -14,6 +14,9 @@ struct StorageToSQLite {
     }()
     var sqliteManager = StorageSQLiteManager.instanceManager
     
+    
+    
+    
 //    fileprivate var objectType:T
     fileprivate var tableName:String = ""
     fileprivate var filter:String = ""
@@ -35,17 +38,27 @@ extension StorageToSQLite {
 // MARK: - Update Data To Table
 extension StorageToSQLite {
     func update<T>(_ object:T) -> Bool {
-        
-        //获取主键
-        let primaryKey = object.primaryKey()
-        guard let primaryKeyValue = object.objectForKey(primaryKey) else {
+        var primaryKey:String = ""
+        if object is StorageProtocol {
+            let storageObject:StorageProtocol = object as! StorageProtocol
+            //获取主键
+            primaryKey = storageObject.primaryKey()
+        }else {
             return false
         }
-        let filter = "Where \(primaryKey) = '\(primaryKeyValue)'"
         
         //设置值
         let objectsMirror = Mirror(reflecting: object)
         let property = objectsMirror.children
+        let primaryKeyChild:[Mirror.Child] = property.filter { child -> Bool in
+            return child.label == primaryKey
+        }
+        guard let primaryKeyValue = primaryKeyChild.first?.value else {
+            return false
+        }
+        let filter = "Where \(primaryKey) = '\(primaryKeyValue)'"
+        
+        
         var values = ""
         if let b = AnyBidirectionalCollection(property) {
             
@@ -70,25 +83,23 @@ extension StorageToSQLite {
 // MARK: - Insert
 extension StorageToSQLite {
     
-    func insert<T>(_ object:T) -> Bool {
+    func insert<T>(_ object:inout T) -> Bool {
         let objectsMirror = Mirror(reflecting: object)
         let property = objectsMirror.children
         
         var columns = ""
         var values = ""
         
-        
-        let json = DataConversion<T>().toJSON(object)
-        let fieldsType = DataConversion<T>().fieldsType(object)
-        
-        json.forEach { (key,value) in
-            let fieldType:Any? = fieldsType[key]
+        let sMirror:StorageMirror = StorageMirror(reflecting: &object)
+        property.forEach { (key,value) in
+            var fieldTypeIndex:NSInteger = sMirror.fieldNames.index(of: key!)!
+            let fieldType:Any? = sMirror.fieldTypes?.formIndex(after: &fieldTypeIndex)
             if fieldType != nil {
                 
                 guard let columnValue:String = self.proToColumnValues(fieldType!, value) , columnValue.characters.count > 0  else  {
                     return
                 }
-                columns += "\(key),"
+                columns += "\(String(describing: key)),"
                 values += columnValue
             }
         }
@@ -103,7 +114,7 @@ extension StorageToSQLite {
         return sqliteManager.execSQL(insertSQL)
     }
     
-    func insert(_ fieldType:[Any] ,_ value:[String:Any]) -> Bool {
+    fileprivate func insert(_ fieldType:[Any] ,_ value:[String:Any]) -> Bool {
         var columns = ""
         var values = ""
         
@@ -350,4 +361,10 @@ extension StorageToSQLite {
     }
 }
 
+extension StorageToSQLite {
+    public func tableName(_ objects:Any) -> String{
+        let objectsMirror = Mirror(reflecting: objects)
+        return String(describing: objectsMirror.subjectType)
+    }
+}
 

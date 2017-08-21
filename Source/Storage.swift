@@ -9,11 +9,15 @@
 import Foundation
 
 struct Storage: StorageProtocol {
-    fileprivate var storageToSQLite = StorageToSQLite.shareInstance
+//    fileprivate var storageToSQLite = StorageToSQLite.shareInstance
+//    var storageToSQLite:StorageToSQLite {
+//        return StorageToSQLite()
+//    }
+    fileprivate var storageToSQLite:StorageToSQLite = StorageToSQLite()
 }
 
 extension Storage {
-    mutating func add<T>(_ object:T?, update:Bool = false) -> Bool {
+    mutating func add<T>(_ object: inout T?, update:Bool = false) -> Bool {
         guard let object:T = object else {
             return false
         }
@@ -21,12 +25,12 @@ extension Storage {
         if !storageToSQLite.tableIsExists(object){
             _ = storageToSQLite.createTable(object)
         }
+        
         //修改
         if update == true && storageToSQLite.count(object) > 0{
-//            return storageToSQLite.update(object)
+            return storageToSQLite.update(object)
         }
-//        return storageToSQLite.insert(object)
-        return true
+        return storageToSQLite.insert(&object)
     }
 }
 
