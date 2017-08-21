@@ -8,7 +8,7 @@
 
 import Foundation
 
-struct Storage: StorageProtocol {
+struct Storage {
 //    fileprivate var storageToSQLite = StorageToSQLite.shareInstance
 //    var storageToSQLite:StorageToSQLite {
 //        return StorageToSQLite()
@@ -18,7 +18,7 @@ struct Storage: StorageProtocol {
 
 extension Storage {
     mutating func add<T>(_ object: inout T?, update:Bool = false) -> Bool {
-        guard let object:T = object else {
+        guard var object:T = object else {
             return false
         }
         //创建数据库

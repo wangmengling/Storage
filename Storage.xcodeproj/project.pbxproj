@@ -20,6 +20,11 @@
 		166DB4221F0F5F37009D18DD /* StorageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166DB4211F0F5F37009D18DD /* StorageExtensions.swift */; };
 		16C703CE1F40911D00410D30 /* StorageNominalType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C703CD1F40911D00410D30 /* StorageNominalType.swift */; };
 		195E36DE1F42CB6B0015A5BD /* StorageMirror.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195E36DD1F42CB6B0015A5BD /* StorageMirror.swift */; };
+		199B886A1F4A73310055D843 /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166DB4111F0F396E009D18DD /* Storage.swift */; };
+		199B886B1F4A73570055D843 /* StorageToSQLite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166DB4151F0F39DF009D18DD /* StorageToSQLite.swift */; };
+		199B886C1F4A735A0055D843 /* StorageSQLiteManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166DB4171F0F5928009D18DD /* StorageSQLiteManager.swift */; };
+		199B886D1F4A735C0055D843 /* StorageProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166DB4131F0F3988009D18DD /* StorageProtocol.swift */; };
+		199B886E1F4A735E0055D843 /* StorageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166DB4211F0F5F37009D18DD /* StorageExtensions.swift */; };
 		19ACCE741F42D37F00233269 /* StorageMirror.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195E36DD1F42CB6B0015A5BD /* StorageMirror.swift */; };
 		19C0BC3D1F468C3900D99517 /* StorageNominalType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C703CD1F40911D00410D30 /* StorageNominalType.swift */; };
 /* End PBXBuildFile section */
@@ -265,10 +270,15 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				199B886B1F4A73570055D843 /* StorageToSQLite.swift in Sources */,
+				199B886C1F4A735A0055D843 /* StorageSQLiteManager.swift in Sources */,
 				19C0BC3D1F468C3900D99517 /* StorageNominalType.swift in Sources */,
+				199B886E1F4A735E0055D843 /* StorageExtensions.swift in Sources */,
 				160058211F403E6B0046EED2 /* StorageMetadata.swift in Sources */,
 				19ACCE741F42D37F00233269 /* StorageMirror.swift in Sources */,
 				166DB3D11F0F32F7009D18DD /* StorageTests.swift in Sources */,
+				199B886A1F4A73310055D843 /* Storage.swift in Sources */,
+				199B886D1F4A735C0055D843 /* StorageProtocol.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -409,7 +419,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -430,7 +440,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.maolin.Storage;
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
-				SWIFT_VERSION = 3.0;
+				SWIFT_VERSION = 4.0;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

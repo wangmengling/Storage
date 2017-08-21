@@ -91,7 +91,9 @@ extension StorageToSQLite {
         var values = ""
         
         let sMirror:StorageMirror = StorageMirror(reflecting: &object)
-        property.forEach { (key,value) in
+        property.forEach { (arg) in
+            
+            let (key, value) = arg
             var fieldTypeIndex:NSInteger = sMirror.fieldNames.index(of: key!)!
             let fieldType:Any? = sMirror.fieldTypes?.formIndex(after: &fieldTypeIndex)
             if fieldType != nil {
@@ -121,7 +123,8 @@ extension StorageToSQLite {
         let fieldsType = fieldType.last as? [String:Any]
         let tableName = fieldType.first as? String
         
-        value.forEach { (k,v) in
+        value.forEach { (arg) in
+            let (k, v) = arg
             let fT:Any? = fieldsType?[k]
             if fT != nil {
                 guard let columnValue:String = self.proToColumnValues(fT!, v ) , columnValue.characters.count > 0  else  {
