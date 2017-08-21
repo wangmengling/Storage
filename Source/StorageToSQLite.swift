@@ -7,7 +7,7 @@
 //
 
 import Foundation
-struct StorageToSQLite {
+public struct StorageToSQLite {
 //    typealias T = Codable
     public static let shareInstance:StorageToSQLite = {
         return StorageToSQLite()

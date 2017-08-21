@@ -17,7 +17,7 @@ struct Storage {
 }
 
 extension Storage {
-    mutating func add<T>(_ object: inout T?, update:Bool = false) -> Bool {
+    mutating func add<T>(_ object: T?, update:Bool = false) -> Bool {
         guard var object:T = object else {
             return false
         }

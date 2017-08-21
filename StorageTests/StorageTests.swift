@@ -80,7 +80,8 @@ class StorageTests: XCTestCase {
 //        }
         
         var stosss = Storage()
-        _ = stosss.add(&storageModel, update: false)
+//        _ = stosss.add(&storageModel, update: false)
+        _ = stosss.add(storageModel, update: false)
     }
     
     func testPerformanceExample() {
