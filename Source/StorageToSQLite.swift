@@ -390,7 +390,9 @@ extension StorageToSQLite {
             column += "storage_\(fatherTableName)_id ,"
         }
         
-        names.enumerated().forEach { (index,pro) in
+        names.enumerated().forEach { (arg) in
+            
+            let (index, pro) = arg
             let type:Any.Type = types[index]
             column += self.proToColumn(pro, value: type)
         }
