@@ -23,7 +23,7 @@ extension Storage {
         }
         //创建数据库
         if !storageToSQLite.tableIsExists(object){
-            _ = storageToSQLite.createTable(object)
+            _ = storageToSQLite.createTable(&object)
         }
         
         //修改

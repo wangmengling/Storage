@@ -153,13 +153,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "StorageTests/StorageTests.swift"
-            timestampString = "524976902.457779"
+            filePath = "Source/StorageToSQLite.swift"
+            timestampString = "524999918.844187"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "64"
-            endingLineNumber = "64"
-            landmarkName = "testExample()"
+            startingLineNumber = "374"
+            endingLineNumber = "374"
+            landmarkName = "createTable(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -169,13 +169,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "StorageTests/StorageTests.swift"
-            timestampString = "524976902.458179"
+            filePath = "Source/StorageToSQLite.swift"
+            timestampString = "524999918.844266"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "65"
-            endingLineNumber = "65"
-            landmarkName = "testExample()"
+            startingLineNumber = "154"
+            endingLineNumber = "154"
+            landmarkName = "insert(_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -185,13 +185,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "StorageTests/StorageTests.swift"
-            timestampString = "524976902.458464"
+            filePath = "Source/StorageToSQLite.swift"
+            timestampString = "524999918.844327"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "68"
-            endingLineNumber = "68"
-            landmarkName = "testExample()"
+            startingLineNumber = "395"
+            endingLineNumber = "395"
+            landmarkName = "createTable(_:_:_:_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -201,29 +201,13 @@
             shouldBeEnabled = "Yes"
             ignoreCount = "0"
             continueAfterRunningActions = "No"
-            filePath = "StorageTests/StorageTests.swift"
-            timestampString = "524976902.458763"
+            filePath = "Source/StorageToSQLite.swift"
+            timestampString = "524999918.844369"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "85"
-            endingLineNumber = "85"
-            landmarkName = "testExample()"
-            landmarkType = "7">
-         </BreakpointContent>
-      </BreakpointProxy>
-      <BreakpointProxy
-         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
-         <BreakpointContent
-            shouldBeEnabled = "Yes"
-            ignoreCount = "0"
-            continueAfterRunningActions = "No"
-            filePath = "StorageTests/StorageTests.swift"
-            timestampString = "524976902.459073"
-            startingColumnNumber = "9223372036854775807"
-            endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "84"
-            endingLineNumber = "84"
-            landmarkName = "testExample()"
+            startingLineNumber = "403"
+            endingLineNumber = "403"
+            landmarkName = "createTable(_:_:_:_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>

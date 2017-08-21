@@ -9,11 +9,12 @@
 import Foundation
 public struct StorageMirror {
     fileprivate let storageNominalType:StorageNominalType
+    var mirror:Mirror
     
     public init<T>(reflecting subject:  inout T) {
+        mirror = Mirror(reflecting: subject)
         storageNominalType = StorageNominalType(reflecting: &subject)
     }
-    
 }
 
 extension StorageMirror {
@@ -54,9 +55,9 @@ extension StorageMirror {
     }
     
     /// The field types of the subject being reflected.
-    var fieldTypes: [Any.Type]? {
+    var fieldTypes: [Any.Type] {
         guard let nominalTypeDescriptorointer = storageNominalType.nominalTypeDescriptorointer else {
-            return nil
+            return []
         }
         let nominalType = UnsafePointer<Int32>(nominalTypeDescriptorointer)
         

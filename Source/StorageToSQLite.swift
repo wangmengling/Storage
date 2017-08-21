@@ -80,6 +80,46 @@ extension StorageToSQLite {
 }
 
 
+// MARK: - Delete Object
+extension StorageToSQLite {
+    
+    private func deleteWhere(_ tableName:String,filter:String) -> Bool {
+        let deleteSQL = "DELETE  FROM \(tableName)  WHERE \(filter);"
+        return sqliteManager.execSQL(deleteSQL)
+    }
+    
+    func delete<T>(_ object:T) -> Bool {
+        var primaryKey:String = ""
+        if object is StorageProtocol {
+            let storageObject:StorageProtocol = object as! StorageProtocol
+            //获取主键
+            primaryKey = storageObject.primaryKey()
+        }else {
+            return false
+        }
+        //设置值
+        let objectsMirror = Mirror(reflecting: object)
+        let property = objectsMirror.children
+        let primaryKeyChild:[Mirror.Child] = property.filter { child -> Bool in
+            return child.label == primaryKey
+        }
+        guard let primaryKeyValue = primaryKeyChild.first?.value else {
+            return false
+        }
+        let filter = "\(primaryKey) = '\(primaryKeyValue)'"
+        return self.delete(object, filter: filter)
+    }
+    
+    func delete<T>(_ object:T,filter:String) -> Bool {
+        return self.deleteWhere(self.tableName(object), filter: filter)
+    }
+    
+    func deleteAll<T>(_ type:T.Type) -> Bool {
+        let deleteSQL = "DELETE  FROM \(String(describing: type));"
+        return sqliteManager.execSQL(deleteSQL)
+    }
+}
+
 // MARK: - Insert
 extension StorageToSQLite {
     
@@ -92,16 +132,14 @@ extension StorageToSQLite {
         
         let sMirror:StorageMirror = StorageMirror(reflecting: &object)
         property.forEach { (arg) in
-            
             let (key, value) = arg
-            var fieldTypeIndex:NSInteger = sMirror.fieldNames.index(of: key!)!
-            let fieldType:Any? = sMirror.fieldTypes?.formIndex(after: &fieldTypeIndex)
-            if fieldType != nil {
-                
-                guard let columnValue:String = self.proToColumnValues(fieldType!, value) , columnValue.characters.count > 0  else  {
+            let fieldTypeIndex:NSInteger = sMirror.fieldNames.index(of: key!)!
+            if fieldTypeIndex < sMirror.fieldTypes.count {
+                let fieldType:Any.Type = sMirror.fieldTypes[fieldTypeIndex]
+                guard let columnValue:String = self.proToColumnValues(fieldType, value) , columnValue.characters.count > 0  else  {
                     return
                 }
-                columns += "\(String(describing: key)),"
+                columns += "\(key!),"
                 values += columnValue
             }
         }
@@ -116,59 +154,91 @@ extension StorageToSQLite {
         return sqliteManager.execSQL(insertSQL)
     }
     
-    fileprivate func insert(_ fieldType:[Any] ,_ value:[String:Any]) -> Bool {
-        var columns = ""
-        var values = ""
-        
-        let fieldsType = fieldType.last as? [String:Any]
-        let tableName = fieldType.first as? String
-        
-        value.forEach { (arg) in
-            let (k, v) = arg
-            let fT:Any? = fieldsType?[k]
-            if fT != nil {
-                guard let columnValue:String = self.proToColumnValues(fT!, v ) , columnValue.characters.count > 0  else  {
-                    return
-                }
-                columns += "\(k),"
-                values += columnValue
-            }
-        }
-        if value.count > 0 {
-            columns = columns.subString(0, length: columns.characters.count - 1)
-            values = values.subString(0, length: values.characters.count - 1)
-        }
-        if let tableName = tableName {
-            let insertSQL = "INSERT INTO \(tableName) (\(columns))  VALUES (\(values));"
-            return sqliteManager.execSQL(insertSQL)
-        }
-        return false
-    }
+//    fileprivate func insert(_ fieldType:[Any.Type] ,_ value:[String:Any]) -> Bool {
+//        var columns = ""
+//        var values = ""
+//
+//        let fieldsType = fieldType.last as? [String:Any]
+//        let tableName = fieldType.first as? String
+//
+//        value.forEach { (arg) in
+//            let (k, v) = arg
+//            let fT:Any? = fieldsType?[k]
+//            if fT != nil {
+//                guard let columnValue:String = self.proToColumnValues(fT!, v ) , columnValue.characters.count > 0  else  {
+//                    return
+//                }
+//                columns += "\(k),"
+//                values += columnValue
+//            }
+//        }
+//        if value.count > 0 {
+//            columns = columns.subString(0, length: columns.characters.count - 1)
+//            values = values.subString(0, length: values.characters.count - 1)
+//        }
+//        if let tableName = tableName {
+//            let insertSQL = "INSERT INTO \(tableName) (\(columns))  VALUES (\(values));"
+//            return sqliteManager.execSQL(insertSQL)
+//        }
+//        return false
+//    }
 }
 
 
 // MARK: - T property to Table Column
 extension StorageToSQLite {
-    func proToColumnValues(_ fieldType:Any, _ value:Any )  -> String? {
-        if fieldType is Int.Type{
+    func proToColumnValues(_ fieldType:Any.Type, _ value:Any? )  -> String {
+        guard let value = value else { return "" }
+        switch fieldType {
+        case is Int.Type:
             return "\(value as! Int),"
-        }else if fieldType is Double.Type{
+        case is Optional<Int>.Type:
+            return "\(value as! Int),"
+        case is Int8.Type:
+            return "\(Int(value as! Int8)),"
+        case is Optional<Int8>.Type:
+            return "\(Int(value as! Int8)),"
+        case is Int16.Type:
+            return "\(Int(value as! Int16)),"
+        case is Optional<Int16>.Type:
+            return "\(Int(value as! Int16)),"
+        case is Int32.Type:
+            return "\(Int(value as! Int32)),"
+        case is Optional<Int32>.Type:
+            return "\(Int(value as! Int32)),"
+        case is Double.Type:
             return "\(value as! Double),"
-        } else if fieldType is Float.Type{
+        case is Optional<Double>.Type:
+            return "\(value as! Double),"
+        case is Float.Type:
             return "\(value as! Float),"
-        } else if fieldType is String.Type{
-            return "'\(value as! String)',"
-        } else if fieldType is Bool.Type{
+        case is Optional<Float>.Type:
+            return "\(value as! Float),"
+        case is Bool.Type:
             let boolValue = value as! Bool
             if boolValue == true{
                 return "1,"
             }
             return "0,"
-        } else if fieldType is Array<Any> {
-            _ = self.insert(fieldType as! [Any], value as! [String : Any])
+        case is Optional<Bool>.Type:
+            let boolValue = value as! Bool
+            if boolValue == true{
+                return "1,"
+            }
+            return "0,"
+        case is String.Type:
+            return "'\(value as! String)',"
+        case is Optional<String>.Type:
+            return "'\(value as! String)',"
+        default:
             return ""
         }
-        return "\(value as! Int),"
+        
+        if fieldType is Array<Any>.Type  || fieldType is Optional<Array<Any>>.Type{
+//            _ = self.insert([fieldType], value as! [String : Any])
+            print(fieldType,value)
+            return ""
+        }
     }
     
     func proToColumnValues(_ value:Any?) -> String?{
@@ -211,6 +281,68 @@ extension StorageToSQLite {
     }
 }
 
+// MARK: - SelectTable
+
+extension StorageToSQLite {
+    
+    fileprivate mutating func objectsToSQLite() -> [[String : AnyObject]]? {
+        let selectSQL = "SELECT * FROM  \(self.tableName) \(self.filter) \(self.sort) \(self.limit)"
+        return sqliteManager.fetchArray(selectSQL)
+    }
+    
+    fileprivate mutating func objectToSQLite() -> [String : AnyObject]? {
+        let objectSQL = "SELECT * FROM  \(self.tableName) \(self.filter)  \(self.sort) LIMIT 0,1"
+        return sqliteManager.fetchArray(objectSQL).last
+    }
+}
+
+// MARK: - filter sorted
+extension StorageToSQLite {
+    
+    mutating func filters(_ predicate:String) -> StorageToSQLite{
+        var filter:String = ""
+        if predicate.characters.count > 1 {
+            filter = " Where "+predicate
+        }
+        self.filter = filter
+        return self
+    }
+    
+    mutating func filter(predicate: NSPredicate) -> StorageToSQLite {
+        var filter:String = ""
+        if predicate.predicateFormat.characters.count > 1 {
+            filter = " Where " + predicate.predicateFormat
+        }
+        self.filter = filter
+        return self
+    }
+    
+    mutating func sorted(_ property: String, ascending: Bool = false) -> StorageToSQLite{
+        if property.characters.count > 0 {
+            self.sort = "order by \(property) " + (ascending == true ? "ASC" : "DESC")
+        }
+        return self
+    }
+    
+    mutating func limit(_ pageIndex:Int,row:Int) -> StorageToSQLite {
+        self.limit = "LIMIT \(pageIndex * row),\(row)"
+        return self
+    }
+    
+    mutating func valueOfArray<T>(_ type:T.Type) -> Array<T> {
+        self.tableName = String(describing: type)
+        let dicArray = self.objectsToSQLite()
+        print(dicArray as Any)
+        return []
+    }
+    
+    mutating func value<T>(_ type:T.Type) -> T? {
+        self.tableName = String(describing: type)
+        let dic = self.objectToSQLite()
+        print(dic ?? "")
+        return nil
+    }
+}
 
 // MARK: - Table
 extension StorageToSQLite {
@@ -231,15 +363,15 @@ extension StorageToSQLite {
     /**
      create table
      
-     - parameter object: E object
+     - parameter object: T object
      */
-    func createTable<T>(_ object:T) -> Bool {
-//        let d = DataConversion<E>().fieldsType(object)
+    func createTable<T>(_ object:inout T) -> Bool {
+        let sMirror:StorageMirror = StorageMirror(reflecting: &object)
+        
         /// 1.反射获取属性
-//        let objectsMirror = Mirror(reflecting: object)
-//        print(objectsMirror.children)
-//        object.
-        return true
+        let objectsMirror = Mirror(reflecting: object)
+        
+        return self.createTable( String(describing: objectsMirror.subjectType),  sMirror.fieldNames, sMirror.fieldTypes)
     }
     
     /**
@@ -249,7 +381,7 @@ extension StorageToSQLite {
      - parameter value: [String:Any]
      - parameter fatherTableName: String  父 table
      */
-    func createTable(_ tableName:String, _ value:[String:Any], _ fatherTableName:String = "") -> Bool {
+    func createTable(_ tableName:String, _ names:[String] , _ types:[Any.Type], _ fatherTableName:String = "") -> Bool {
         
         
         var column = "storage_\(tableName)_id integer auto_increment ,"
@@ -258,10 +390,9 @@ extension StorageToSQLite {
             column += "storage_\(fatherTableName)_id ,"
         }
         
-        value.forEach { (arg) in
-            
-            let (pro, v) = arg
-            column += self.proToColumn(pro, value: v)
+        names.enumerated().forEach { (index,pro) in
+            let type:Any.Type = types[index]
+            column += self.proToColumn(pro, value: type)
         }
         
         if column.characters.count > 5 {
@@ -303,9 +434,9 @@ extension StorageToSQLite {
         } else if value is Bool.Type{
             return ColumuType.INT
         } else if value is Array<Any> {
-            if self.createTable((value as AnyObject).firstObject as! String, (value as AnyObject).lastObject as! [String : Any],tableName){
-                return ColumuType.INT
-            }
+//            if self.createTable((value as AnyObject).firstObject as! String, (value as AnyObject).lastObject as! [String : Any],tableName){
+//                return ColumuType.INT
+//            }
             return ColumuType.INT
         }
         return ColumuType.CHARACTER

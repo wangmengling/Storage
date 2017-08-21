@@ -49,7 +49,7 @@ extension StorageSQLiteManager {
     
     
     func path(_ dbName:String) -> String {
-        guard let path = NSSearchPathForDirectoriesInDomains(.documentDirectory, .userDomainMask, true).first else {
+        guard let path = NSSearchPathForDirectoriesInDomains(.libraryDirectory, .userDomainMask, true).first else {
             return ""
         }
         let dbPath = (path as NSString).appendingPathComponent(dbName)
