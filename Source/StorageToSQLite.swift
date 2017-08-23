@@ -189,30 +189,19 @@ extension StorageToSQLite {
 extension StorageToSQLite {
     func proToColumnValues(_ fieldType:Any.Type, _ value:Any? )  -> String {
         guard let value = value else { return "" }
-        switch fieldType {
+        let type = self.optionalTypeToType(fieldType)
+        switch type {
         case is Int.Type:
-            return "\(value as! Int),"
-        case is Optional<Int>.Type:
             return "\(value as! Int),"
         case is Int8.Type:
             return "\(Int(value as! Int8)),"
-        case is Optional<Int8>.Type:
-            return "\(Int(value as! Int8)),"
         case is Int16.Type:
-            return "\(Int(value as! Int16)),"
-        case is Optional<Int16>.Type:
             return "\(Int(value as! Int16)),"
         case is Int32.Type:
             return "\(Int(value as! Int32)),"
-        case is Optional<Int32>.Type:
-            return "\(Int(value as! Int32)),"
         case is Double.Type:
             return "\(value as! Double),"
-        case is Optional<Double>.Type:
-            return "\(value as! Double),"
         case is Float.Type:
-            return "\(value as! Float),"
-        case is Optional<Float>.Type:
             return "\(value as! Float),"
         case is Bool.Type:
             let boolValue = value as! Bool
@@ -220,15 +209,7 @@ extension StorageToSQLite {
                 return "1,"
             }
             return "0,"
-        case is Optional<Bool>.Type:
-            let boolValue = value as! Bool
-            if boolValue == true{
-                return "1,"
-            }
-            return "0,"
         case is String.Type:
-            return "'\(value as! String)',"
-        case is Optional<String>.Type:
             return "'\(value as! String)',"
         default:
             return ""
@@ -381,7 +362,7 @@ extension StorageToSQLite {
      - parameter value: [String:Any]
      - parameter fatherTableName: String  父 table
      */
-    func createTable(_ tableName:String, _ names:[String] , _ types:[Any.Type], _ fatherTableName:String = "") -> Bool {
+    private func createTable(_ tableName:String, _ names:[String] , _ types:[Any.Type], _ fatherTableName:String = "") -> Bool {
         
         
         var column = "storage_\(tableName)_id integer auto_increment ,"
@@ -390,9 +371,10 @@ extension StorageToSQLite {
             column += "storage_\(fatherTableName)_id ,"
         }
         
-        names.enumerated().forEach { (index,pro) in
-            let type:Any.Type = types[index]
-            column += self.proToColumn(pro, value: type)
+        names.enumerated().forEach { (arg) in
+            let (index, pro) = arg
+            let fieldType:Any.Type = types[index]
+            column += self.proToColumn(pro, fieldType)
         }
         
         if column.characters.count > 5 {
@@ -420,26 +402,27 @@ extension StorageToSQLite {
     }
     
     
-    func proTypeReplace( _ value:Any,tableName:String = "") -> ColumuType {
-        //        let sd = Mirror(reflecting: value)
-        //        print(sd)
-        if value is Int.Type{
+    private func proTypeReplace( _ fieldType:Any.Type,tableName:String = "") -> ColumuType {
+        let type = self.optionalTypeToType(fieldType)
+        switch type {
+        case is Int.Type:
             return ColumuType.INT
-        }else if value is Double.Type{
+        case is Double.Type:
             return ColumuType.DOUBLE
-        } else if value is Float.Type{
+        case is Float.Type:
             return ColumuType.FLOAT
-        } else if value is String.Type{
+        case is String.Type:
             return ColumuType.CHARACTER
-        } else if value is Bool.Type{
+        case is Bool.Type:
             return ColumuType.INT
-        } else if value is Array<Any> {
-//            if self.createTable((value as AnyObject).firstObject as! String, (value as AnyObject).lastObject as! [String : Any],tableName){
-//                return ColumuType.INT
-//            }
+        case is Array<Any>.Type:
+            //            if self.createTable((value as AnyObject).firstObject as! String, (value as AnyObject).lastObject as! [String : Any],tableName){
+            //                return ColumuType.INT
+            //            }
             return ColumuType.INT
+        default:
+            return ColumuType.CHARACTER
         }
-        return ColumuType.CHARACTER
     }
     
     /**
@@ -450,9 +433,9 @@ extension StorageToSQLite {
      
      - returns: SQL
      */
-    func proToColumn(_ label:String,value:Any) -> String {
+    private func proToColumn(_ label:String,_ fieldType:Any.Type) -> String {
         var string = ""
-        let columuType = self.proTypeReplace(value)
+        let columuType = self.proTypeReplace(fieldType)
         switch columuType {
         case ColumuType.INT:
             string += "\(label) \(ColumuType.INT.rawValue) ,"
@@ -467,35 +450,32 @@ extension StorageToSQLite {
         }
         return string
     }
-    
-    /**
-     type replace [eg:String To CHARACTER]
-     
-     - parameter value: AnyObject.Type
-     
-     - returns: Column Type
-     */
-    func typeReplace(_ value:Any?) -> ColumuType {
-        guard let value = value else {
-            return ColumuType.NULL
-        }
-        
-        let m =  Mirror(reflecting: value)
-        if m.subjectType ==  ImplicitlyUnwrappedOptional<Int>.self || m.subjectType == Optional<Int>.self{
-            return ColumuType.INT
-        } else if m.subjectType ==  ImplicitlyUnwrappedOptional<Double>.self || m.subjectType == Optional<Double>.self{
-            return ColumuType.DOUBLE
-        } else if m.subjectType ==  ImplicitlyUnwrappedOptional<Float>.self || m.subjectType == Optional<Float>.self{
-            return ColumuType.FLOAT
-        } else if m.subjectType ==  ImplicitlyUnwrappedOptional<String>.self || m.subjectType == Optional<String>.self{
-            return ColumuType.CHARACTER
-        }
-        
-        return ColumuType.NULL
-    }
 }
 
 extension StorageToSQLite {
+    public func optionalTypeToType(_ fieldType:Any.Type) -> Any.Type {
+        switch fieldType {
+        case is Optional<Int>.Type:
+            return Int.self
+        case is Optional<Int8>.Type:
+            return Int8.self
+        case is Optional<Int16>.Type:
+            return Int16.self
+        case is Optional<Int32>.Type:
+            return Int32.self
+        case is Optional<Double>.Type:
+            return Double.self
+        case is Optional<Float>.Type:
+            return Float.self
+        case is Optional<Bool>.Type:
+            return Bool.self
+        case is Optional<String>.Type:
+            return String.self
+        default:
+            return fieldType
+        }
+    }
+    
     public func tableName(_ objects:Any) -> String{
         let objectsMirror = Mirror(reflecting: objects)
         return String(describing: objectsMirror.subjectType)
