@@ -13,15 +13,21 @@ public struct StorageToSQLite {
         return StorageToSQLite()
     }()
     var sqliteManager = StorageSQLiteManager.instanceManager
-    
-    
-    
-    
-//    fileprivate var objectType:T
     fileprivate var tableName:String = ""
-    fileprivate var filter:String = ""
-    fileprivate var sort:String = ""
-    fileprivate var limit:String = ""
+}
+
+
+// MARK: - SelectTable
+
+extension StorageToSQLite {
+    
+    mutating func objectsToSQLite(_ selectSQL:String) -> [[String : AnyObject]]? {
+        return sqliteManager.fetchArray(selectSQL)
+    }
+    
+    mutating func objectToSQLite(_ selectSQL:String) -> [String : AnyObject]? {
+        return sqliteManager.fetchArray(selectSQL).last
+    }
 }
 
 extension StorageToSQLite {
@@ -262,68 +268,7 @@ extension StorageToSQLite {
     }
 }
 
-// MARK: - SelectTable
 
-extension StorageToSQLite {
-    
-    fileprivate mutating func objectsToSQLite() -> [[String : AnyObject]]? {
-        let selectSQL = "SELECT * FROM  \(self.tableName) \(self.filter) \(self.sort) \(self.limit)"
-        return sqliteManager.fetchArray(selectSQL)
-    }
-    
-    fileprivate mutating func objectToSQLite() -> [String : AnyObject]? {
-        let objectSQL = "SELECT * FROM  \(self.tableName) \(self.filter)  \(self.sort) LIMIT 0,1"
-        return sqliteManager.fetchArray(objectSQL).last
-    }
-}
-
-// MARK: - filter sorted
-extension StorageToSQLite {
-    
-    mutating func filters(_ predicate:String) -> StorageToSQLite{
-        var filter:String = ""
-        if predicate.characters.count > 1 {
-            filter = " Where "+predicate
-        }
-        self.filter = filter
-        return self
-    }
-    
-    mutating func filter(predicate: NSPredicate) -> StorageToSQLite {
-        var filter:String = ""
-        if predicate.predicateFormat.characters.count > 1 {
-            filter = " Where " + predicate.predicateFormat
-        }
-        self.filter = filter
-        return self
-    }
-    
-    mutating func sorted(_ property: String, ascending: Bool = false) -> StorageToSQLite{
-        if property.characters.count > 0 {
-            self.sort = "order by \(property) " + (ascending == true ? "ASC" : "DESC")
-        }
-        return self
-    }
-    
-    mutating func limit(_ pageIndex:Int,row:Int) -> StorageToSQLite {
-        self.limit = "LIMIT \(pageIndex * row),\(row)"
-        return self
-    }
-    
-    mutating func valueOfArray<T>(_ type:T.Type) -> Array<T> {
-        self.tableName = String(describing: type)
-        let dicArray = self.objectsToSQLite()
-        print(dicArray as Any)
-        return []
-    }
-    
-    mutating func value<T>(_ type:T.Type) -> T? {
-        self.tableName = String(describing: type)
-        let dic = self.objectToSQLite()
-        print(dic ?? "")
-        return nil
-    }
-}
 
 // MARK: - Table
 extension StorageToSQLite {

@@ -18,12 +18,8 @@ struct Storage {
 
 // MARK: - Select Table Data
 extension Storage {
-    public func objects() ->  StorageToSQLite {
-        return StorageToSQLite()
-    }
-    
-    public func object() -> StorageToSQLite {
-        return StorageToSQLite()
+    mutating public func object<T:Codable>(_ type:T.Type) -> StoragePredicate {
+        return StoragePredicate(storageToSQLite, type)
     }
 }
 

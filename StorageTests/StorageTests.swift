@@ -9,7 +9,7 @@
 import XCTest
 @testable import Storage
 
-struct StorageModel {
+struct StorageModel:Codable {
     var name: String
     var eMail: Int?
 //    var phome: String?
@@ -59,7 +59,9 @@ class StorageTests: XCTestCase {
         
         
         var stosss = Storage()
-        _ = stosss.add(storageModel, update: false)
+//        _ = stosss.add(storageModel, update: false)
+        let array:Array<StorageModel>  =  stosss.object(StorageModel.self).filters("").sorted("").valueOfArray(StorageModel.self)
+        print(array)
     }
     
     func testPerformanceExample() {

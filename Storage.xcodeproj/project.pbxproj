@@ -18,6 +18,7 @@
 		166DB4201F0F5EDC009D18DD /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 166DB41F1F0F5EC0009D18DD /* libsqlite3.0.tbd */; };
 		166DB4221F0F5F37009D18DD /* StorageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166DB4211F0F5F37009D18DD /* StorageExtensions.swift */; };
 		16C703CE1F40911D00410D30 /* StorageNominalType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C703CD1F40911D00410D30 /* StorageNominalType.swift */; };
+		1931FBC51F4E6BFB0076BFA4 /* StoragePredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1931FBC41F4E6BFB0076BFA4 /* StoragePredicate.swift */; };
 		195E36DE1F42CB6B0015A5BD /* StorageMirror.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195E36DD1F42CB6B0015A5BD /* StorageMirror.swift */; };
 /* End PBXBuildFile section */
 
@@ -46,6 +47,7 @@
 		166DB41F1F0F5EC0009D18DD /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		166DB4211F0F5F37009D18DD /* StorageExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageExtensions.swift; sourceTree = "<group>"; };
 		16C703CD1F40911D00410D30 /* StorageNominalType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageNominalType.swift; sourceTree = "<group>"; };
+		1931FBC41F4E6BFB0076BFA4 /* StoragePredicate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoragePredicate.swift; sourceTree = "<group>"; };
 		195E36DD1F42CB6B0015A5BD /* StorageMirror.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageMirror.swift; sourceTree = "<group>"; };
 		1997C2C11F4A82760055CAAD /* StorageTests-Swift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "StorageTests-Swift.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -113,6 +115,7 @@
 			isa = PBXGroup;
 			children = (
 				166DB4111F0F396E009D18DD /* Storage.swift */,
+				1931FBC41F4E6BFB0076BFA4 /* StoragePredicate.swift */,
 				166DB4151F0F39DF009D18DD /* StorageToSQLite.swift */,
 				166DB4171F0F5928009D18DD /* StorageSQLiteManager.swift */,
 				166DB4131F0F3988009D18DD /* StorageProtocol.swift */,
@@ -251,6 +254,7 @@
 			files = (
 				16C703CE1F40911D00410D30 /* StorageNominalType.swift in Sources */,
 				195E36DE1F42CB6B0015A5BD /* StorageMirror.swift in Sources */,
+				1931FBC51F4E6BFB0076BFA4 /* StoragePredicate.swift in Sources */,
 				166DB4121F0F396E009D18DD /* Storage.swift in Sources */,
 				166DB4221F0F5F37009D18DD /* StorageExtensions.swift in Sources */,
 				166DB4161F0F39DF009D18DD /* StorageToSQLite.swift in Sources */,
