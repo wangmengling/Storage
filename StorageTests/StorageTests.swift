@@ -84,7 +84,7 @@ extension StorageTests {
         storageModel.eMail = 3
         
         var storage = Storage()
-        let status = storage.add(storageModel, update: true)
+        let status = storage.update(storageModel)
         XCTAssertTrue(status, "update object error \(status)")
     }
 }

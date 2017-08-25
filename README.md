@@ -13,10 +13,12 @@
 	        return "name"
 	    }
 	}
-	
-	var storage = Storage()
+	var storageModel:StorageModel = StorageModel(name:"sd2", eMail: 2)
+	var storage:Storage = Storage()
 
 [Select](#storage-select)
+[Insert](#storage-insert)
+[Update](#storage-update)
 	
 
 
@@ -26,6 +28,22 @@
 > Select single data
 
 	let value:StorageModel?  =  storage.object().filters("").sorted("").value(StorageModel.self)
+
 > Select many data
 
 	let value:[StorageModel]  =  storage.object().filters("").sorted("").valueOfArray(StorageModel.self)
+	
+### <a name="storage-insert"></a>Insert
+> Insert single data
+
+	let status = storage.add(storageModel) //Add enty
+	let status = storage.create(StorageModel.self, value: ["name":"wangmaoling","eMail":654321])
+
+> Insert many data
+
+	let value:[StorageModel]  =  storage.object().filters("").sorted("").valueOfArray(StorageModel.self)
+	
+### <a name="storage-update"></a>Update
+>Requires inheritance protocol StorageProtocol
+
+	let status = storage.update(storageModel)
