@@ -1,5 +1,6 @@
-## Storage
-   	Storage is a mobile database that runs directly inside phones, tablets or wearables. This repository holds the source code for the iOS versions of Storage Swift 
+# Storage
+   	Storage is a mobile database that runs directly inside phones, tablets or wearables. 
+   	This repository holds the source code for the iOS versions of Storage Swift 
    	
 ## usage
 	struct StorageModel:Codable {
@@ -12,6 +13,8 @@
 	        return "name"
 	    }
 	}
+	
+	var storage = Storage()
 
 [Select](#storage-select)
 	
@@ -20,5 +23,9 @@
 
 
 ### <a name="storage-select"></a>Select
-	var storage = Storage()
-	let value:StorageModel?  =  storage.object(StorageModel.self).filters("").sorted("").value(StorageModel.self)
+> Select single data
+
+	let value:StorageModel?  =  storage.object().filters("").sorted("").value(StorageModel.self)
+> Select many data
+
+	let value:[StorageModel]  =  storage.object().filters("").sorted("").valueOfArray(StorageModel.self)

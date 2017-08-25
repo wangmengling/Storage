@@ -10,16 +10,13 @@ import Foundation
 public class StoragePredicate {
     
     fileprivate var storageToSQLite:StorageToSQLite
-    fileprivate var tableName:String
+    fileprivate var tableName:String = ""
     fileprivate var filter:String = ""
     fileprivate var sort:String = ""
     fileprivate var limit:String = ""
-    fileprivate let type:Any.Type
     
-    init<T:Codable>(_ storageToSQLite:StorageToSQLite, _ type:T.Type) {
+    init(_ storageToSQLite:StorageToSQLite) {
         self.storageToSQLite = storageToSQLite
-        self.type = type
-        self.tableName = String(describing: type);
     }
 }
 

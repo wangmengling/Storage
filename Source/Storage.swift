@@ -19,8 +19,8 @@ extension Storage {
     ///
     /// - Parameter type: Type is inherit Codable Protocol
     /// - Returns: Filter, filter().sorted().limit().value()
-    mutating public func object<T:Codable>(_ type:T.Type) -> StoragePredicate {
-        return StoragePredicate(storageToSQLite, type)
+    mutating public func object() -> StoragePredicate {
+        return StoragePredicate(storageToSQLite)
     }
 }
 

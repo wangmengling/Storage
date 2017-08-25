@@ -35,14 +35,14 @@ class StorageTests: XCTestCase {
 extension StorageTests {
     func testSelectObject() {
         var storage = Storage()
-        let value:StorageModel?  =  storage.object(StorageModel.self).filters("").sorted("").value(StorageModel.self)
+        let value:StorageModel?  =  storage.object().filters("").sorted("").value(StorageModel.self)
         XCTAssertNotNil(value, "select object is null");
         XCTAssertNotNil(value?.name, "select object is null");
     }
     
     func testSelectObjectOfArray() {
         var storage = Storage()
-        let value:[StorageModel]  =  storage.object(StorageModel.self).filters("").sorted("").valueOfArray(StorageModel.self)
+        let value:[StorageModel]  =  storage.object().filters("").sorted("").valueOfArray(StorageModel.self)
         XCTAssertNotNil(value, "select object is null\(value)");
         XCTAssertNotNil(value.first, "select object is null \(String(describing: value.first))");
     }
