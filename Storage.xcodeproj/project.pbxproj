@@ -18,6 +18,7 @@
 		166DB4201F0F5EDC009D18DD /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 166DB41F1F0F5EC0009D18DD /* libsqlite3.0.tbd */; };
 		166DB4221F0F5F37009D18DD /* StorageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166DB4211F0F5F37009D18DD /* StorageExtensions.swift */; };
 		16C703CE1F40911D00410D30 /* StorageNominalType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C703CD1F40911D00410D30 /* StorageNominalType.swift */; };
+		1912C5F51F4FC1750097E8E8 /* StorageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1912C5F41F4FC1750097E8E8 /* StorageModel.swift */; };
 		1931FBC51F4E6BFB0076BFA4 /* StoragePredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1931FBC41F4E6BFB0076BFA4 /* StoragePredicate.swift */; };
 		195E36DE1F42CB6B0015A5BD /* StorageMirror.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195E36DD1F42CB6B0015A5BD /* StorageMirror.swift */; };
 /* End PBXBuildFile section */
@@ -47,9 +48,9 @@
 		166DB41F1F0F5EC0009D18DD /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		166DB4211F0F5F37009D18DD /* StorageExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageExtensions.swift; sourceTree = "<group>"; };
 		16C703CD1F40911D00410D30 /* StorageNominalType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageNominalType.swift; sourceTree = "<group>"; };
+		1912C5F41F4FC1750097E8E8 /* StorageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageModel.swift; sourceTree = "<group>"; };
 		1931FBC41F4E6BFB0076BFA4 /* StoragePredicate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoragePredicate.swift; sourceTree = "<group>"; };
 		195E36DD1F42CB6B0015A5BD /* StorageMirror.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageMirror.swift; sourceTree = "<group>"; };
-		1997C2C11F4A82760055CAAD /* StorageTests-Swift.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "StorageTests-Swift.h"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -104,9 +105,10 @@
 		166DB3CF1F0F32F7009D18DD /* StorageTests */ = {
 			isa = PBXGroup;
 			children = (
+				1912C5F81F4FC2570097E8E8 /* ReflectionTests */,
 				166DB3D01F0F32F7009D18DD /* StorageTests.swift */,
-				1997C2C11F4A82760055CAAD /* StorageTests-Swift.h */,
 				166DB3D21F0F32F7009D18DD /* Info.plist */,
+				1912C5F41F4FC1750097E8E8 /* StorageModel.swift */,
 			);
 			path = StorageTests;
 			sourceTree = "<group>";
@@ -141,6 +143,13 @@
 				195E36DD1F42CB6B0015A5BD /* StorageMirror.swift */,
 			);
 			name = Reflection;
+			sourceTree = "<group>";
+		};
+		1912C5F81F4FC2570097E8E8 /* ReflectionTests */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = ReflectionTests;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -269,6 +278,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				166DB3D11F0F32F7009D18DD /* StorageTests.swift in Sources */,
+				1912C5F51F4FC1750097E8E8 /* StorageModel.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

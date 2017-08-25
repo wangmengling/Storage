@@ -31,9 +31,9 @@ extension StorageToSQLite {
 }
 
 extension StorageToSQLite {
-    mutating func count<T>(_ type:T,filter:String = "") -> Int {
+    mutating func count<T>(_ object:T,filter:String = "") -> Int {
         var count = 0
-        self.tableName = String(describing: type)
+        self.tableName = self.tableName(object)
         //关键字 来计算count
         let countSql = "SELECT COUNT(*) AS count FROM \(self.tableName) \(filter)"
         count = sqliteManager.count(countSql)

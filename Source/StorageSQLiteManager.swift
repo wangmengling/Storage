@@ -135,7 +135,8 @@ extension StorageSQLiteManager {
     //执行查询操作
     func execSQL(_ sqlString : String) -> Bool {
         var error:UnsafeMutablePointer<CChar>? = nil
-        if sqlite3_exec(db, sqlString.cString(using: String.Encoding.utf8)!, nil , nil, &error) != SQLITE_OK{
+        let sqliteStatus = sqlite3_exec(db, sqlString.cString(using: String.Encoding.utf8)!, nil , nil, &error)
+        if sqliteStatus != SQLITE_OK{
             return false
         }
         return true

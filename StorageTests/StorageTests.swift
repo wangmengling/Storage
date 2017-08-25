@@ -8,29 +8,6 @@
 
 import XCTest
 @testable import Storage
-
-struct StorageModel:Codable {
-    var name: String
-    var eMail: Int?
-//    var phome: String?
-//    var nickName: String?
-//    var password: String?
-//    var passwords: Int?
-//    var storageClassModel:StorageClassModel?
-}
-
-extension StorageModel:StorageProtocol {
-    func primaryKey() -> String {
-        return "name"
-    }
-}
-
-class StorageClassModel: NSObject {
-    var name: String?
-    var eMail: Int?
-    var phone: String?
-}
-
 class StorageTests: XCTestCase {
     
     override func setUp() {
@@ -44,26 +21,6 @@ class StorageTests: XCTestCase {
         super.tearDown()
         
     }
-    
-    func testExample() {
-        // This is an example of a functional test case.
-        // Use XCTAssert and related functions to verify your tests produce the correct results.
-        let storageClassModel:StorageClassModel = StorageClassModel()
-        storageClassModel.name = "wangmengling"
-        storageClassModel.phone = "15828581089"
-        
-        var storageModel:StorageModel = StorageModel(name:"sd2", eMail: 2)
-        storageModel.name = "王国仲"
-        storageModel.eMail = 1
-//        storageModel.storageClassModel = storageClassModel
-        
-        
-        var stosss = Storage()
-//        _ = stosss.add(storageModel, update: false)
-        let array:Array<StorageModel>  =  stosss.object(StorageModel.self).filters("").sorted("").valueOfArray(StorageModel.self)
-        print(array)
-    }
-    
     func testPerformanceExample() {
         // This is an example of a performance test case.
         self.measure {
@@ -71,4 +28,61 @@ class StorageTests: XCTestCase {
         }
     }
     
+}
+
+
+// MARK: - Select object
+extension StorageTests {
+    func testSelectObject() {
+        var storage = Storage()
+        let value:StorageModel?  =  storage.object(StorageModel.self).filters("").sorted("").value(StorageModel.self)
+        XCTAssertNil(value, "select object is null");
+        XCTAssertNil(value?.name, "select object is null");
+    }
+}
+
+// MARK: - Insert object
+extension StorageTests {
+    func testInsertStructModel() {
+        var storageModel:StorageModel = StorageModel(name:"sd2", eMail: 2)
+        storageModel.name = "王国仲"
+        storageModel.eMail = 1
+        
+        var storage = Storage()
+        let status = storage.add(storageModel)
+        XCTAssertTrue(status, "insert object error \(status)")
+    }
+}
+
+
+// MARK: - Update object
+extension StorageTests {
+    func testUpdateObject() {
+        var storageModel:StorageModel = StorageModel(name:"sd2", eMail: 2)
+//        storageModel.name = "王国仲"
+        storageModel.eMail = 3
+        
+        var storage = Storage()
+        let status = storage.add(storageModel, update: true)
+        XCTAssertTrue(status, "update object error \(status)")
+    }
+}
+
+// MARK: - Delete object
+extension StorageTests {
+    func testDeleteObject() {
+        var storageModel:StorageModel = StorageModel(name:"sd2", eMail: 2)
+        //        storageModel.name = "王国仲"
+        storageModel.eMail = 3
+        
+        var storage = Storage()
+        let status = storage.delete(storageModel)
+        XCTAssertTrue(status, "update object error \(status)")
+    }
+    
+    func testDeleteAll() {
+        var storage = Storage()
+        let status = storage.deleteAll(StorageModel.self)
+        XCTAssertTrue(status, "update object error \(status)")
+    }
 }
