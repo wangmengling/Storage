@@ -7,6 +7,11 @@
 //
 
 import Foundation
+public enum StorageToSQLiteSorted {
+    case DESC
+    case ASC
+}
+
 public struct StorageToSQLite {
 //    typealias T = Codable
     public static let shareInstance:StorageToSQLite = {
@@ -43,7 +48,7 @@ extension StorageToSQLite {
 
 // MARK: - Update Data To Table
 extension StorageToSQLite {
-    func update<T>(_ object:T) -> Bool {
+    func updatePrimaryKey<T>(_ object:T) -> Bool {
         var primaryKey:String = ""
         if object is StorageProtocol {
             let storageObject:StorageProtocol = object as! StorageProtocol
@@ -81,6 +86,17 @@ extension StorageToSQLite {
         }
         //组装
         let updateSql = "UPDATE \(self.tableName(object)) SET \(values) \(filter)"
+        return sqliteManager.execSQL(updateSql)
+    }
+    
+    public func update<T>(_ type:T.Type, _ values:[String:Any], _ filters:[String:Any] = [:], _ sorted:StorageToSQLiteSorted = .DESC, _ limit:Int = 1) -> Bool {
+        if values.count < 1 {
+            return false
+        }
+        //filters
+//        let filter = "Where \(primaryKey) = '\(primaryKeyValue)'"
+        
+        let updateSql = "UPDATE \(String(describing: type)) SET \(values) \(filters)"
         return sqliteManager.execSQL(updateSql)
     }
 }

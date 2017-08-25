@@ -61,7 +61,7 @@ extension Storage {
         
         //update
         if update == true && storageToSQLite.count(object) > 0{
-            return storageToSQLite.update(object)
+            return storageToSQLite.updatePrimaryKey(object)
         }
         return storageToSQLite.insert(&object)
     }
