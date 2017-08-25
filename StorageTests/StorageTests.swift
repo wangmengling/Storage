@@ -36,8 +36,15 @@ extension StorageTests {
     func testSelectObject() {
         var storage = Storage()
         let value:StorageModel?  =  storage.object(StorageModel.self).filters("").sorted("").value(StorageModel.self)
-        XCTAssertNil(value, "select object is null");
-        XCTAssertNil(value?.name, "select object is null");
+        XCTAssertNotNil(value, "select object is null");
+        XCTAssertNotNil(value?.name, "select object is null");
+    }
+    
+    func testSelectObjectOfArray() {
+        var storage = Storage()
+        let value:[StorageModel]  =  storage.object(StorageModel.self).filters("").sorted("").valueOfArray(StorageModel.self)
+        XCTAssertNotNil(value, "select object is null\(value)");
+        XCTAssertNotNil(value.first, "select object is null \(String(describing: value.first))");
     }
 }
 
@@ -50,6 +57,20 @@ extension StorageTests {
         
         var storage = Storage()
         let status = storage.add(storageModel)
+        XCTAssertTrue(status, "insert object error \(status)")
+    }
+    
+    func testCreateArrayStructModel() {
+        let dic = [["name":"wangmaoling","eMail":123456],["name":"wangguozhong","eMail":123456]]
+        
+        var storage = Storage()
+        let status = storage.create(StorageModel.self, value: dic)
+        XCTAssertTrue(status, "insert object error \(status)")
+    }
+    
+    func testCreateStructModel() {
+        var storage = Storage()
+        let status = storage.create(StorageModel.self, value: ["name":"wangmaoling","eMail":654321])
         XCTAssertTrue(status, "insert object error \(status)")
     }
 }
@@ -72,7 +93,7 @@ extension StorageTests {
 extension StorageTests {
     func testDeleteObject() {
         var storageModel:StorageModel = StorageModel(name:"sd2", eMail: 2)
-        //        storageModel.name = "王国仲"
+        storageModel.name = "王国仲"
         storageModel.eMail = 3
         
         var storage = Storage()

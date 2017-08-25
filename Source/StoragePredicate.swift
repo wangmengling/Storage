@@ -76,9 +76,9 @@ extension StoragePredicate {
         let dicArray = self.objectsToSQLite()
         let data:Data = try! JSONSerialization.data(withJSONObject: dicArray as Any, options: [])
         let decoder = JSONDecoder()
-        if let decoded = try? decoder.decode(T.self, from:data )
+        if let decoded = try? decoder.decode([T].self, from:data )
         {
-            return [decoded]
+            return decoded
         }
         return []
     }
