@@ -3,7 +3,7 @@
    	This repository holds the source code for the iOS versions of Storage Swift 
    	
 ## usage
->Will use Codable and StorageProtocol
+>Will use Codable and StorageProtocol [Non-must use]
 
 	struct StorageModel:Codable {
 	    var name: String
@@ -41,13 +41,15 @@
 > Insert single data
 
 	let status = storage.add(storageModel) //Add enty
-	// Value is [String:Any] ，Type is inherit Codable Protocol
+> Insert single data , Value is [String:Any] ，Type is inherit Codable Protocol
+
 	let status = storage.create(StorageModel.self, value: ["name":"wangmaoling","eMail":654321])
 
 > Insert many data
 	
 	let status = storage.addArray([storageModel])
-	// Value is [[String:Any]] ，Type is inherit Codable Protocol
+> Insert many data , Value is [[String:Any]] ，Type is inherit Codable Protocol
+
 	let dic = [["name":"wangmaoling","eMail":123456],["name":"wangguozhong","eMail":123456]]
 	let status = storage.create(StorageModel.self, value: dic)
 	
