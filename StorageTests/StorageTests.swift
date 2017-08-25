@@ -60,6 +60,16 @@ extension StorageTests {
         XCTAssertTrue(status, "insert object error \(status)")
     }
     
+    func testInsertArrayStructModel() {
+        var storageModel:StorageModel = StorageModel(name:"sd2", eMail: 2)
+        storageModel.name = "王国仲"
+        storageModel.eMail = 1
+        
+        var storage = Storage()
+        let status = storage.addArray([storageModel])
+        XCTAssertTrue(status, "insert object error \(status)")
+    }
+    
     func testCreateArrayStructModel() {
         let dic = [["name":"wangmaoling","eMail":123456],["name":"wangguozhong","eMail":123456]]
         
