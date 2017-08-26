@@ -15,8 +15,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "32"
             endingLineNumber = "32"
-            landmarkName = "count(_:filter:)"
-            landmarkType = "7">
+            landmarkName = "StorageToSQLite"
+            landmarkType = "21">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -77,8 +77,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "195"
             endingLineNumber = "195"
-            landmarkName = "proToColumnValues(_:_:)"
-            landmarkType = "7">
+            landmarkName = "StorageToSQLite"
+            landmarkType = "21">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -109,7 +109,7 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "409"
             endingLineNumber = "409"
-            landmarkName = "proTypeReplace(_:tableName:)"
+            landmarkName = "proToColumn(_:_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
