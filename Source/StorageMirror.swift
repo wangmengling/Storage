@@ -15,6 +15,11 @@ public struct StorageMirror {
         mirror = Mirror(reflecting: subject)
         storageNominalType = StorageNominalType(reflecting: &subject)
     }
+    
+    public init<T>(reflecting type:  T.Type) {
+        mirror = Mirror(reflecting: type)
+        storageNominalType = StorageNominalType(reflecting: type);
+    }
 }
 
 extension StorageMirror {
@@ -82,6 +87,16 @@ extension StorageMirror {
         }
         
         return types
+    }
+}
+
+extension StorageMirror {
+    func getType(_ name:String) -> Any.Type? {
+        let index = self.fieldNames.index(of: name)
+        guard let indexG = index else {
+            return nil
+        }
+        return self.fieldTypes[indexG]
     }
 }
 

@@ -13,6 +13,10 @@ struct StorageNominalType {
     public init<T>(reflecting subject: inout T) {
         metadata = StorageMetadata(type: T.self)
     }
+    
+    public init<T>(reflecting type: T.Type) {
+        metadata = StorageMetadata(type: type)
+    }
 }
 
 extension StorageNominalType {

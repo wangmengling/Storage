@@ -93,8 +93,12 @@ extension StorageToSQLite {
         if values.count < 1 {
             return false
         }
-        //filters
-//        let filter = "Where \(primaryKey) = '\(primaryKeyValue)'"
+        let storageMirror = StorageMirror(reflecting: type)
+        
+        values.forEach { (arg) in
+            let type = storageMirror.getType(arg.key)
+            
+        }
         
         let updateSql = "UPDATE \(String(describing: type)) SET \(values) \(filters)"
         return sqliteManager.execSQL(updateSql)
