@@ -94,14 +94,29 @@ extension StorageToSQLite {
             return false
         }
         let storageMirror = StorageMirror(reflecting: type)
+        let valueAssembly = self.updateAssemblyResult(values, storageMirror)
+        var filterAssembly = self.updateAssemblyResult(filters, storageMirror)
+        if filters.count > 0 {
+            filterAssembly = "Where \(filterAssembly)"
+        }
+        let limitAssembly = "LIMIT \(limit)"
+        let updateSql = "UPDATE \(String(describing: type)) SET \(valueAssembly) \(filterAssembly) \(limitAssembly)"
+        return sqliteManager.execSQL(updateSql)
+    }
+    
+    private func updateAssemblyResult(_ values:[String:Any], _ storageMirror:StorageMirror)  -> String{
+        var sql = ""
         
         values.forEach { (arg) in
             let type = storageMirror.getType(arg.key)
-            
+            guard let fieldType = type else { return  }
+            guard let value:String = self.proToColumnValues(fieldType, arg.value), value.count > 0 else { return  }
+            sql += "\(arg.key) = \(String(describing: value))"
         }
-        
-        let updateSql = "UPDATE \(String(describing: type)) SET \(values) \(filters)"
-        return sqliteManager.execSQL(updateSql)
+        if sql.count > 1 {
+            sql = sql.subString(0, length: sql.count - 1)
+        }
+        return sql
     }
 }
 

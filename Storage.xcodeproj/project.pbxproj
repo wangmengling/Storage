@@ -15,12 +15,12 @@
 		166DB4141F0F3988009D18DD /* StorageProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166DB4131F0F3988009D18DD /* StorageProtocol.swift */; };
 		166DB4161F0F39DF009D18DD /* StorageToSQLite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166DB4151F0F39DF009D18DD /* StorageToSQLite.swift */; };
 		166DB4181F0F5928009D18DD /* StorageSQLiteManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166DB4171F0F5928009D18DD /* StorageSQLiteManager.swift */; };
-		166DB4201F0F5EDC009D18DD /* libsqlite3.0.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 166DB41F1F0F5EC0009D18DD /* libsqlite3.0.tbd */; };
 		166DB4221F0F5F37009D18DD /* StorageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166DB4211F0F5F37009D18DD /* StorageExtensions.swift */; };
 		16C703CE1F40911D00410D30 /* StorageNominalType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C703CD1F40911D00410D30 /* StorageNominalType.swift */; };
 		1912C5F51F4FC1750097E8E8 /* StorageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1912C5F41F4FC1750097E8E8 /* StorageModel.swift */; };
 		1931FBC51F4E6BFB0076BFA4 /* StoragePredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1931FBC41F4E6BFB0076BFA4 /* StoragePredicate.swift */; };
 		195E36DE1F42CB6B0015A5BD /* StorageMirror.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195E36DD1F42CB6B0015A5BD /* StorageMirror.swift */; };
+		19D86DA61F53EF2B0088A91D /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 19D86DA51F53EF2B0088A91D /* libsqlite3.tbd */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,6 +51,7 @@
 		1912C5F41F4FC1750097E8E8 /* StorageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageModel.swift; sourceTree = "<group>"; };
 		1931FBC41F4E6BFB0076BFA4 /* StoragePredicate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoragePredicate.swift; sourceTree = "<group>"; };
 		195E36DD1F42CB6B0015A5BD /* StorageMirror.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageMirror.swift; sourceTree = "<group>"; };
+		19D86DA51F53EF2B0088A91D /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -58,7 +59,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				166DB4201F0F5EDC009D18DD /* libsqlite3.0.tbd in Frameworks */,
+				19D86DA61F53EF2B0088A91D /* libsqlite3.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -130,6 +131,7 @@
 		166DB4191F0F5B9C009D18DD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				19D86DA51F53EF2B0088A91D /* libsqlite3.tbd */,
 				166DB41F1F0F5EC0009D18DD /* libsqlite3.0.tbd */,
 			);
 			name = Frameworks;

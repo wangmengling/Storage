@@ -145,6 +145,15 @@ extension Storage {
     mutating func update<T>(_ object:T?)  -> Bool {
         return self.add(object, update: true)
     }
+    
+    public func update<T>(_ type:T.Type, _ values:[String:Any], _ filters:[String:Any] = [:], _ sorted:StorageToSQLiteSorted = .DESC, _ limit:Int = 1) -> Bool {
+        return storageToSQLite.update(type, values, filters, sorted, limit)
+    }
+    
+    public func update<T>(type:T.Type) -> StoragePredicateUpdate {
+        return StoragePredicateUpdate(storageToSQLite)
+    }
+    
 }
 
 // MARK: - Delete Table

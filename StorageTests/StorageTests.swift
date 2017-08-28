@@ -97,6 +97,22 @@ extension StorageTests {
         let status = storage.update(storageModel)
         XCTAssertTrue(status, "update object error \(status)")
     }
+    
+    func testUpdateType() {
+        let storage = Storage()
+        let status = storage.update(StorageModel.self, ["name":"sdsd"])
+        XCTAssertTrue(status, "update object error \(status)")
+    }
+    
+    func testUpdateTypeP() {
+        struct AModel {
+            
+        }
+        let storage = Storage()
+        var s = storage.update(type:AModel.self).sorted("").execute()
+        let status = storage.update(StorageModel.self, ["name":"sdsd"])
+        XCTAssertTrue(status, "update object error \(status)")
+    }
 }
 
 // MARK: - Delete object
