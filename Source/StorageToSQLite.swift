@@ -89,43 +89,20 @@ extension StorageToSQLite {
         return sqliteManager.execSQL(updateSql)
     }
     
-    public func update<T>(_ type:T.Type, _ values:[String:Any], _ filters:[String:Any] = [:], _ sorted:StorageToSQLiteSorted = .DESC, _ limit:Int = 1) -> Bool {
-        if values.count < 1 {
-            return false
-        }
-        let storageMirror = StorageMirror(reflecting: type)
-        let valueAssembly = self.updateAssemblyResult(values, storageMirror)
-        var filterAssembly = self.updateAssemblyResult(filters, storageMirror)
-        if filters.count > 0 {
-            filterAssembly = "Where \(filterAssembly)"
-        }
-        let limitAssembly = "LIMIT \(limit)"
-        let updateSql = "UPDATE \(String(describing: type)) SET \(valueAssembly) \(filterAssembly) \(limitAssembly)"
+    public func update(_ tableName:String, _ values:String, _ filters:String, _ sorted:String, _ limit:String) -> Bool {
+        let updateSql = "UPDATE \(tableName) SET \(values) \(filters) \(sorted) \(limit)"
         return sqliteManager.execSQL(updateSql)
     }
     
-    private func updateAssemblyResult(_ values:[String:Any], _ storageMirror:StorageMirror)  -> String{
-        var sql = ""
-        
-        values.forEach { (arg) in
-            let type = storageMirror.getType(arg.key)
-            guard let fieldType = type else { return  }
-            guard let value:String = self.proToColumnValues(fieldType, arg.value), value.count > 0 else { return  }
-            sql += "\(arg.key) = \(String(describing: value))"
-        }
-        if sql.count > 1 {
-            sql = sql.subString(0, length: sql.count - 1)
-        }
-        return sql
-    }
+    
 }
 
 
 // MARK: - Delete Object
 extension StorageToSQLite {
     
-    private func deleteWhere(_ tableName:String,filter:String) -> Bool {
-        let deleteSQL = "DELETE  FROM \(tableName)  WHERE \(filter);"
+    func deleteWhere(_ tableName:String, _ filter:String, _ sorted:String = "", _ limit:String = "") -> Bool {
+        let deleteSQL = "DELETE  FROM \(tableName) \(filter) \(sorted) \(limit)"
         return sqliteManager.execSQL(deleteSQL)
     }
     
@@ -148,11 +125,11 @@ extension StorageToSQLite {
             return false
         }
         let filter = "\(primaryKey) = '\(primaryKeyValue)'"
-        return self.delete(object, filter: filter)
+        return self.delete(object, filter)
     }
     
-    func delete<T>(_ object:T,filter:String) -> Bool {
-        return self.deleteWhere(self.tableName(object), filter: filter)
+    private func delete<T>(_ object:T,_ filter:String) -> Bool {
+        return self.deleteWhere(self.tableName(object), filter)
     }
     
     func deleteAll<T>(_ type:T.Type) -> Bool {
@@ -295,7 +272,7 @@ extension StorageToSQLite {
             return "'\(value as! String)',"
         }else if m.subjectType == Optional<Bool>.self{
             return "'\(value as! String)',"
-        } else if m.subjectType == ImplicitlyUnwrappedOptional<String>.self {
+        } else if m.subjectType == String.self {
             return "'\(value)',"
         } else {
             return "\(value),"

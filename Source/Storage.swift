@@ -19,8 +19,8 @@ extension Storage {
     ///
     /// - Parameter type: Type is inherit Codable Protocol
     /// - Returns: Filter, filter().sorted().limit().value()
-    mutating public func object() -> StoragePredicate {
-        return StoragePredicate(storageToSQLite)
+    mutating public func object() -> StoragePredicateSelect {
+        return StoragePredicateSelect(storageToSQLite)
     }
 }
 
@@ -146,12 +146,8 @@ extension Storage {
         return self.add(object, update: true)
     }
     
-    public func update<T>(_ type:T.Type, _ values:[String:Any], _ filters:[String:Any] = [:], _ sorted:StorageToSQLiteSorted = .DESC, _ limit:Int = 1) -> Bool {
-        return storageToSQLite.update(type, values, filters, sorted, limit)
-    }
-    
-    public func update<T>(type:T.Type) -> StoragePredicateUpdate {
-        return StoragePredicateUpdate(storageToSQLite)
+    public func update<T>(_ type:T.Type, _ values:[String:Any]) -> StoragePredicateUpdate {
+        return StoragePredicateUpdate(storageToSQLite, type, values)
     }
     
 }
@@ -168,6 +164,14 @@ extension Storage {
             return false
         }
         return storageToSQLite.delete(object)
+    }
+    
+    /// Delete single data
+    ///
+    /// - Parameter object: Need to delete the entity
+    /// - Returns: Status
+    public mutating func delete<T>(_ type:T.Type) -> StoragePredicateDelete  {
+        return StoragePredicateDelete(self.storageToSQLite, type)
     }
     
     /// Delete all data of type table

@@ -21,15 +21,21 @@ protocol StoragePredicateProtocol: class {
     var filter:String {get set}
     var sort:String {get set}
     var limit:String {get set}
+    var predicateType:StoragePredicateType {get set}
     
     func filter(_ predicate: String) -> StoragePredicateProtocol
     func filter(_ predicate: NSPredicate) -> StoragePredicateProtocol
     func filter(_ predicate: [String:Any]) -> StoragePredicateProtocol
+    
     func sorted(_ property: String, ascending: Bool) -> StoragePredicateProtocol
+    
     func limit(_ pageIndex:Int,row:Int) -> StoragePredicateProtocol
     func limit(_ limit:Int) -> StoragePredicateProtocol
     
     func execute() -> Bool
+    
+    func value<T:Codable>(_ type:T.Type) -> T?
+    func valueOfArray<T:Codable>(_ type:T.Type) -> Array<T>
 }
 
 extension StoragePredicateProtocol {
@@ -45,16 +51,30 @@ extension StoragePredicateProtocol {
     func filter(_ predicate: NSPredicate) -> StoragePredicateProtocol {
         var filters:String = ""
         if predicate.predicateFormat.characters.count > 1 {
-            filters = " Where " + predicate.predicateFormat
+            filters = " WHERE " + predicate.predicateFormat
         }
         self.filter = filters
         return self
     }
     
-    func filter(_ predicate: [String:Any]) -> StoragePredicateProtocol {
+    func filter(_ filters: [String:Any]) -> StoragePredicateProtocol {
+        var filterAssembly = ""
+        filters.forEach { (arg) in
+            guard let value:String = self.storageToSQLite.proToColumnValues(arg.value), value.count > 0 else { return  }
+            filterAssembly += "\(arg.key) = \(String(describing: value))"
+        }
+        if filterAssembly.count > 1 {
+            filterAssembly = filterAssembly.subString(0, length: filterAssembly.count - 1)
+        }
+        if filters.count > 0 {
+            filterAssembly = "Where \(filterAssembly)"
+        }
+        self.filter = filterAssembly;
         return self
     }
-    
+}
+
+extension StoragePredicateProtocol {
     func sorted(_ property: String, ascending: Bool = false) -> StoragePredicateProtocol{
         if property.characters.count > 0 {
             self.sort = "order by \(property) " + (ascending == true ? "ASC" : "DESC")
@@ -64,21 +84,37 @@ extension StoragePredicateProtocol {
 }
 
 extension StoragePredicateProtocol {
-    func limit(_ pageIndex:Int,row:Int) -> StoragePredicateProtocol {
-        self.limit = "LIMIT \(pageIndex * row),\(row)"
+    func limit(_ pageIndex:Int = 0,row:Int = 10) -> StoragePredicateProtocol {
+        if self.predicateType == .SELECT {
+            self.limit = "LIMIT \(pageIndex * row),\(row)"
+        }else {
+            self.limit = "LIMIT \(limit)"
+        }
         return self
     }
     
-    func limit(_ limit: Int) -> StoragePredicateProtocol {
+    func limit(_ limit: Int = 1) -> StoragePredicateProtocol {
         self.limit = "LIMIT \(limit)"
         return self
     }
 }
 
+extension StoragePredicateProtocol {
+    func execute() -> Bool {
+        return false
+    }
+    
+    func value<T:Codable>(_ type:T.Type) -> T? {
+        return nil
+    }
+    func valueOfArray<T:Codable>(_ type:T.Type) -> Array<T> {
+        return []
+    }
+}
+
+
+/// Update
 public class StoragePredicateUpdate:StoragePredicateProtocol {
-    
-    
-    
     var storageToSQLite: StorageToSQLite
     
     var filter: String = ""
@@ -89,31 +125,97 @@ public class StoragePredicateUpdate:StoragePredicateProtocol {
     
     var limit: String = ""
     
-    init(_ storageToSQLite:StorageToSQLite) {
+    var updateValues = ""
+    
+    var predicateType:StoragePredicateType
+    
+    var values:[String:Any]
+    
+    init<T>(_ storageToSQLite:StorageToSQLite, _ type:T.Type, _ values:[String:Any]) {
         self.storageToSQLite = storageToSQLite
+        self.values = values
+        self.predicateType = .UPDATE
+        self.updateValues(type)
     }
     
-    func execute() -> Bool {
-        return true
+    
+    private func updateValues<T>(_ type:T.Type) {
+        if values.count < 1 {
+            return
+        }
+        self.tableName = String(describing: type)
+        let storageMirror = StorageMirror(reflecting: type)
+        let valueAssembly = self.updateAssemblyResult(values, storageMirror)
+        self.updateValues = valueAssembly
+    }
+    
+    fileprivate func updateAssemblyResult(_ values:[String:Any], _ storageMirror:StorageMirror)  -> String{
+        var sql = ""
+        
+        values.forEach { (arg) in
+            let type = storageMirror.getType(arg.key)
+            guard let fieldType = type else { return  }
+            guard let value:String = self.storageToSQLite.proToColumnValues(fieldType, arg.value), value.count > 0 else { return  }
+            sql += "\(arg.key) = \(String(describing: value))"
+        }
+        if sql.count > 1 {
+            sql = sql.subString(0, length: sql.count - 1)
+        }
+        return sql
     }
 }
 
-public class StoragePredicate {
+extension StoragePredicateUpdate {
+    func execute() -> Bool {
+        return storageToSQLite.update(self.tableName, self.updateValues, self.filter, self.sort, self.limit)
+    }
+}
+
+/// Delete
+public class StoragePredicateDelete:StoragePredicateProtocol {
+    var storageToSQLite: StorageToSQLite
     
-    fileprivate var storageToSQLite:StorageToSQLite
-    fileprivate var tableName:String = ""
-    fileprivate var filter:String = ""
-    fileprivate var sort:String = ""
-    fileprivate var limit:String = ""
+    var filter: String = ""
     
+    var tableName: String = ""
+    
+    var sort: String = ""
+    
+    var limit: String = ""
+    
+    var predicateType:StoragePredicateType
+    
+    init<T>(_ storageToSQLite:StorageToSQLite, _ type:T.Type) {
+        self.tableName = String(describing: type)
+        self.storageToSQLite = storageToSQLite
+        self.predicateType = .DELETE
+    }
+}
+
+extension StoragePredicateDelete {
+    func execute() -> Bool {
+        return storageToSQLite.deleteWhere(self.tableName, self.filter, self.sort, self.limit)
+    }
+}
+
+
+/// Select
+public class StoragePredicateSelect:StoragePredicateProtocol {
+     var storageToSQLite:StorageToSQLite
+     var tableName:String = ""
+     var filter:String = ""
+     var sort:String = ""
+     var limit:String = ""
+    var predicateType:StoragePredicateType
     init(_ storageToSQLite:StorageToSQLite) {
         self.storageToSQLite = storageToSQLite
+        self.predicateType = .SELECT
     }
 }
 
 // MARK: - SelectTable
 
-extension StoragePredicate {
+extension StoragePredicateSelect {
     
     fileprivate func objectsToSQLite() -> [[String : AnyObject]]? {
         let selectSQL = "SELECT * FROM  \(self.tableName) \(self.filter) \(self.sort) \(self.limit)"
@@ -127,37 +229,7 @@ extension StoragePredicate {
 }
 
 // MARK: - filter sorted
-extension StoragePredicate {
-    
-    public func filters(_ predicate:String) -> StoragePredicate{
-        var filter:String = ""
-        if predicate.characters.count > 1 {
-            filter = " Where "+predicate
-        }
-        self.filter = filter
-        return self
-    }
-    
-    public func filter(predicate: NSPredicate) -> StoragePredicate {
-        var filter:String = ""
-        if predicate.predicateFormat.characters.count > 1 {
-            filter = " Where " + predicate.predicateFormat
-        }
-        self.filter = filter
-        return self
-    }
-    
-    func sorted(_ property: String, ascending: Bool = false) -> StoragePredicate{
-        if property.characters.count > 0 {
-            self.sort = "order by \(property) " + (ascending == true ? "ASC" : "DESC")
-        }
-        return self
-    }
-    
-    func limit(_ pageIndex:Int,row:Int) -> StoragePredicate {
-        self.limit = "LIMIT \(pageIndex * row),\(row)"
-        return self
-    }
+extension StoragePredicateSelect {
     
     func valueOfArray<T:Codable>(_ type:T.Type) -> Array<T> {
         self.tableName = String(describing: type)
