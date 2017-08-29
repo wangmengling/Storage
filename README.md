@@ -60,6 +60,10 @@
 
 	let status = storage.update(storageModel)
 	
+> Update
+ 
+	let status = storage.update(StorageModel.self, ["name":"wangguozhongss"]).filter(["eMail":123456]).sorted("name", ascending: true).limit(1).execute()
+	
 ### <a name="storage-delete"></a>Delete
 
 > Delete single data
@@ -68,7 +72,7 @@
 	
 > Delete many data
 
-	Has not yet been added
+	let status = storage.delete(StorageModel.self).filter(["name":"sdsd"]).sorted("name").limit(1).execute()
 
 > Delete all data of StorageModel type
 	

@@ -137,7 +137,7 @@ extension StorageTests {
     
     func testDeleteOne() {
         var storage = Storage()
-        let status = storage.delete(StorageModel.self).filter(["name":"sdsd"]).limit(1).execute()
+        let status = storage.delete(StorageModel.self).filter(["name":"sdsd"]).sorted("name").limit(1).execute()
         XCTAssertTrue(status, "update object error \(status)")
     }
     
