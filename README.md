@@ -5,7 +5,7 @@
    	This repository holds the source code for the iOS versions of Storage Swift 
    	
 ## usage
->Will use Codable and StorageProtocol [Non-must use]
+>Will use Codable and StorageProtocol [Must use]
 
 	struct StorageModel:Codable {
 	    var name: String
