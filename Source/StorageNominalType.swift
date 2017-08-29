@@ -136,7 +136,6 @@ extension NominalTypeDescriptor{
 }
 
 extension NominalTypeDescriptor{
-    
     struct Enum {
         var name: Int32
         var NumPayloadCasesAndPayloadSizeOffset: Int32
@@ -145,7 +144,6 @@ extension NominalTypeDescriptor{
         var caseTypes: Int32
     }
 }
-
 
 /// FieldsType Function
 typealias FieldTypesAccessor = @convention(c) (UnsafePointer<Int>) -> UnsafePointer<UnsafePointer<Int>>
