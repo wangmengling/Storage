@@ -291,9 +291,9 @@ extension StorageToSQLite {
      
      - returns: Bool
      */
-    func tableIsExists<T>(_ object:T) -> Bool {
-        let objectsMirror = Mirror(reflecting: object)
-        let sqls = "SELECT count(*) FROM sqlite_master WHERE type='table' AND name='\(String(describing: objectsMirror.subjectType))'"
+    func tableIsExists<T>(_ type:T.Type) -> Bool {
+        let sMirror:StorageMirror = StorageMirror(reflecting: type)
+        let sqls = "SELECT count(*) FROM sqlite_master WHERE type='table' AND name='\(String(describing: sMirror.mirror.subjectType))'"
         let tableNum = sqliteManager.count(sqls)
         return tableNum > 0 ? true : false
     }
@@ -303,14 +303,14 @@ extension StorageToSQLite {
      
      - parameter object: T object
      */
-    func createTable<T>(_ object:inout T) -> Bool {
-        let sMirror:StorageMirror = StorageMirror(reflecting: &object)
-        
-        /// 1.反射获取属性
-        let objectsMirror = Mirror(reflecting: object)
-        
-        return self.createTable( String(describing: objectsMirror.subjectType),  sMirror.fieldNames, sMirror.fieldTypes)
+    func createTable<T>(_ type:T.Type) -> Bool {
+        if self.tableIsExists(type){
+            return true
+        }
+        let sMirror:StorageMirror = StorageMirror(reflecting: type)
+        return self.createTable( String(describing: sMirror.mirror.subjectType),  sMirror.fieldNames, sMirror.fieldTypes)
     }
+    
     
     /**
      create table
@@ -320,8 +320,6 @@ extension StorageToSQLite {
      - parameter fatherTableName: String  父 table
      */
     private func createTable(_ tableName:String, _ names:[String] , _ types:[Any.Type], _ fatherTableName:String = "") -> Bool {
-        
-        
         var column = "storage_\(tableName)_id integer auto_increment ,"
         
         if fatherTableName.characters.count > 0 {
@@ -359,7 +357,7 @@ extension StorageToSQLite {
     }
     
     
-    private func proTypeReplace( _ fieldType:Any.Type,tableName:String = "") -> ColumuType {
+    private func proTypeReplace( _ fieldType:Any.Type) -> ColumuType {
         let type = self.optionalTypeToType(fieldType)
         switch type {
         case is Int.Type:
@@ -372,10 +370,11 @@ extension StorageToSQLite {
             return ColumuType.CHARACTER
         case is Bool.Type:
             return ColumuType.INT
+        case is Codable.Type:
+            let sMirror:StorageMirror = StorageMirror(reflecting: type)
+            print(sMirror.fieldTypes)
+            return ColumuType.INT
         case is Array<Any>.Type:
-            //            if self.createTable((value as AnyObject).firstObject as! String, (value as AnyObject).lastObject as! [String : Any],tableName){
-            //                return ColumuType.INT
-            //            }
             return ColumuType.INT
         default:
             return ColumuType.CHARACTER

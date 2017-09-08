@@ -14,8 +14,12 @@ struct StorageNominalType {
         metadata = StorageMetadata(type: T.self)
     }
     
-    public init<T>(reflecting type: T.Type) {
-        metadata = StorageMetadata(type: type)
+//    public init<T>(reflecting type: T.Type) {
+//        metadata = StorageMetadata(type: type)
+//    }
+    
+    public init(reflecting anyType: Any.Type) {
+        metadata = StorageMetadata(type: anyType)
     }
 }
 

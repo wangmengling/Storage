@@ -12,7 +12,7 @@ import Foundation
 
 /// swift struct model
 struct StorageModel:Codable {
-    var name: String
+    var name: String?
     var eMail: Int?
 }
 

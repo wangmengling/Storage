@@ -55,15 +55,14 @@ extension Storage {
             return false
         }
         //create table if no exist
-        if !storageToSQLite.tableIsExists(object){
-            _ = storageToSQLite.createTable(&object)
+        if storageToSQLite.createTable(type(of: object)){
+            //update
+            if update == true && storageToSQLite.count(object) > 0{
+                return storageToSQLite.updatePrimaryKey(object)
+            }
+            return storageToSQLite.insert(&object)
         }
-        
-        //update
-        if update == true && storageToSQLite.count(object) > 0{
-            return storageToSQLite.updatePrimaryKey(object)
-        }
-        return storageToSQLite.insert(&object)
+        return false
     }
     
     
