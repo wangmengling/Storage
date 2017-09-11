@@ -12,6 +12,8 @@ public enum StorageToSQLiteSorted {
     case ASC
 }
 
+
+
 public struct StorageToSQLite {
 //    typealias T = Codable
     public static let shareInstance:StorageToSQLite = {
@@ -19,6 +21,8 @@ public struct StorageToSQLite {
     }()
     var sqliteManager = StorageSQLiteManager.instanceManager
     fileprivate var tableName:String = ""
+    
+    
 }
 
 
@@ -358,6 +362,7 @@ extension StorageToSQLite {
     
     
     private func proTypeReplace( _ fieldType:Any.Type) -> ColumuType {
+        
         let type = self.optionalTypeToType(fieldType)
         switch type {
         case is Int.Type:
@@ -371,6 +376,22 @@ extension StorageToSQLite {
         case is Bool.Type:
             return ColumuType.INT
         case is Codable.Type:
+            if let transformableType:Decodable.Type = type as? Decodable.Type {
+                let p = transformableType.transforms()
+                print(p)
+//                if let sv = transformableType.transform(from: rawValue) {
+//                    extensions(of: transformableType).write(sv, to: mutablePointer)
+//                    return
+//                }
+            }
+            if let transformableType:Encodable.Type = type as? Encodable.Type {
+                let p = transformableType.transforms()
+                print(p)
+                //                if let sv = transformableType.transform(from: rawValue) {
+                //                    extensions(of: transformableType).write(sv, to: mutablePointer)
+                //                    return
+                //                }
+            }
             let sMirror:StorageMirror = StorageMirror(reflecting: type)
             print(sMirror.fieldTypes)
             return ColumuType.INT
@@ -380,6 +401,10 @@ extension StorageToSQLite {
             return ColumuType.CHARACTER
         }
     }
+    
+//    func fd() -> <#return type#> {
+//        <#function body#>
+//    }
     
     /**
      Create Table Column Structure ---- E object property To Column SQL
@@ -431,6 +456,8 @@ extension StorageToSQLite {
             return fieldType
         }
     }
+    
+    
     
     public func tableName(_ objects:Any) -> String{
         let objectsMirror = Mirror(reflecting: objects)

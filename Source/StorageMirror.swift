@@ -21,13 +21,16 @@ public struct StorageMirror {
 //        storageNominalType = StorageNominalType(reflecting: type);
 //    }
     
-    public init(reflecting anyType:  Any.Type) {
-        mirror = Mirror(reflecting: anyType)
-        if mirror.subjectType is Optional<Any>.Type {
-            let optionalType:Any.Type = mirror.subjectType
-            print(optionalType)
+    public init(reflecting anyType:  Any.Type?) {
+        if let field = anyType {
+            mirror = Mirror(reflecting: field)
+            print(mirror)
+            storageNominalType = StorageNominalType(reflecting: field);
+        }else {
+            mirror = Mirror(reflecting: anyType)
+            print(mirror)
+            storageNominalType = StorageNominalType(reflecting: anyType!);
         }
-        storageNominalType = StorageNominalType(reflecting: anyType);
     }
 }
 
@@ -74,6 +77,7 @@ extension StorageMirror {
             return []
         }
         let nominalType = UnsafePointer<Int32>(nominalTypeDescriptorointer)
+        print(nominalType,nominalTypeDescriptorointer)
         let nominalTypeFunc: UnsafePointer<Int> = relativePointer(base: nominalType.advanced(by: 4), offset: nominalTypeDescriptorointer.pointee.fieldTypesAccessor)
         
         let types = self.getType(pointer: nominalTypeFunc, fieldCount: self.numberOfFields ?? 0)
