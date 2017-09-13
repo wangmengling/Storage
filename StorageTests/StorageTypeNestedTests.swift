@@ -41,7 +41,7 @@ class StorageTypeNestedTests: XCTestCase {
     
     
     func testTypeNestedIntertModel() {
-        var storageModel:StorageModel = StorageModel()
+        let storageModel:StorageModel = StorageModel()
         storageModel.name = "王国仲"
         storageModel.eMail = 424080998
         
@@ -49,6 +49,7 @@ class StorageTypeNestedTests: XCTestCase {
         storageTypeNestedModel.content = "mutale type nested"
         storageTypeNestedModel.title = "type nested"
         storageTypeNestedModel.time = Int(NSDate().timeIntervalSinceNow / 1000)
+        storageTypeNestedModel.storageModel = storageModel
         
         var storage = Storage()
         let status = storage.add(storageTypeNestedModel)

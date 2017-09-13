@@ -21,16 +21,9 @@ public struct StorageMirror {
 //        storageNominalType = StorageNominalType(reflecting: type);
 //    }
     
-    public init(reflecting anyType:  Any.Type?) {
-        if let field = anyType {
-            mirror = Mirror(reflecting: field)
-            print(mirror)
-            storageNominalType = StorageNominalType(reflecting: field);
-        }else {
-            mirror = Mirror(reflecting: anyType)
-            print(mirror)
-            storageNominalType = StorageNominalType(reflecting: anyType!);
-        }
+    public init(reflecting anyType:  Any.Type) {
+        mirror = Mirror(reflecting: anyType)
+        storageNominalType = StorageNominalType(reflecting: anyType);
     }
 }
 
@@ -95,7 +88,6 @@ extension StorageMirror {
         for i in 0..<numberOfField {
             let typeFetcher = funcBase.advanced(by: i).pointee
             let type:Any.Type = unsafeBitCast(typeFetcher, to: Any.Type.self)
-            print(type)
             types.append(type)
         }
         

@@ -50,7 +50,7 @@ extension StorageTests {
 // MARK: - Insert object
 extension StorageTests {
     func testInsertStructModel() {
-        var storageModel:StorageModel = StorageModel(name:"sd2", eMail: 2)
+        var storageModel:StorageModel = StorageModel()
         storageModel.name = "王国仲"
         storageModel.eMail = 1
         
@@ -60,7 +60,7 @@ extension StorageTests {
     }
     
     func testInsertArrayStructModel() {
-        var storageModel:StorageModel = StorageModel(name:"sd2", eMail: 2)
+        var storageModel:StorageModel = StorageModel()
         storageModel.name = "王国仲"
         storageModel.eMail = 1
         
@@ -88,7 +88,7 @@ extension StorageTests {
 // MARK: - Update object
 extension StorageTests {
     func testUpdateObject() {
-        var storageModel:StorageModel = StorageModel(name:"sd2", eMail: 2)
+        var storageModel:StorageModel = StorageModel()
 //        storageModel.name = "王国仲"
         storageModel.eMail = 3
         
@@ -125,7 +125,7 @@ extension StorageTests {
 // MARK: - Delete object
 extension StorageTests {
     func testDeleteObject() {
-        var storageModel:StorageModel = StorageModel(name:"sd2", eMail: 2)
+        var storageModel:StorageModel = StorageModel()
         storageModel.name = "王国仲"
         storageModel.eMail = 3
         

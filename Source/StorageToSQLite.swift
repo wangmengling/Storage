@@ -312,7 +312,7 @@ extension StorageToSQLite {
             return true
         }
         let sMirror:StorageMirror = StorageMirror(reflecting: type)
-        return self.createTable( String(describing: sMirror.mirror.subjectType),  sMirror.fieldNames, sMirror.fieldTypes)
+        return self.createTable( String(describing: type),  sMirror.fieldNames, sMirror.fieldTypes)
     }
     
     
@@ -326,22 +326,50 @@ extension StorageToSQLite {
     private func createTable(_ tableName:String, _ names:[String] , _ types:[Any.Type], _ fatherTableName:String = "") -> Bool {
         var column = "storage_\(tableName)_id integer auto_increment ,"
         
-        if fatherTableName.characters.count > 0 {
-            column += "storage_\(fatherTableName)_id ,"
+        if fatherTableName.count > 0 {
+            column += "storage_\(fatherTableName)_id Int,"
         }
         
         names.enumerated().forEach { (arg) in
             let (index, pro) = arg
             let fieldType:Any.Type = types[index]
-            column += self.proToColumn(pro, fieldType)
+            column += self.proToColumn(pro, fieldType, tableName)
         }
         
-        if column.characters.count > 5 {
-            column = column.subString(0, length: column.characters.count - 1)
+        if column.count > 5 {
+            column = column.subString(0, length: column.count - 1)
         }
         let createTabelSQL = "Create TABLE if not exists \(tableName)(\(column));"
         /// 3.执行createTableSql
         return sqliteManager.execSQL(createTabelSQL)
+    }
+    
+    //创建子table
+    private func createTable(type:Any.Type, _ fatherTableName:String = ""){
+        var optionalType = type
+        var typeName = String(describing: optionalType)
+        
+        if typeName.contains("Optional<") {
+            var optionalTypeName = String(describing: ImplicitlyUnwrappedOptional.init(optionalType))
+            if optionalTypeName.contains("Optional<") {
+                optionalTypeName = optionalTypeName.subString(9, length: optionalTypeName.count-10)
+            }
+            if optionalTypeName.contains("Swift.Optional<") {
+                optionalTypeName = optionalTypeName.subString(15, length: optionalTypeName.count-16)
+            }
+            let optionalClassType:AnyClass? = NSClassFromString(optionalTypeName)
+            if (optionalClassType != nil) {
+                optionalType = optionalClassType!
+                typeName = typeName.subString(9, length: typeName.count-10)
+            }else {
+                return ;
+            }
+        }
+        let sMirror:StorageMirror = StorageMirror(reflecting: optionalType)
+        let status = self.createTable(typeName, sMirror.fieldNames, sMirror.fieldTypes, fatherTableName)
+        if !status {
+            print("\(tableName)-----\(typeName) database create failed")
+        }
     }
     
     /**
@@ -361,7 +389,7 @@ extension StorageToSQLite {
     }
     
     
-    private func proTypeReplace( _ fieldType:Any.Type) -> ColumuType {
+    private func proTypeReplace( _ fieldType:Any.Type, _ tableName:String) -> ColumuType {
         
         let type = self.optionalTypeToType(fieldType)
         switch type {
@@ -376,35 +404,14 @@ extension StorageToSQLite {
         case is Bool.Type:
             return ColumuType.INT
         case is Codable.Type:
-            if let transformableType:Decodable.Type = type as? Decodable.Type {
-                let p = transformableType.transforms()
-                print(p)
-//                if let sv = transformableType.transform(from: rawValue) {
-//                    extensions(of: transformableType).write(sv, to: mutablePointer)
-//                    return
-//                }
-            }
-            if let transformableType:Encodable.Type = type as? Encodable.Type {
-                let p = transformableType.transforms()
-                print(p)
-                //                if let sv = transformableType.transform(from: rawValue) {
-                //                    extensions(of: transformableType).write(sv, to: mutablePointer)
-                //                    return
-                //                }
-            }
-            let sMirror:StorageMirror = StorageMirror(reflecting: type)
-            print(sMirror.fieldTypes)
-            return ColumuType.INT
+            self.createTable(type: type, tableName)
+            return ColumuType.NULL
         case is Array<Any>.Type:
-            return ColumuType.INT
+            return ColumuType.CHARACTER
         default:
             return ColumuType.CHARACTER
         }
     }
-    
-//    func fd() -> <#return type#> {
-//        <#function body#>
-//    }
     
     /**
      Create Table Column Structure ---- E object property To Column SQL
@@ -414,9 +421,9 @@ extension StorageToSQLite {
      
      - returns: SQL
      */
-    private func proToColumn(_ label:String,_ fieldType:Any.Type) -> String {
+    private func proToColumn(_ label:String,_ fieldType:Any.Type, _ tableName:String) -> String {
         var string = ""
-        let columuType = self.proTypeReplace(fieldType)
+        let columuType = self.proTypeReplace(fieldType,tableName)
         switch columuType {
         case ColumuType.INT:
             string += "\(label) \(ColumuType.INT.rawValue) ,"
