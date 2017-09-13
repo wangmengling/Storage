@@ -146,13 +146,11 @@ extension StorageToSQLite {
 extension StorageToSQLite {
     
     func insert<T>(_ object:inout T) -> Bool {
-        let objectsMirror = Mirror(reflecting: object)
-        let property = objectsMirror.children
-        
         var columns = ""
         var values = ""
         
         let sMirror:StorageMirror = StorageMirror(reflecting: &object)
+        let property = sMirror.mirror.children
         property.forEach { (arg) in
             let (key, value) = arg
             let fieldTypeIndex:NSInteger = sMirror.fieldNames.index(of: key!)!
@@ -171,7 +169,7 @@ extension StorageToSQLite {
             values = values.subString(0, length: values.characters.count - 1)
         }
         
-        let insertSQL = "INSERT INTO \(String(describing: objectsMirror.subjectType)) (\(columns))  VALUES (\(values));"
+        let insertSQL = "INSERT INTO \(String(describing: sMirror.mirror.subjectType)) (\(columns))  VALUES (\(values));"
         
         return sqliteManager.execSQL(insertSQL)
     }
@@ -233,6 +231,10 @@ extension StorageToSQLite {
             return "0,"
         case is String.Type:
             return "'\(value as! String)',"
+        case is Codable.Type:
+            var object = value
+            self.insert(&object)
+            return ""
         default:
             return ""
         }
@@ -463,8 +465,6 @@ extension StorageToSQLite {
             return fieldType
         }
     }
-    
-    
     
     public func tableName(_ objects:Any) -> String{
         let objectsMirror = Mirror(reflecting: objects)

@@ -154,7 +154,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "StorageTests/StorageTests.swift"
-            timestampString = "526980882.392706"
+            timestampString = "526987387.171383"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "46"
@@ -170,7 +170,7 @@
                   moduleName = "StorageTests"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/utouu-imac/Documents/GIT/Storage/StorageTests/StorageTests.swift"
-                  timestampString = "526980883.135093"
+                  timestampString = "526987387.629405"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "46"
@@ -185,7 +185,7 @@
                   moduleName = "StorageTests"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/utouu-imac/Documents/GIT/Storage/StorageTests/StorageTests.swift"
-                  timestampString = "526980883.136926"
+                  timestampString = "526987387.632801"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "46"
@@ -200,7 +200,7 @@
                   moduleName = "StorageTests"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/utouu-imac/Documents/GIT/Storage/StorageTests/StorageTests.swift"
-                  timestampString = "526980883.138673"
+                  timestampString = "526987387.636749"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "46"
@@ -217,7 +217,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Source/StorageToSQLite.swift"
-            timestampString = "526980882.392768"
+            timestampString = "526987387.171443"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "88"
@@ -297,7 +297,7 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "StorageTests/StorageTypeNestedTests.swift"
-            timestampString = "526980882.393321"
+            timestampString = "526987387.171589"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "56"
@@ -313,7 +313,7 @@
                   moduleName = "StorageTests"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/utouu-imac/Documents/GIT/Storage/StorageTests/StorageTypeNestedTests.swift"
-                  timestampString = "526980883.140967"
+                  timestampString = "526987387.639286"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "56"
@@ -328,7 +328,7 @@
                   moduleName = "StorageTests"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/utouu-imac/Documents/GIT/Storage/StorageTests/StorageTypeNestedTests.swift"
-                  timestampString = "526980883.142712"
+                  timestampString = "526987387.640838"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "56"
@@ -336,6 +336,70 @@
                   offsetFromSymbolStart = "16">
                </Location>
             </Locations>
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Source/StorageToSQLite.swift"
+            timestampString = "526987387.171644"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "236"
+            endingLineNumber = "236"
+            landmarkName = "proToColumnValues(_:_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Source/StorageMetadata.swift"
+            timestampString = "526987387.1717"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "20"
+            endingLineNumber = "20"
+            landmarkName = "init(type:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Source/StorageToSQLite.swift"
+            timestampString = "526987387.171751"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "153"
+            endingLineNumber = "153"
+            landmarkName = "insert(_:)"
+            landmarkType = "7">
+         </BreakpointContent>
+      </BreakpointProxy>
+      <BreakpointProxy
+         BreakpointExtensionID = "Xcode.Breakpoint.FileBreakpoint">
+         <BreakpointContent
+            shouldBeEnabled = "Yes"
+            ignoreCount = "0"
+            continueAfterRunningActions = "No"
+            filePath = "Source/StorageMirror.swift"
+            timestampString = "526987387.171796"
+            startingColumnNumber = "9223372036854775807"
+            endingColumnNumber = "9223372036854775807"
+            startingLineNumber = "16"
+            endingLineNumber = "16"
+            landmarkName = "unknown"
+            landmarkType = "0">
          </BreakpointContent>
       </BreakpointProxy>
    </Breakpoints>
