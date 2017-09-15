@@ -222,16 +222,16 @@ extension StorageToSQLite {
             return "0,"
         case is String.Type:
             return "'\(value as! String)',"
+        case is Array<Any>.Type:
+            let data = try! JSONSerialization.data(withJSONObject: value, options: JSONSerialization.WritingOptions.prettyPrinted)
+            return "'\(data)',"
+        case is Dictionary<String,Any>.Type:
+            let data = try! JSONSerialization.data(withJSONObject: value, options: JSONSerialization.WritingOptions.prettyPrinted)
+            return "'\(data)',"
         case is Codable.Type:
             _ = self.insertOptional(value)
             return ""
         default:
-            return ""
-        }
-        
-        if fieldType is Array<Any>.Type  || fieldType is Optional<Array<Any>>.Type{
-//            _ = self.insert([fieldType], value as! [String : Any])
-            print(fieldType,value)
             return ""
         }
     }
@@ -342,7 +342,6 @@ extension StorageToSQLite {
             print("\(tableName)-----\(typeName) database create failed")
             return
         }
-        print(optionalType)
         let sMirror:StorageMirror = StorageMirror(optionalType)
         let status = self.createTable(typeName, sMirror.fieldNames, sMirror.fieldTypes, fatherTableName)
         if !status {
@@ -370,6 +369,7 @@ extension StorageToSQLite {
     private func proTypeReplace( _ fieldType:Any.Type, _ tableName:String) -> ColumuType {
         
         let type = self.optionalTypeToType(fieldType)
+        print(type)
         switch type {
         case is Int.Type:
             return ColumuType.INT
@@ -381,11 +381,13 @@ extension StorageToSQLite {
             return ColumuType.CHARACTER
         case is Bool.Type:
             return ColumuType.INT
+        case is Array<Any>.Type:
+            return ColumuType.BLOB
+        case is Dictionary<String,Any>.Type:
+            return ColumuType.BLOB
         case is Codable.Type:
             self.createTable(type: type, tableName)
             return ColumuType.NULL
-        case is Array<Any>.Type:
-            return ColumuType.CHARACTER
         default:
             return ColumuType.CHARACTER
         }
@@ -411,6 +413,8 @@ extension StorageToSQLite {
             string += "\(label) \(ColumuType.FLOAT.rawValue) ,"
         case ColumuType.CHARACTER:
             string += "\(label) \(ColumuType.CHARACTER.rawValue)(255) ,"
+        case ColumuType.BLOB:
+            string += "\(label) \(ColumuType.BLOB.rawValue) ,"
         default:
             return string
         }
@@ -420,6 +424,7 @@ extension StorageToSQLite {
 
 extension StorageToSQLite {
     public func optionalTypeToType(_ fieldType:Any.Type) -> Any.Type {
+        print(fieldType)
         switch fieldType {
         case is Optional<Int>.Type:
             return Int.self
@@ -437,7 +442,15 @@ extension StorageToSQLite {
             return Bool.self
         case is Optional<String>.Type:
             return String.self
+        case is Optional<Array<Codable>>.Type:
+            return Array<Codable>.self
         default:
+            let typeName = String(describing: fieldType)
+            if typeName.contains("Optional<Array<") {
+                return Array<Any>.self
+            }else if typeName.contains("Optional<Dictionary<") {
+                return Dictionary<String,Any>.self
+            }
             return fieldType
         }
     }
@@ -475,3 +488,16 @@ extension StorageToSQLite {
     }
 }
 
+
+extension StorageToSQLite {
+    func toJSONString(_ object:Any)->String{
+        var data:Data
+        do {
+            data = try! JSONSerialization.data(withJSONObject: object, options: JSONSerialization.WritingOptions.prettyPrinted)
+        } catch _ {
+            return ""
+        }
+        let strJson=String(data: data, encoding: String.Encoding.utf8)
+        return strJson!
+    }
+}

@@ -9,10 +9,14 @@
 import XCTest
 @testable import Storage
 struct StorageTypeNestedModel:Codable {
-    var storageModel:StorageModel?
+//    var storageModel:StorageModel?
     var title:String!
     var content:String
 //    var time:Int?
+//    var otherFile:[String:String]
+    var sd:[String]?
+    
+    
 }
 
 class StorageTypeNestedTests: XCTestCase {
@@ -44,12 +48,12 @@ class StorageTypeNestedTests: XCTestCase {
         var storageModel:StorageModel = StorageModel()
         storageModel.name = "王国仲"
         storageModel.eMail = 424080998
-        var storageTypeNestedModel:StorageTypeNestedModel? = StorageTypeNestedModel(storageModel: nil, title: "", content: "")
+        var storageTypeNestedModel:StorageTypeNestedModel? = StorageTypeNestedModel(title: "", content: "", sd: nil)
         storageTypeNestedModel?.content = "mutale type nested"
         storageTypeNestedModel?.title = "type nested"
 //        storageTypeNestedModel?.time = Int(NSDate().timeIntervalSinceNow / 1000)
-        storageTypeNestedModel?.storageModel = storageModel 
-        
+//        storageTypeNestedModel?.storageModel = storageModel
+        storageTypeNestedModel?.sd = ["asdfasdfasdf","asdf"]
         var storage = Storage()
         let status = storage.add(storageTypeNestedModel)
         XCTAssertTrue(status, "insert object error \(status)")

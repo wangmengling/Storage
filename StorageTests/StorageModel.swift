@@ -11,7 +11,7 @@ import Foundation
 
 
 /// swift struct model
-struct StorageModel:Codable {
+class StorageModel:Codable {
     var name: String?
     var eMail: Int?
 }
