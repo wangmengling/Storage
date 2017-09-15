@@ -21,7 +21,6 @@
 		1931FBC51F4E6BFB0076BFA4 /* StoragePredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1931FBC41F4E6BFB0076BFA4 /* StoragePredicate.swift */; };
 		195E36DE1F42CB6B0015A5BD /* StorageMirror.swift in Sources */ = {isa = PBXBuildFile; fileRef = 195E36DD1F42CB6B0015A5BD /* StorageMirror.swift */; };
 		196938361F62419100893650 /* StorageTypeNestedTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 196938351F62419100893650 /* StorageTypeNestedTests.swift */; };
-		19D48ED81F667507008704F9 /* StorageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1912C5F41F4FC1750097E8E8 /* StorageModel.swift */; };
 		19D86DA61F53EF2B0088A91D /* libsqlite3.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 19D86DA51F53EF2B0088A91D /* libsqlite3.tbd */; };
 /* End PBXBuildFile section */
 
@@ -272,7 +271,6 @@
 				1931FBC51F4E6BFB0076BFA4 /* StoragePredicate.swift in Sources */,
 				166DB4121F0F396E009D18DD /* Storage.swift in Sources */,
 				166DB4221F0F5F37009D18DD /* StorageExtensions.swift in Sources */,
-				19D48ED81F667507008704F9 /* StorageModel.swift in Sources */,
 				166DB4161F0F39DF009D18DD /* StorageToSQLite.swift in Sources */,
 				166DB4181F0F5928009D18DD /* StorageSQLiteManager.swift in Sources */,
 				160058201F403E6B0046EED2 /* StorageMetadata.swift in Sources */,

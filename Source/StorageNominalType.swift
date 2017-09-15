@@ -10,7 +10,7 @@ import Foundation
 
 struct StorageNominalType {
     fileprivate var metadata:StorageMetadata
-    public init<T>(reflecting subject: inout T) {
+    public init<T>(reflecting subject:T) {
         metadata = StorageMetadata(type: T.self)
     }
     

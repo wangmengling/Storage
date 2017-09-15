@@ -43,6 +43,25 @@ extension Storage {
 
 // MARK: - Insert data to sqlite
 extension Storage {
+    /// Insert a single piece of data into the database
+    ///
+    /// - Parameters:
+    ///   - object: Added entity
+    ///   - update: Whether it is updated (Requires inheritance protocol StorageProtocol)
+    /// - Returns: Status
+    mutating func add<T>(_ object: T, update:Bool = false) -> Bool {
+        var object:T = object
+        //create table if no exist
+        if storageToSQLite.createTable(type(of: object)){
+            //update
+            if update == true && storageToSQLite.count(object) > 0{
+                return storageToSQLite.updatePrimaryKey(object)
+            }
+            return storageToSQLite.insert(object)
+        }
+        return false
+    }
+    
     
     /// Insert a single piece of data into the database
     ///
@@ -51,20 +70,23 @@ extension Storage {
     ///   - update: Whether it is updated (Requires inheritance protocol StorageProtocol)
     /// - Returns: Status
     mutating func add<T>(_ object: T?, update:Bool = false) -> Bool {
-        guard var object:T = object else {
+        guard let object:T = object else {
             return false
         }
-        //create table if no exist
-        if storageToSQLite.createTable(type(of: object)){
-            //update
-            if update == true && storageToSQLite.count(object) > 0{
-                return storageToSQLite.updatePrimaryKey(object)
-            }
-            return storageToSQLite.insert(&object)
-        }
-        return false
+        return add(object, update: update)
     }
     
+    
+    /// Insert the array into the database
+    ///
+    /// - Parameter objectArray: Added entity
+    /// - Returns: Status
+    mutating func addArray<T>(_ objectArray:[T])  -> Bool{
+        for (_,element) in objectArray.enumerated() {
+            _ = self.add(element,update: false)
+        }
+        return true
+    }
     
     /// Insert the array into the database
     ///
@@ -74,10 +96,7 @@ extension Storage {
         guard let objectArray = objectArray else {
             return false
         }
-        for (_,element) in objectArray.enumerated() {
-            _ = self.add(element,update: false)
-        }
-        return true
+        return addArray(objectArray)
     }
 }
 

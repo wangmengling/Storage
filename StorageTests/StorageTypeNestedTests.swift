@@ -10,9 +10,9 @@ import XCTest
 @testable import Storage
 struct StorageTypeNestedModel:Codable {
     var storageModel:StorageModel?
-    var title:String?
-    var content:String?
-    var time:Int?
+    var title:String!
+    var content:String
+//    var time:Int?
 }
 
 class StorageTypeNestedTests: XCTestCase {
@@ -41,15 +41,14 @@ class StorageTypeNestedTests: XCTestCase {
     
     
     func testTypeNestedIntertModel() {
-        let storageModel:StorageModel = StorageModel()
+        var storageModel:StorageModel = StorageModel()
         storageModel.name = "王国仲"
         storageModel.eMail = 424080998
-        
-        var storageTypeNestedModel:StorageTypeNestedModel = StorageTypeNestedModel()
-        storageTypeNestedModel.content = "mutale type nested"
-        storageTypeNestedModel.title = "type nested"
-        storageTypeNestedModel.time = Int(NSDate().timeIntervalSinceNow / 1000)
-        storageTypeNestedModel.storageModel = storageModel
+        var storageTypeNestedModel:StorageTypeNestedModel? = StorageTypeNestedModel(storageModel: nil, title: "", content: "")
+        storageTypeNestedModel?.content = "mutale type nested"
+        storageTypeNestedModel?.title = "type nested"
+//        storageTypeNestedModel?.time = Int(NSDate().timeIntervalSinceNow / 1000)
+        storageTypeNestedModel?.storageModel = storageModel 
         
         var storage = Storage()
         let status = storage.add(storageTypeNestedModel)

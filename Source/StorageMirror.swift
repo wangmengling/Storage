@@ -11,17 +11,18 @@ public struct StorageMirror {
     fileprivate let storageNominalType:StorageNominalType
     var mirror:Mirror
     
-    public init<T>(reflecting subject:  inout T) {
+    public init<T>(reflecting subject:T) {
         mirror = Mirror(reflecting: subject)
-        storageNominalType = StorageNominalType(reflecting: &subject)
+        storageNominalType = StorageNominalType(reflecting: subject)
     }
+    
     
 //    public init<T>(reflecting type:  T.Type) {
 //        mirror = Mirror(reflecting: type)
 //        storageNominalType = StorageNominalType(reflecting: type);
 //    }
     
-    public init(reflecting anyType:  Any.Type) {
+    public init(_ anyType:Any.Type) {
         mirror = Mirror(reflecting: anyType)
         storageNominalType = StorageNominalType(reflecting: anyType);
     }
