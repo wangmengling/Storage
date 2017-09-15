@@ -424,7 +424,6 @@ extension StorageToSQLite {
 
 extension StorageToSQLite {
     public func optionalTypeToType(_ fieldType:Any.Type) -> Any.Type {
-        print(fieldType)
         switch fieldType {
         case is Optional<Int>.Type:
             return Int.self
@@ -483,19 +482,5 @@ extension StorageToSQLite {
             }
         }
         return (typeName,optionalType)
-    }
-}
-
-
-extension StorageToSQLite {
-    func toJSONString(_ object:Any)->String{
-        var data:Data
-        do {
-            data = try! JSONSerialization.data(withJSONObject: object, options: JSONSerialization.WritingOptions.prettyPrinted)
-        } catch _ {
-            return ""
-        }
-        let strJson=String(data: data, encoding: String.Encoding.utf8)
-        return strJson!
     }
 }
