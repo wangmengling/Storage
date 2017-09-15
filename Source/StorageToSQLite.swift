@@ -367,9 +367,7 @@ extension StorageToSQLite {
     
     
     private func proTypeReplace( _ fieldType:Any.Type, _ tableName:String) -> ColumuType {
-        
         let type = self.optionalTypeToType(fieldType)
-        print(type)
         switch type {
         case is Int.Type:
             return ColumuType.INT
