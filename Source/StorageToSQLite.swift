@@ -442,8 +442,6 @@ extension StorageToSQLite {
             return Bool.self
         case is Optional<String>.Type:
             return String.self
-        case is Optional<Array<Codable>>.Type:
-            return Array<Codable>.self
         default:
             let typeName = String(describing: fieldType)
             if typeName.contains("Optional<Array<") {
