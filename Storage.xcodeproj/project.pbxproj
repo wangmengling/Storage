@@ -8,8 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		160058201F403E6B0046EED2 /* StorageMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1600581F1F403E6B0046EED2 /* StorageMetadata.swift */; };
-		164E9A5820479C9300414372 /* StorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166DB3D01F0F32F7009D18DD /* StorageTests.swift */; };
-		164E9A5A20479CB600414372 /* XCTest.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 164E9A5920479CB600414372 /* XCTest.framework */; };
 		166DB3CC1F0F32F7009D18DD /* Storage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 166DB3C21F0F32F7009D18DD /* Storage.framework */; };
 		166DB3D11F0F32F7009D18DD /* StorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166DB3D01F0F32F7009D18DD /* StorageTests.swift */; };
 		166DB3D31F0F32F7009D18DD /* Storage.h in Headers */ = {isa = PBXBuildFile; fileRef = 166DB3C51F0F32F7009D18DD /* Storage.h */; settings = {ATTRIBUTES = (Public, ); }; };
@@ -38,7 +36,6 @@
 
 /* Begin PBXFileReference section */
 		1600581F1F403E6B0046EED2 /* StorageMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageMetadata.swift; sourceTree = "<group>"; };
-		164E9A5920479CB600414372 /* XCTest.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = XCTest.framework; path = Platforms/iPhoneOS.platform/Developer/Library/Frameworks/XCTest.framework; sourceTree = DEVELOPER_DIR; };
 		166DB3C21F0F32F7009D18DD /* Storage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Storage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		166DB3C51F0F32F7009D18DD /* Storage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Storage.h; sourceTree = "<group>"; };
 		166DB3C61F0F32F7009D18DD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -64,7 +61,6 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				164E9A5A20479CB600414372 /* XCTest.framework in Frameworks */,
 				19D86DA61F53EF2B0088A91D /* libsqlite3.tbd in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -138,7 +134,6 @@
 		166DB4191F0F5B9C009D18DD /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				164E9A5920479CB600414372 /* XCTest.framework */,
 				19D86DA51F53EF2B0088A91D /* libsqlite3.tbd */,
 				166DB41F1F0F5EC0009D18DD /* libsqlite3.0.tbd */,
 			);
@@ -280,7 +275,6 @@
 				166DB4181F0F5928009D18DD /* StorageSQLiteManager.swift in Sources */,
 				160058201F403E6B0046EED2 /* StorageMetadata.swift in Sources */,
 				166DB4141F0F3988009D18DD /* StorageProtocol.swift in Sources */,
-				164E9A5820479C9300414372 /* StorageTests.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
