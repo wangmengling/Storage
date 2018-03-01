@@ -12,7 +12,7 @@ extension String {
         var pos = -1
         if let range = self.range(of: sub) {
             if !range.isEmpty {
-                pos = self.characters.distance(from: self.startIndex, to: range.lowerBound)
+                pos = self.distance(from: self.startIndex, to: range.lowerBound)
             }
         }
         return pos
@@ -21,12 +21,12 @@ extension String {
     func subString(_ start:Int, length:Int = -1)->String {
         var len = length
         if len == -1 {
-            len = characters.count - start
+            len = self.count - start
         }
-        let st = characters.index(startIndex, offsetBy: start)
+        let st = self.index(startIndex, offsetBy: start)
         //let en = <#T##String.CharacterView corresponding to `st`##String.CharacterView#>.index(st, offsetBy: len)
-        let en = characters.index(st, offsetBy: len)
+        let en = self.index(st, offsetBy: len)
         let range = st ..< en
-        return substring(with: range)
+        return self.substring(with: range)
     }
 }

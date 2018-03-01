@@ -41,7 +41,7 @@ protocol StoragePredicateProtocol: class {
 extension StoragePredicateProtocol {
     func filter(_ predicate: String) -> StoragePredicateProtocol {
         var filter:String = ""
-        if predicate.characters.count > 1 {
+        if predicate.count > 1 {
             filter = " Where "+predicate
         }
         self.filter = filter
@@ -50,7 +50,7 @@ extension StoragePredicateProtocol {
     
     func filter(_ predicate: NSPredicate) -> StoragePredicateProtocol {
         var filters:String = ""
-        if predicate.predicateFormat.characters.count > 1 {
+        if predicate.predicateFormat.count > 1 {
             filters = " WHERE " + predicate.predicateFormat
         }
         self.filter = filters
@@ -76,7 +76,7 @@ extension StoragePredicateProtocol {
 
 extension StoragePredicateProtocol {
     func sorted(_ property: String, ascending: Bool = false) -> StoragePredicateProtocol{
-        if property.characters.count > 0 {
+        if property.count > 0 {
             self.sort = "order by \(property) " + (ascending == true ? "ASC" : "DESC")
         }
         return self

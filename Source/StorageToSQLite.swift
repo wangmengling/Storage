@@ -88,8 +88,8 @@ extension StorageToSQLite {
                 values += "\(child.label!) = \(columnValue)"
             })
             
-            if values.characters.count > 0 {
-                values = values.subString(0, length: values.characters.count - 1)
+            if values.count > 0 {
+                values = values.subString(0, length: values.count - 1)
             }
         }
         //组装
@@ -175,17 +175,16 @@ extension StorageToSQLite {
         
         mirror.children.forEach { (arg) in
             let (key, value) = arg
-            let columnValue:String = self.proToColumnValues(type(of: value), value)
-            if columnValue.count < 1   {
-                return
+            guard let columnValue:String = self.proToColumnValues(type(of: value), value) ,  columnValue.count > 0 else {
+                return;
             }
             columns += "\(key!),"
             values += columnValue
         }
         
         if mirror.children.count > 0 {
-            columns = columns.subString(0, length: columns.characters.count - 1)
-            values = values.subString(0, length: values.characters.count - 1)
+            columns = columns.subString(0, length: columns.count - 1)
+            values = values.subString(0, length: values.count - 1)
         }
         
         let insertSQL = "INSERT INTO \(String(describing: mirror.subjectType)) (\(columns))  VALUES (\(values));"
@@ -198,7 +197,7 @@ extension StorageToSQLite {
 // MARK: - T property to Table Column
 extension StorageToSQLite {
     
-    func proToColumnValues<T>(_ fieldType:Any.Type, _ value:T? )  -> String {
+    func proToColumnValues<T>(_ fieldType:Any.Type, _ value:T? )  -> String? {
         guard let value = value else { return "" }
         let type = self.optionalTypeToType(fieldType)
         switch type {

@@ -50,7 +50,7 @@ extension Storage {
     ///   - update: Whether it is updated (Requires inheritance protocol StorageProtocol)
     /// - Returns: Status
     mutating func add<T>(_ object: T, update:Bool = false) -> Bool {
-        var object:T = object
+        let object:T = object
         //create table if no exist
         if storageToSQLite.createTable(type(of: object)){
             //update

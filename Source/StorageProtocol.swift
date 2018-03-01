@@ -73,8 +73,7 @@ public extension RawRepresentable where Self: Codable {
 //    }
     
     static func transform() -> Self? {
-        if let transformableType = RawValue.self as? Codable.Type {
-            print(self)
+        if RawValue.self is Codable.Type {
             return self as! Self
         }
         return nil
