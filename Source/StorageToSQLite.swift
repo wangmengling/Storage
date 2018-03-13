@@ -25,8 +25,6 @@ public struct StorageToSQLite:StorageToSQLiteProtocol {
     }()
     var sqliteManager = StorageSQLiteManager.instanceManager
     fileprivate var tableName:String = ""
-    
-    
 }
 
 
