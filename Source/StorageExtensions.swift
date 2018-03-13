@@ -27,6 +27,6 @@ extension String {
         //let en = <#T##String.CharacterView corresponding to `st`##String.CharacterView#>.index(st, offsetBy: len)
         let en = self.index(st, offsetBy: len)
         let range = st ..< en
-        return self.substring(with: range)
+        return String(self[range])
     }
 }
