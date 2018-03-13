@@ -10,13 +10,14 @@
 		160058201F403E6B0046EED2 /* StorageMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1600581F1F403E6B0046EED2 /* StorageMetadata.swift */; };
 		166DB3CC1F0F32F7009D18DD /* Storage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 166DB3C21F0F32F7009D18DD /* Storage.framework */; };
 		166DB3D11F0F32F7009D18DD /* StorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166DB3D01F0F32F7009D18DD /* StorageTests.swift */; };
-		166DB3D31F0F32F7009D18DD /* Storage.h in Headers */ = {isa = PBXBuildFile; fileRef = 166DB3C51F0F32F7009D18DD /* Storage.h */; settings = {ATTRIBUTES = (Public, ); }; };
 		166DB4121F0F396E009D18DD /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166DB4111F0F396E009D18DD /* Storage.swift */; };
 		166DB4141F0F3988009D18DD /* StorageProtocol.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166DB4131F0F3988009D18DD /* StorageProtocol.swift */; };
 		166DB4161F0F39DF009D18DD /* StorageToSQLite.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166DB4151F0F39DF009D18DD /* StorageToSQLite.swift */; };
 		166DB4181F0F5928009D18DD /* StorageSQLiteManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166DB4171F0F5928009D18DD /* StorageSQLiteManager.swift */; };
 		166DB4221F0F5F37009D18DD /* StorageExtensions.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166DB4211F0F5F37009D18DD /* StorageExtensions.swift */; };
 		1691C4362057C3BB007B7BC0 /* libxml2.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = 1691C4352057C3BB007B7BC0 /* libxml2.tbd */; };
+		1691C4392057D250007B7BC0 /* Storage.h in Headers */ = {isa = PBXBuildFile; fileRef = 1691C4372057D250007B7BC0 /* Storage.h */; };
+		1691C43A2057D250007B7BC0 /* Info.plist in Resources */ = {isa = PBXBuildFile; fileRef = 1691C4382057D250007B7BC0 /* Info.plist */; };
 		16C703CE1F40911D00410D30 /* StorageNominalType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 16C703CD1F40911D00410D30 /* StorageNominalType.swift */; };
 		1912C5F51F4FC1750097E8E8 /* StorageModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1912C5F41F4FC1750097E8E8 /* StorageModel.swift */; };
 		1931FBC51F4E6BFB0076BFA4 /* StoragePredicate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1931FBC41F4E6BFB0076BFA4 /* StoragePredicate.swift */; };
@@ -38,8 +39,6 @@
 /* Begin PBXFileReference section */
 		1600581F1F403E6B0046EED2 /* StorageMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageMetadata.swift; sourceTree = "<group>"; };
 		166DB3C21F0F32F7009D18DD /* Storage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Storage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
-		166DB3C51F0F32F7009D18DD /* Storage.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = Storage.h; sourceTree = "<group>"; };
-		166DB3C61F0F32F7009D18DD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		166DB3CB1F0F32F7009D18DD /* StorageTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StorageTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		166DB3D01F0F32F7009D18DD /* StorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageTests.swift; sourceTree = "<group>"; };
 		166DB3D21F0F32F7009D18DD /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -50,6 +49,8 @@
 		166DB41F1F0F5EC0009D18DD /* libsqlite3.0.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.0.tbd; path = usr/lib/libsqlite3.0.tbd; sourceTree = SDKROOT; };
 		166DB4211F0F5F37009D18DD /* StorageExtensions.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageExtensions.swift; sourceTree = "<group>"; };
 		1691C4352057C3BB007B7BC0 /* libxml2.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libxml2.tbd; path = usr/lib/libxml2.tbd; sourceTree = SDKROOT; };
+		1691C4372057D250007B7BC0 /* Storage.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Storage.h; sourceTree = "<group>"; };
+		1691C4382057D250007B7BC0 /* Info.plist */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		16C703CD1F40911D00410D30 /* StorageNominalType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageNominalType.swift; sourceTree = "<group>"; };
 		1912C5F41F4FC1750097E8E8 /* StorageModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageModel.swift; sourceTree = "<group>"; };
 		1931FBC41F4E6BFB0076BFA4 /* StoragePredicate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StoragePredicate.swift; sourceTree = "<group>"; };
@@ -101,8 +102,6 @@
 		166DB3C41F0F32F7009D18DD /* Storage */ = {
 			isa = PBXGroup;
 			children = (
-				166DB3C51F0F32F7009D18DD /* Storage.h */,
-				166DB3C61F0F32F7009D18DD /* Info.plist */,
 				166DB4101F0F3962009D18DD /* Source */,
 			);
 			path = Storage;
@@ -123,6 +122,8 @@
 		166DB4101F0F3962009D18DD /* Source */ = {
 			isa = PBXGroup;
 			children = (
+				1691C4382057D250007B7BC0 /* Info.plist */,
+				1691C4372057D250007B7BC0 /* Storage.h */,
 				166DB4111F0F396E009D18DD /* Storage.swift */,
 				1931FBC41F4E6BFB0076BFA4 /* StoragePredicate.swift */,
 				166DB4151F0F39DF009D18DD /* StorageToSQLite.swift */,
@@ -168,7 +169,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				166DB3D31F0F32F7009D18DD /* Storage.h in Headers */,
+				1691C4392057D250007B7BC0 /* Storage.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -253,6 +254,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				1691C43A2057D250007B7BC0 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
