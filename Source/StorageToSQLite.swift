@@ -148,7 +148,7 @@ extension StorageToSQLite {
 extension StorageToSQLite {
     
     // insert
-    private func insertOptional<T>(_ object:T) -> Bool {
+    func insertOptional<T>(_ object:T) -> Bool {
         let mirror = Mirror(reflecting: object)
         if String(describing: mirror.subjectType).contains("Optional<") {
             var bool:Bool = false
