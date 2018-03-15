@@ -24,10 +24,9 @@ extension String {
             len = self.count - start
         }
         let st = self.index(startIndex, offsetBy: start)
-        //let en = <#T##String.CharacterView corresponding to `st`##String.CharacterView#>.index(st, offsetBy: len)
         let en = self.index(st, offsetBy: len)
         let range = st ..< en
-        let subString = self[range]
-        return String(subString)
+        let string = self[range]
+        return String(string)
     }
 }
