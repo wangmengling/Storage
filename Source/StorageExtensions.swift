@@ -29,6 +29,5 @@ extension String {
         let range = st ..< en
         let subString = self[range]
         return String(subString)
-//        return self.substring(with: range)
     }
 }
