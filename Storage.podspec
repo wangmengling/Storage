@@ -16,7 +16,7 @@ Pod::Spec.new do |s|
   #
 
   s.name         = "Storage"
-  s.version      = "master"
+  s.version      = "1.0.0"
   s.summary      = "Storage is a mobile database."
 
   # This description is used to generate tags and improve search results.
