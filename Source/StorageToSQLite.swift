@@ -148,7 +148,7 @@ extension StorageToSQLite {
 extension StorageToSQLite {
     
     // insert
-    func insertOptional<T>(_ object:T) -> Bool {
+     func insertOptional<T>(_ object:T) -> Bool {
         let mirror = Mirror(reflecting: object)
         if String(describing: mirror.subjectType).contains("Optional<") {
             var bool:Bool = false
@@ -226,8 +226,7 @@ extension StorageToSQLite {
             let data = try! JSONSerialization.data(withJSONObject: value, options: JSONSerialization.WritingOptions.prettyPrinted)
             return "'\(data)',"
         case is Codable.Type:
-            let bo = self.insertOptional(value)
-            print(bo)
+            _ = self.insertOptional(value)
             return ""
         default:
             return ""
