@@ -226,7 +226,8 @@ extension StorageToSQLite {
             let data = try! JSONSerialization.data(withJSONObject: value, options: JSONSerialization.WritingOptions.prettyPrinted)
             return "'\(data)',"
         case is Codable.Type:
-            _ = self.insertOptional(value)
+            let bo = self.insertOptional(value)
+            print(bo)
             return ""
         default:
             return ""
