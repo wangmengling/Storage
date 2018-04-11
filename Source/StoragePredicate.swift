@@ -246,6 +246,7 @@ extension StoragePredicateSelect {
     func value<T:Codable>(_ type:T.Type) -> T? {
         self.tableName = String(describing: type)
         let dic = self.objectToSQLite()
+        guard dic != nil else { return nil }
         let data:Data = try! JSONSerialization.data(withJSONObject: dic as Any, options: [])
         let decoder = JSONDecoder()
         if let decoded = try? decoder.decode(T.self, from:data )
