@@ -231,7 +231,7 @@ extension StoragePredicateSelect {
 // MARK: - filter sorted
 extension StoragePredicateSelect {
     
-    func valueOfArray<T:Codable>(_ type:T.Type) -> Array<T> {
+    public func valueOfArray<T:Codable>(_ type:T.Type) -> Array<T> {
         self.tableName = String(describing: type)
         let dicArray = self.objectsToSQLite()
         let data:Data = try! JSONSerialization.data(withJSONObject: dicArray as Any, options: [])
@@ -243,7 +243,7 @@ extension StoragePredicateSelect {
         return []
     }
     
-    func value<T:Codable>(_ type:T.Type) -> T? {
+    public func value<T:Codable>(_ type:T.Type) -> T? {
         self.tableName = String(describing: type)
         let dic = self.objectToSQLite()
         guard dic != nil else { return nil }
