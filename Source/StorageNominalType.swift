@@ -80,7 +80,13 @@ extension StorageNominalType {
         let headerPointer = UnsafePointer<Int>(metadataClassPointer);
         
         let nominalTypeAddressPointer = headerPointer.advanced(by: NominalTypeDescriptor.Class.nominalTypeOffset).withMemoryRebound(to: Int8.self, capacity: 1, {$0})
+        #if swift(>=4.1) || (swift(>=3.3) && !swift(>=4.0))
+        //        return NominalTypeDescriptor(pointer: relativePointer(base: base, offset: base.pointee - base.hashValue))
+        let nominalTypePointer = nominalTypeAddressPointer.advanced(by: metadataClassPointer.pointee.Description - nominalTypeAddressPointer.hashValue)
+        #else
         let nominalTypePointer = nominalTypeAddressPointer.advanced(by: metadataClassPointer.pointee.Description)
+        #endif
+        
         return nominalTypePointer
     }
 }

@@ -234,12 +234,12 @@
                   moduleName = "StorageTests"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/utouu-imac/Documents/GIT/Storage/StorageTests/StorageTypeNestedTests.swift"
-                  timestampString = "542775672.35028"
+                  timestampString = "547529485.304482"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "59"
                   endingLineNumber = "59"
-                  offsetFromSymbolStart = "1424">
+                  offsetFromSymbolStart = "1563">
                </Location>
                <Location
                   shouldBeEnabled = "Yes"
@@ -249,7 +249,7 @@
                   moduleName = "StorageTests"
                   usesParentBreakpointCondition = "Yes"
                   urlString = "file:///Users/utouu-imac/Documents/GIT/Storage/StorageTests/StorageTypeNestedTests.swift"
-                  timestampString = "542775672.3537951"
+                  timestampString = "547529485.306651"
                   startingColumnNumber = "9223372036854775807"
                   endingColumnNumber = "9223372036854775807"
                   startingLineNumber = "59"
