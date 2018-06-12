@@ -218,7 +218,10 @@ extension StorageToSQLite {
             }
             return "0,"
         case is String.Type:
-            return "'\(value as! String)',"
+            guard let ds = value as? String else {
+                return ""
+            }
+            return "'\(ds)',"
         case is Array<Any>.Type:
             let data = try! JSONSerialization.data(withJSONObject: value, options: JSONSerialization.WritingOptions.prettyPrinted)
             return "'\(data)',"
