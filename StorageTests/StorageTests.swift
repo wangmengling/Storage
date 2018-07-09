@@ -52,7 +52,7 @@ extension StorageTests {
     func testInsertStructModel() {
         let storageModel:StorageModel = StorageModel()
         storageModel.name = "王国仲"
-        storageModel.eMail = 1
+        storageModel.eMail = nil
         
         var storage = Storage()
         let status = storage.add(storageModel)

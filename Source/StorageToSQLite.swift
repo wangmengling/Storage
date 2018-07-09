@@ -200,28 +200,45 @@ extension StorageToSQLite {
         let type = self.optionalTypeToType(fieldType)
         switch type {
         case is Int.Type:
-            return "\(value as! Int),"
-        case is Int8.Type:
-            return "\(Int(value as! Int8)),"
-        case is Int16.Type:
-            return "\(Int(value as! Int16)),"
-        case is Int32.Type:
-            return "\(Int(value as! Int32)),"
-        case is Double.Type:
-            return "\(value as! Double),"
-        case is Float.Type:
-            return "\(value as! Float),"
-        case is Bool.Type:
-            let boolValue = value as! Bool
-            if boolValue == true{
-                return "1,"
-            }
-            return "0,"
-        case is String.Type:
-            guard let ds = value as? String else {
+            guard let v = value as? Int else {
                 return ""
             }
-            return "'\(ds)',"
+            return "\(v),"
+        case is Int8.Type:
+            guard let v = value as? Int8 else {
+                return ""
+            }
+            return "\(v),"
+        case is Int16.Type:
+            guard let v = value as? Int16 else {
+                return ""
+            }
+            return "\(v),"
+        case is Int32.Type:
+            guard let v = value as? Int32 else {
+                return ""
+            }
+            return "\(v),"
+        case is Double.Type:
+            guard let v = value as? Double else {
+                return ""
+            }
+            return "\(v),"
+        case is Float.Type:
+            guard let v = value as? Float else {
+                return ""
+            }
+            return "\(v),"
+        case is Bool.Type:
+            guard let v = value as? Bool,v == true else {
+                return "0,"
+            }
+            return "1,"
+        case is String.Type:
+            guard let v = value as? String else {
+                return ""
+            }
+            return "'\(v)',"
         case is Array<Any>.Type:
             let data = try! JSONSerialization.data(withJSONObject: value, options: JSONSerialization.WritingOptions.prettyPrinted)
             return "'\(data)',"
@@ -229,8 +246,7 @@ extension StorageToSQLite {
             let data = try! JSONSerialization.data(withJSONObject: value, options: JSONSerialization.WritingOptions.prettyPrinted)
             return "'\(data)',"
         case is Codable.Type:
-            let bo = self.insertOptional(value)
-            print(bo)
+            _ = self.insertOptional(value)
             return ""
         default:
             return ""
