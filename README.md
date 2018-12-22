@@ -34,47 +34,47 @@
 ### <a name="storage-select"></a>Select
 > Select single data
 
-	let value:StorageModel?  =  storage.object().filters("").sorted("").value(StorageModel.self)
+	let value:StorageModel?  =  Storage.object().filters("").sorted("").value(StorageModel.self)
 
 > Select many data
 
-	let value:[StorageModel]  =  storage.object().filters("").sorted("").valueOfArray(StorageModel.self)
+	let value:[StorageModel]  =  Storage.object().filters("").sorted("").valueOfArray(StorageModel.self)
 	
 ### <a name="storage-insert"></a>Insert
 > Insert single data
 
-	let status = storage.add(storageModel) //Add enty
+	let status = Storage.add(storageModel) //Add enty
 > Insert single data , Value is [String:Any] ，Type is inherit Codable Protocol
 
-	let status = storage.create(StorageModel.self, value: ["name":"wangmaoling","eMail":654321])
+	let status = Storage.create(StorageModel.self, value: ["name":"wangmaoling","eMail":654321])
 
 > Insert many data
 	
-	let status = storage.addArray([storageModel])
+	let status = Storage.addArray([storageModel])
 > Insert many data , Value is [[String:Any]] ，Type is inherit Codable Protocol
 
 	let dic = [["name":"wangmaoling","eMail":123456],["name":"wangguozhong","eMail":123456]]
-	let status = storage.create(StorageModel.self, value: dic)
+	let status = Storage.create(StorageModel.self, value: dic)
 	
 ### <a name="storage-update"></a>Update
 >Requires inheritance protocol StorageProtocol
 
-	let status = storage.update(storageModel)
+	let status = Storage.update(storageModel)
 	
 > Update
  
-	let status = storage.update(StorageModel.self, ["name":"wangguozhongss"]).filter(["eMail":123456]).sorted("name", ascending: true).limit(1).execute()
+	let status = Storage.update(StorageModel.self, ["name":"wangguozhongss"]).filter(["eMail":123456]).sorted("name", ascending: true).limit(1).execute()
 	
 ### <a name="storage-delete"></a>Delete
 
 > Delete single data
 
-	let status = storage.delete(storageModel)
+	let status = Storage.delete(storageModel)
 	
 > Delete many data
 
-	let status = storage.delete(StorageModel.self).filter(["name":"sdsd"]).sorted("name").limit(1).execute()
+	let status = Storage.delete(StorageModel.self).filter(["name":"sdsd"]).sorted("name").limit(1).execute()
 
 > Delete all data of StorageModel type
 	
-	let status = storage.deleteAll(StorageModel.self)
+	let status = Storage.deleteAll(StorageModel.self)
