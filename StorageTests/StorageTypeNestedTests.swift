@@ -54,8 +54,7 @@ class StorageTypeNestedTests: XCTestCase {
 //        storageTypeNestedModel?.time = Int(NSDate().timeIntervalSinceNow / 1000)
         storageTypeNestedModel?.storageModel = storageModel
         storageTypeNestedModel?.sd = ["asdfasdfasdf","asdf"]
-        var storage = Storage()
-        let status = storage.add(storageTypeNestedModel)
+        let status = Storage.add(storageTypeNestedModel)
         XCTAssertTrue(status, "insert object error \(status)")
     }
 }

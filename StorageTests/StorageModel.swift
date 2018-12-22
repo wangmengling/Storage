@@ -11,7 +11,7 @@ import Foundation
 
 
 /// swift struct model
-class StorageModel:Codable {
+struct StorageModel:Codable {
     var name: String?
     var eMail: Int?
 }
@@ -23,8 +23,11 @@ extension StorageModel:StorageProtocol {
 }
 
 /// swift class model
-class StorageClassModel: NSObject {
+class StorageClassModel: StorageProtocol {
     var name: String?
     var eMail: Int?
     var phone: String?
+    required init() {
+        
+    }
 }

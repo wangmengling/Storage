@@ -8,6 +8,8 @@
 
 /* Begin PBXBuildFile section */
 		160058201F403E6B0046EED2 /* StorageMetadata.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1600581F1F403E6B0046EED2 /* StorageMetadata.swift */; };
+		1611D4EC21CDDAB8002A7262 /* StorageDataStructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1611D4EB21CDDAB8002A7262 /* StorageDataStructure.swift */; };
+		1611D4ED21CDDAB8002A7262 /* StorageDataStructure.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1611D4EB21CDDAB8002A7262 /* StorageDataStructure.swift */; };
 		166DB3CC1F0F32F7009D18DD /* Storage.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 166DB3C21F0F32F7009D18DD /* Storage.framework */; };
 		166DB3D11F0F32F7009D18DD /* StorageTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166DB3D01F0F32F7009D18DD /* StorageTests.swift */; };
 		166DB4121F0F396E009D18DD /* Storage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 166DB4111F0F396E009D18DD /* Storage.swift */; };
@@ -35,6 +37,7 @@
 
 /* Begin PBXFileReference section */
 		1600581F1F403E6B0046EED2 /* StorageMetadata.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageMetadata.swift; sourceTree = "<group>"; };
+		1611D4EB21CDDAB8002A7262 /* StorageDataStructure.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = StorageDataStructure.swift; sourceTree = "<group>"; };
 		166DB3C21F0F32F7009D18DD /* Storage.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Storage.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		166DB3CB1F0F32F7009D18DD /* StorageTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = StorageTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		166DB3D01F0F32F7009D18DD /* StorageTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StorageTests.swift; sourceTree = "<group>"; };
@@ -95,8 +98,6 @@
 		166DB3C41F0F32F7009D18DD /* Storage */ = {
 			isa = PBXGroup;
 			children = (
-				1691C43B2057D344007B7BC0 /* Info.plist */,
-				1691C4412057D425007B7BC0 /* Storage.h */,
 				166DB4101F0F3962009D18DD /* Source */,
 			);
 			path = Storage;
@@ -143,6 +144,7 @@
 				1600581F1F403E6B0046EED2 /* StorageMetadata.swift */,
 				16C703CD1F40911D00410D30 /* StorageNominalType.swift */,
 				195E36DD1F42CB6B0015A5BD /* StorageMirror.swift */,
+				1611D4EB21CDDAB8002A7262 /* StorageDataStructure.swift */,
 			);
 			name = Reflection;
 			sourceTree = "<group>";
@@ -161,7 +163,6 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1691C4422057D425007B7BC0 /* Storage.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -246,7 +247,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1691C43C2057D344007B7BC0 /* Info.plist in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -265,6 +265,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				16C703CE1F40911D00410D30 /* StorageNominalType.swift in Sources */,
+				1611D4EC21CDDAB8002A7262 /* StorageDataStructure.swift in Sources */,
 				195E36DE1F42CB6B0015A5BD /* StorageMirror.swift in Sources */,
 				1931FBC51F4E6BFB0076BFA4 /* StoragePredicate.swift in Sources */,
 				166DB4121F0F396E009D18DD /* Storage.swift in Sources */,
@@ -281,6 +282,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				166DB3D11F0F32F7009D18DD /* StorageTests.swift in Sources */,
+				1611D4ED21CDDAB8002A7262 /* StorageDataStructure.swift in Sources */,
 				196938361F62419100893650 /* StorageTypeNestedTests.swift in Sources */,
 				1912C5F51F4FC1750097E8E8 /* StorageModel.swift in Sources */,
 			);
@@ -350,6 +352,7 @@
 				SDKROOT = iphoneos;
 				SWIFT_ACTIVE_COMPILATION_CONDITIONS = DEBUG;
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				SWIFT_VERSION = 4.2;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
 			};
@@ -400,6 +403,7 @@
 				MTL_ENABLE_DEBUG_INFO = NO;
 				SDKROOT = iphoneos;
 				SWIFT_OPTIMIZATION_LEVEL = "-Owholemodule";
+				SWIFT_VERSION = 4.2;
 				VALIDATE_PRODUCT = YES;
 				VERSIONING_SYSTEM = "apple-generic";
 				VERSION_INFO_PREFIX = "";
@@ -424,7 +428,7 @@
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "$(SWIFT_MODULE_NAME)-Swift.h";
 				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -446,7 +450,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME:c99extidentifier)";
 				SKIP_INSTALL = YES;
 				SWIFT_OBJC_INTERFACE_HEADER_NAME = "$(SWIFT_MODULE_NAME)-Swift.h";
-				SWIFT_VERSION = 4.0;
+				SWIFT_VERSION = 4.2;
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;

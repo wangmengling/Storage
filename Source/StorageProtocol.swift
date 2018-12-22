@@ -7,7 +7,8 @@
 //
 
 import Foundation
-protocol StorageProtocol {
+protocol StorageProtocol: Codable {
+    init()
     func primaryKey() -> String
 }
 

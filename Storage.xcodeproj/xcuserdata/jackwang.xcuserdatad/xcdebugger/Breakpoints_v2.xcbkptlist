@@ -10,12 +10,12 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Source/StorageToSQLite.swift"
-            timestampString = "541582516.376"
+            timestampString = "567142060.8923219"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "409"
-            endingLineNumber = "409"
-            landmarkName = "proToColumn(_:_:_:)"
+            startingLineNumber = "410"
+            endingLineNumber = "410"
+            landmarkName = "proTypeReplace(_:_:)"
             landmarkType = "7">
          </BreakpointContent>
       </BreakpointProxy>
@@ -26,60 +26,13 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "StorageTests/StorageTests.swift"
-            timestampString = "542627340.4108109"
+            timestampString = "567142060.892887"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "39"
-            endingLineNumber = "39"
+            startingLineNumber = "38"
+            endingLineNumber = "38"
             landmarkName = "testSelectObject()"
             landmarkType = "7">
-            <Locations>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "StorageTests.StorageTests.testSelectObject() -&gt; ()"
-                  moduleName = "StorageTests"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jackwang/Documents/github/Storage/StorageTests/StorageTests.swift"
-                  timestampString = "542627354.445124"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "39"
-                  endingLineNumber = "39"
-                  offsetFromSymbolStart = "739">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "implicit closure #3 : @autoclosure () throws -&gt; Swift.Optional&lt;Any&gt; in StorageTests.StorageTests.testSelectObject() -&gt; ()"
-                  moduleName = "StorageTests"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jackwang/Documents/github/Storage/StorageTests/StorageTests.swift"
-                  timestampString = "542627354.454168"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "39"
-                  endingLineNumber = "39"
-                  offsetFromSymbolStart = "21">
-               </Location>
-               <Location
-                  shouldBeEnabled = "Yes"
-                  ignoreCount = "0"
-                  continueAfterRunningActions = "No"
-                  symbolName = "implicit closure #4 : @autoclosure () -&gt; Swift.String in StorageTests.StorageTests.testSelectObject() -&gt; ()"
-                  moduleName = "StorageTests"
-                  usesParentBreakpointCondition = "Yes"
-                  urlString = "file:///Users/jackwang/Documents/github/Storage/StorageTests/StorageTests.swift"
-                  timestampString = "542627354.459692"
-                  startingColumnNumber = "9223372036854775807"
-                  endingColumnNumber = "9223372036854775807"
-                  startingLineNumber = "39"
-                  endingLineNumber = "39"
-                  offsetFromSymbolStart = "4">
-               </Location>
-            </Locations>
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -89,11 +42,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "StorageTests/StorageTests.swift"
-            timestampString = "542627340.425693"
+            timestampString = "567142060.893518"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "37"
-            endingLineNumber = "37"
+            startingLineNumber = "36"
+            endingLineNumber = "36"
             landmarkName = "testSelectObject()"
             landmarkType = "7">
          </BreakpointContent>
@@ -105,11 +58,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "Source/StorageToSQLite.swift"
-            timestampString = "541582516.3766921"
+            timestampString = "567142060.893882"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "85"
-            endingLineNumber = "85"
+            startingLineNumber = "86"
+            endingLineNumber = "86"
             landmarkName = "updatePrimaryKey(_:)"
             landmarkType = "7">
          </BreakpointContent>

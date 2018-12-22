@@ -33,15 +33,13 @@ class StorageTests: XCTestCase {
 // MARK: - Select object
 extension StorageTests {
     func testSelectObject() {
-        var storage = Storage()
-        let value:StorageModel?  =  storage.object().filter("").sorted("").value(StorageModel.self)
+        let value:StorageModel?  =  Storage.object().filter("").sorted("").value(StorageModel.self)
         XCTAssertNotNil(value, "select object is null");
         XCTAssertNotNil(value?.name, "select object is null");
     }
     
     func testSelectObjectOfArray() {
-        var storage = Storage()
-        let value:[StorageModel]  =  storage.object().filter("").sorted("").valueOfArray(StorageModel.self)
+        let value:[StorageModel]  =  Storage.object().filter("").sorted("").valueOfArray(StorageModel.self)
         XCTAssertNotNil(value, "select object is null\(value)");
         XCTAssertNotNil(value.first, "select object is null \(String(describing: value.first))");
     }
@@ -50,36 +48,32 @@ extension StorageTests {
 // MARK: - Insert object
 extension StorageTests {
     func testInsertStructModel() {
-        let storageModel:StorageModel = StorageModel()
+        var storageModel:StorageModel = StorageModel()
         storageModel.name = "王国仲"
         storageModel.eMail = nil
         
-        var storage = Storage()
-        let status = storage.add(storageModel)
+        let status = Storage.add(storageModel)
         XCTAssertTrue(status, "insert object error \(status)")
     }
     
     func testInsertArrayStructModel() {
-        let storageModel:StorageModel = StorageModel()
+        var storageModel:StorageModel = StorageModel()
         storageModel.name = "王国仲"
         storageModel.eMail = 1
         
-        var storage = Storage()
-        let status = storage.addArray([storageModel])
+        let status = Storage.addArray([storageModel])
         XCTAssertTrue(status, "insert object error \(status)")
     }
     
     func testCreateArrayStructModel() {
         let dic = [["name":"wangmaoling","eMail":123456],["name":"wangguozhong","eMail":123456]]
         
-        var storage = Storage()
-        let status = storage.create(StorageModel.self, value: dic)
+        let status = Storage.create(StorageModel.self, value: dic)
         XCTAssertTrue(status, "insert object error \(status)")
     }
     
     func testCreateStructModel() {
-        var storage = Storage()
-        let status = storage.create(StorageModel.self, value: ["name":"wangmaoling","eMail":654321])
+        let status = Storage.create(StorageModel.self, value: ["name":"wangmaoling","eMail":654321])
         XCTAssertTrue(status, "insert object error \(status)")
     }
 }
@@ -88,36 +82,35 @@ extension StorageTests {
 // MARK: - Update object
 extension StorageTests {
     func testUpdateObject() {
-        let storageModel:StorageModel = StorageModel()
+        var storageModel:StorageModel = StorageModel()
 //        storageModel.name = "王国仲"
         storageModel.eMail = 3
         
-        var storage = Storage()
-        let status = storage.update(storageModel)
+        let status = Storage.update(storageModel)
         XCTAssertTrue(status, "update object error \(status)")
     }
     
     func testUpdateType() {
-        let storage = Storage()
-        let status = storage.update(StorageModel.self, ["name":"sdsd"]).execute()
+        
+        let status = Storage.update(StorageModel.self, ["name":"sdsd"]).execute()
         XCTAssertTrue(status, "update object error \(status)")
     }
     
     func testUpdateTypeOne() {
-        let storage = Storage()
-        let status = storage.update(StorageModel.self, ["name":"wangguozhong"]).filter(["eMail":123456]).execute()
+        
+        let status = Storage.update(StorageModel.self, ["name":"wangguozhong"]).filter(["eMail":123456]).execute()
         XCTAssertTrue(status, "update object error \(status)")
     }
     
     func testUpdateTypeTwo() {
-        let storage = Storage()
-        let status = storage.update(StorageModel.self, ["name":"wangguozhongs"]).filter(["eMail":123456]).limit(2).execute()
+        
+        let status = Storage.update(StorageModel.self, ["name":"wangguozhongs"]).filter(["eMail":123456]).limit(2).execute()
         XCTAssertTrue(status, "update object error \(status)")
     }
     
     func testUpdateTypeThree() {
-        let storage = Storage()
-        let status = storage.update(StorageModel.self, ["name":"wangguozhongss"]).filter(["eMail":123456]).sorted("name", ascending: true).limit(1).execute()
+        
+        let status = Storage.update(StorageModel.self, ["name":"wangguozhongss"]).filter(["eMail":123456]).sorted("name", ascending: true).limit(1).execute()
         XCTAssertTrue(status, "update object error \(status)")
     }
 }
@@ -125,36 +118,31 @@ extension StorageTests {
 // MARK: - Delete object
 extension StorageTests {
     func testDeleteObject() {
-        let storageModel:StorageModel = StorageModel()
+        var storageModel:StorageModel = StorageModel()
         storageModel.name = "王国仲"
         storageModel.eMail = 3
         
-        var storage = Storage()
-        let status = storage.delete(storageModel)
+        let status = Storage.delete(storageModel)
         XCTAssertTrue(status, "update object error \(status)")
     }
     
     func testDeleteOne() {
-        var storage = Storage()
-        let status = storage.delete(StorageModel.self).filter(["name":"sdsd"]).sorted("name").limit(1).execute()
+        let status = Storage.delete(StorageModel.self).filter(["name":"sdsd"]).sorted("name").limit(1).execute()
         XCTAssertTrue(status, "update object error \(status)")
     }
     
     func testDeleteTwo() {
-        var storage = Storage()
-        let status = storage.delete(StorageModel.self).limit(1).execute()
+        let status = Storage.delete(StorageModel.self).limit(1).execute()
         XCTAssertTrue(status, "update object error \(status)")
     }
     
     func testDeleteThree() {
-        var storage = Storage()
-        let status = storage.delete(StorageModel.self).sorted("name").limit(1).execute()
+        let status = Storage.delete(StorageModel.self).sorted("name").limit(1).execute()
         XCTAssertTrue(status, "update object error \(status)")
     }
     
     func testDeleteAll() {
-        var storage = Storage()
-        let status = storage.deleteAll(StorageModel.self)
+        let status = Storage.deleteAll(StorageModel.self)
         XCTAssertTrue(status, "update object error \(status)")
     }
 }

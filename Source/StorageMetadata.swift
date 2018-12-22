@@ -16,7 +16,6 @@ struct CommonMetadataLayout {
 struct StorageMetadata {
     var pointer:UnsafePointer<CommonMetadataLayout>
     init(type: Any.Type) {
-        print(type)
         self.pointer = unsafeBitCast(type, to: UnsafePointer<CommonMetadataLayout>.self)
     }
 }

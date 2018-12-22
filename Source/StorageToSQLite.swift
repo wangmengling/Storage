@@ -20,9 +20,10 @@ protocol StorageToSQLiteProtocol {
 
 public struct StorageToSQLite:StorageToSQLiteProtocol {
 //    typealias T = Codable
-    public static let shareInstance:StorageToSQLite = {
-        return StorageToSQLite()
-    }()
+//    public static let shareInstance:StorageToSQLite = {
+//        return StorageToSQLite()
+//    }()
+    public static let shareInstance: StorageToSQLite = StorageToSQLite()
     var sqliteManager = StorageSQLiteManager.instanceManager
     fileprivate var tableName:String = ""
 }
@@ -315,12 +316,13 @@ extension StorageToSQLite {
      
      - parameter object: T object
      */
-    func createTable<T>(_ type:T.Type) -> Bool {
-        if self.tableIsExists(type){
+    func createTable<T>(_ object:T) -> Bool {
+        let objectType = type(of: object)
+        if self.tableIsExists(objectType){
             return true
         }
-        let sMirror:StorageMirror = StorageMirror(type)
-        return self.createTable( String(describing: type),  sMirror.fieldNames, sMirror.fieldTypes)
+        let sMirror:StorageMirror = StorageMirror(reflecting: object)
+        return self.createTable( String(describing: objectType),  sMirror.fieldNames, sMirror.fieldTypes)
     }
     
     
@@ -359,7 +361,7 @@ extension StorageToSQLite {
             print("\(tableName)-----\(typeName) database create failed")
             return
         }
-        let sMirror:StorageMirror = StorageMirror(optionalType)
+        let sMirror:StorageMirror = StorageMirror(reflecting: optionalType)
         let status = self.createTable(typeName, sMirror.fieldNames, sMirror.fieldTypes, fatherTableName)
         if !status {
             print("\(tableName)-----\(typeName) database create failed")
@@ -400,7 +402,7 @@ extension StorageToSQLite {
             return ColumuType.BLOB
         case is Dictionary<String,Any>.Type:
             return ColumuType.BLOB
-        case is Codable.Type:
+        case is StorageProtocol.Type:
             self.createTable(type: type, tableName)
             return ColumuType.NULL
         default:
@@ -476,7 +478,7 @@ extension StorageToSQLite {
         var optionalType = type
         var typeName = String(describing: optionalType)
         if typeName.contains("Optional<") {
-            var optionalTypeName = String(describing: ImplicitlyUnwrappedOptional.init(optionalType))
+            var optionalTypeName = String(describing: Optional.init(optionalType))
             if optionalTypeName.contains("Optional<") {
                 optionalTypeName = optionalTypeName.subString(9, length: optionalTypeName.count-10)
             }

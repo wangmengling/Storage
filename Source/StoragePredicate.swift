@@ -14,6 +14,11 @@ enum StoragePredicateType {
     case DELETE
 }
 
+enum StorageSort: String {
+    case DESC
+    case ASC
+}
+
 
 protocol StoragePredicateProtocol: class {
     var storageToSQLite:StorageToSQLite {get set}

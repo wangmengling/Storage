@@ -11,8 +11,8 @@ import Foundation
 /// Sqlite data manager for swift
 public struct Storage {
     fileprivate var storageToSQLite:StorageToSQLite = StorageToSQLite()
-    
-    public init(){}
+    public static let instance: Storage = Storage()
+    private init(){}
 }
 
 // MARK: - Select data
@@ -20,9 +20,9 @@ extension Storage {
     /// Select data
     ///
     /// - Parameter type: Type is inherit Codable Protocol
-    /// - Returns: Filter, filter().sorted().limit().value()
-    mutating public func object() -> StoragePredicateSelect {
-        return StoragePredicateSelect(storageToSQLite)
+    /// - Returns: Filter, filvar().sorted().limit().value()
+    static public func object() -> StoragePredicateSelect {
+        return StoragePredicateSelect(StorageToSQLite.shareInstance)
     }
 }
 
@@ -35,9 +35,9 @@ extension Storage {
     ///   - type: Type is Struct or Class or Enum
     ///   - filter: String
     /// - Returns: Numbers
-    public func count<T>(_ type:T.Type,filter:String = "") -> Int {
-        var storageToSQLite = StorageToSQLite()
-        let count = storageToSQLite.count(type,filter: filter)
+    static public func count<T>(_ type:T.Type,filter:String = "") -> Int {
+        var instance = StorageToSQLite.shareInstance
+        let count = instance.count(type,filter: filter)
         return count
     }
 }
@@ -51,15 +51,16 @@ extension Storage {
     ///   - object: Added entity
     ///   - update: Whether it is updated (Requires inheritance protocol StorageProtocol)
     /// - Returns: Status
-    mutating public func add<T>(_ object: T, update:Bool = false) -> Bool {
+    static public func add<T>(_ object: T, update:Bool = false) -> Bool {
+        var instance = StorageToSQLite.shareInstance
         let object:T = object
         //create table if no exist
-        if storageToSQLite.createTable(type(of: object)){
+        if instance.createTable(object){
             //update
-            if update == true && storageToSQLite.count(object) > 0{
-                return storageToSQLite.updatePrimaryKey(object)
+            if update == true && instance.count(object) > 0{
+                return instance.updatePrimaryKey(object)
             }
-            return storageToSQLite.insert(object)
+            return instance.insert(object)
         }
         return false
     }
@@ -71,11 +72,11 @@ extension Storage {
     ///   - object: Added entity
     ///   - update: Whether it is updated (Requires inheritance protocol StorageProtocol)
     /// - Returns: Status
-    mutating public func add<T>(_ object: T?, update:Bool = false) -> Bool {
+    static public func add<T>(_ object: T?, update:Bool = false) -> Bool {
         guard let object:T = object else {
             return false
         }
-        return add(object, update: update)
+        return Storage.add(object, update: update)
     }
     
     
@@ -83,9 +84,9 @@ extension Storage {
     ///
     /// - Parameter objectArray: Added entity
     /// - Returns: Status
-    mutating public func addArray<T>(_ objectArray:[T])  -> Bool{
+    static public func addArray<T>(_ objectArray:[T])  -> Bool{
         for (_,element) in objectArray.enumerated() {
-            _ = self.add(element,update: false)
+            _ = Storage.add(element,update: false)
         }
         return true
     }
@@ -94,11 +95,11 @@ extension Storage {
     ///
     /// - Parameter objectArray: Added entity
     /// - Returns: Status
-    mutating public func addArray<T>(_ objectArray:[T]?)  -> Bool{
+    static public func addArray<T>(_ objectArray:[T]?)  -> Bool{
         guard let objectArray = objectArray else {
             return false
         }
-        return addArray(objectArray)
+        return Storage.addArray(objectArray)
     }
 }
 
@@ -112,11 +113,11 @@ extension Storage {
     ///   - type: Type is inherit Codable Protocol
     ///   - value: Added entity
     /// - Returns: Status
-    mutating public func create<T:Codable>(_ type:T.Type , value:AnyObject) -> Bool {
+    static public func create<T:Codable>(_ type:T.Type , value:AnyObject) -> Bool {
         if value is [String:Any] {
-            return self.create(type, value: value as! [String:Any])
+            return Storage.create(type, value: value as! [String:Any])
         }else if value is [[String:Any]] {
-            return self.create(type, value: value as! [[String:Any]])
+            return Storage.create(type, value: value as! [[String:Any]])
         }
         return false
     }
@@ -127,12 +128,12 @@ extension Storage {
     ///   - type: Type is inherit Codable Protocol
     ///   - value: Added entity [String:Any]
     /// - Returns: Status
-    mutating public func create<T:Codable>(_ type:T.Type , value:[String:Any]) -> Bool {
+    static public func create<T:Codable>(_ type:T.Type , value:[String:Any]) -> Bool {
         let data:Data = try! JSONSerialization.data(withJSONObject: value as Any, options: [])
         let decoder = JSONDecoder()
         if let decoded = try? decoder.decode(T.self, from:data )
         {
-            return self.add(decoded)
+            return Storage.add(decoded)
         }
         return false
     }
@@ -143,12 +144,12 @@ extension Storage {
     ///   - type: Type is inherit Codable Protocol
     ///   - value: Added entity [[String : Any]]
     /// - Returns: Status
-    mutating public func create<T:Codable>(_ type:T.Type , value:[[String : Any]]) -> Bool {
+    static public func create<T:Codable>(_ type:T.Type , value:[[String : Any]]) -> Bool {
         let data:Data = try! JSONSerialization.data(withJSONObject: value as Any, options: [])
         let decoder = JSONDecoder()
         if let decoded = try? decoder.decode([T].self, from:data )
         {
-            return self.addArray(decoded)
+            return Storage.addArray(decoded)
         }
         return false
     }
@@ -162,12 +163,12 @@ extension Storage {
     ///
     /// - Parameter object:Update entity (Requires inheritance protocol StorageProtocol)
     /// - Returns: Status
-    mutating public func update<T>(_ object:T?)  -> Bool {
-        return self.add(object, update: true)
+    static public func update<T>(_ object:T?)  -> Bool {
+        return Storage.add(object, update: true)
     }
     
-    public func update<T>(_ type:T.Type, _ values:[String:Any]) -> StoragePredicateUpdate {
-        return StoragePredicateUpdate(storageToSQLite, type, values)
+    static func update<T>(_ type:T.Type, _ values:[String:Any]) -> StoragePredicateUpdate {
+        return StoragePredicateUpdate(StorageToSQLite.shareInstance, type, values)
     }
     
 }
@@ -179,27 +180,27 @@ extension Storage {
     ///
     /// - Parameter object: Need to delete the entity
     /// - Returns: Status
-    public mutating func delete<T>(_ object:T?) -> Bool  {
+    public static func delete<T>(_ object:T?) -> Bool  {
         guard let object = object else {
             return false
         }
-        return storageToSQLite.delete(object)
+        return StorageToSQLite.shareInstance.delete(object)
     }
     
     /// Delete single data
     ///
     /// - Parameter object: Need to delete the entity
     /// - Returns: Status
-    public mutating func delete<T>(_ type:T.Type) -> StoragePredicateDelete  {
-        return StoragePredicateDelete(self.storageToSQLite, type)
+    public static func delete<T>(_ type:T.Type) -> StoragePredicateDelete  {
+        return StoragePredicateDelete(StorageToSQLite.shareInstance, type)
     }
     
     /// Delete all data of type table
     ///
     /// - Parameter type: Need to delete the type
     /// - Returns: Status
-    public mutating func deleteAll<T>(_ type:T.Type) -> Bool {
-        return storageToSQLite.deleteAll(type)
+    public static func deleteAll<T>(_ type:T.Type) -> Bool {
+        return StorageToSQLite.shareInstance.deleteAll(type)
     }
 }
 
