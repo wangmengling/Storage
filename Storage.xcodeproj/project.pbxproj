@@ -119,8 +119,8 @@
 			isa = PBXGroup;
 			children = (
 				166DB4111F0F396E009D18DD /* Storage.swift */,
-				1931FBC41F4E6BFB0076BFA4 /* StoragePredicate.swift */,
 				166DB4151F0F39DF009D18DD /* StorageToSQLite.swift */,
+				1931FBC41F4E6BFB0076BFA4 /* StoragePredicate.swift */,
 				166DB4171F0F5928009D18DD /* StorageSQLiteManager.swift */,
 				166DB4131F0F3988009D18DD /* StorageProtocol.swift */,
 				166DB4211F0F5F37009D18DD /* StorageExtensions.swift */,

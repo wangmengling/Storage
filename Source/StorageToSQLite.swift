@@ -19,10 +19,6 @@ protocol StorageToSQLiteProtocol {
 
 
 public struct StorageToSQLite:StorageToSQLiteProtocol {
-//    typealias T = Codable
-//    public static let shareInstance:StorageToSQLite = {
-//        return StorageToSQLite()
-//    }()
     public static let shareInstance: StorageToSQLite = StorageToSQLite()
     var sqliteManager = StorageSQLiteManager.instanceManager
     fileprivate var tableName:String = ""
@@ -91,19 +87,6 @@ extension StorageToSQLite {
             values = values.subString(0, length: values.count - 1)
         }
         
-//        if let b = AnyBidirectionalCollection(property) {
-//            
-//            b.forEach({ (child) in
-//                guard let columnValue:String = self.proToColumnValues(child.value) , primaryKey != child.label else  {
-//                    return
-//                }
-//                values += "\(child.label!) = \(columnValue)"
-//            })
-//            
-//            if values.count > 0 {
-//                values = values.subString(0, length: values.count - 1)
-//            }
-//        }
         //组装
         let updateSql = "UPDATE \(self.tableName(object)) SET \(values) \(filter)"
         return sqliteManager.execSQL(updateSql)
