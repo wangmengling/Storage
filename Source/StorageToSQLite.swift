@@ -20,8 +20,13 @@ protocol StorageToSQLiteProtocol {
 
 public struct StorageToSQLite:StorageToSQLiteProtocol {
     public static let shareInstance: StorageToSQLite = StorageToSQLite()
+    private let queueID = "com.maolin.StorageToSQLite.queue"
     var sqliteManager = StorageSQLiteManager.instanceManager
+    var sqliteQueue: DispatchQueue
     fileprivate var tableName:String = ""
+    private init() {
+        sqliteQueue = DispatchQueue(label: queueID)
+    }
 }
 
 
@@ -185,6 +190,15 @@ extension StorageToSQLite {
         let insertSQL = "INSERT INTO \(String(describing: mirror.subjectType)) (\(columns))  VALUES (\(values));"
         
         return sqliteManager.execSQL(insertSQL)
+    }
+    
+    func insert<T>(_ object:T, _ block: @escaping (Bool) -> Void) {
+        sqliteQueue.async {
+            let insertResult = self.insert(object)
+            DispatchQueue.main.async(execute: {
+                block(insertResult)
+            })
+        }
     }
 }
 
