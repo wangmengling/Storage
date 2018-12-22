@@ -10,7 +10,7 @@ import Foundation
 
 /// Sqlite data manager for swift
 public struct Storage {
-    fileprivate var storageToSQLite:StorageToSQLite = StorageToSQLite()
+//    fileprivate var storageToSQLite:StorageToSQLite = StorageToSQLite()
     public static let instance: Storage = Storage()
     private init(){}
 }
