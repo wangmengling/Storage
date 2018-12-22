@@ -17,9 +17,9 @@ struct StorageModel:Codable {
 }
 
 extension StorageModel:StorageProtocol {
-    func primaryKey() -> String {
-        return "name"
-    }
+//    func primaryKey() -> String {
+//        return "name"
+//    }
 }
 
 /// swift class model

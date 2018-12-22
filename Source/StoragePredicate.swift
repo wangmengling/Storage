@@ -223,11 +223,17 @@ public class StoragePredicateSelect:StoragePredicateProtocol {
 extension StoragePredicateSelect {
     
     fileprivate func objectsToSQLite() -> [[String : AnyObject]]? {
+        if self.sort.count < 1 {
+            self.sort = "order by storage_\(self.tableName)_id DESC"
+        }
         let selectSQL = "SELECT * FROM  \(self.tableName) \(self.filter) \(self.sort) \(self.limit)"
         return storageToSQLite.objectsToSQLite(selectSQL)
     }
     
     fileprivate func objectToSQLite() -> [String : AnyObject]? {
+        if self.sort.count < 1 {
+            self.sort = "order by storage_\(self.tableName)_id DESC"
+        }
         let selectSQL = "SELECT * FROM  \(self.tableName) \(self.filter)  \(self.sort) LIMIT 0,1"
         return storageToSQLite.objectToSQLite(selectSQL)
     }

@@ -71,26 +71,39 @@ extension StorageToSQLite {
         let primaryKeyChild:[Mirror.Child] = property.filter { child -> Bool in
             return child.label == primaryKey
         }
-        guard let primaryKeyValue = primaryKeyChild.first?.value else {
-            return false
+        var filter = ""
+        if let primaryKeyValue = primaryKeyChild.first?.value {
+            filter = "Where \(primaryKey) = '\(primaryKeyValue)'"
         }
-        let filter = "Where \(primaryKey) = '\(primaryKeyValue)'"
         
         
         var values = ""
-        if let b = AnyBidirectionalCollection(property) {
-            
-            b.forEach({ (child) in
-                guard let columnValue:String = self.proToColumnValues(child.value) , primaryKey != child.label else  {
-                    return
-                }
-                values += "\(child.label!) = \(columnValue)"
-            })
-            
-            if values.count > 0 {
-                values = values.subString(0, length: values.count - 1)
+        
+        objectsMirror.children.forEach { (arg) in
+            let (key, value) = arg
+            guard let columnValue:String = self.proToColumnValues(type(of: value), value) ,  columnValue.count > 0 else {
+                return;
             }
+           values += "\(key!) = \(columnValue)"
         }
+        
+        if values.count > 0 {
+            values = values.subString(0, length: values.count - 1)
+        }
+        
+//        if let b = AnyBidirectionalCollection(property) {
+//            
+//            b.forEach({ (child) in
+//                guard let columnValue:String = self.proToColumnValues(child.value) , primaryKey != child.label else  {
+//                    return
+//                }
+//                values += "\(child.label!) = \(columnValue)"
+//            })
+//            
+//            if values.count > 0 {
+//                values = values.subString(0, length: values.count - 1)
+//            }
+//        }
         //组装
         let updateSql = "UPDATE \(self.tableName(object)) SET \(values) \(filter)"
         return sqliteManager.execSQL(updateSql)

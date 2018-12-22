@@ -14,7 +14,8 @@ protocol StorageProtocol: Codable {
 
 extension StorageProtocol {
     func primaryKey() -> String {
-        return ""
+        let typeKey = type(of: self)
+        return "storage_\(typeKey)_id"
     }
 }
 

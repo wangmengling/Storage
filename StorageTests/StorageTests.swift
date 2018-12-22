@@ -52,7 +52,7 @@ extension StorageTests {
         storageModel.name = "王国仲"
         storageModel.eMail = nil
         
-        let status = Storage.add(storageModel)
+        let status = Storage.add(storageModel, update: true)
         XCTAssertTrue(status, "insert object error \(status)")
     }
     
