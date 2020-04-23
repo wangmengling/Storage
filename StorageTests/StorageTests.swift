@@ -122,6 +122,8 @@ extension StorageTests {
         storageModel.name = "王国仲"
         storageModel.eMail = 3
         
+        storageModel.add()
+        
         let status = Storage.delete(storageModel)
         XCTAssertTrue(status, "update object error \(status)")
     }
